@@ -1,0 +1,139 @@
+\usepackage[a4paper,bottom=1in]{geometry}
+% Fix fancyhdr warnings
+\setlength{\headheight}{14.5pt}
+
+\usepackage[english]{babel}
+
+% Only used for text generation in the template
+%
+\usepackage{lipsum}
+%%
+
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{csquotes}
+
+\usepackage[final]{microtype}
+
+\usepackage[ttscale=.75]{libertine}
+\usepackage[libertine]{newtxmath}
+
+% Set nicer (= less bold, less vertical spacing) mathcal font
+\usepackage[cal=cm]{mathalpha}
+
+% Set up the opening page for the chapters
+\usepackage{titlesec}
+\titleformat{\chapter}[display]
+{\Huge}
+{\filleft\textsc{\chaptertitlename} \thechapter}
+{4ex}
+{\bfseries
+  \titlerule%
+  \vspace{2ex}%
+\filright}
+[\vspace{2ex}%
+\titlerule]
+
+% Set up the headers and footers
+\usepackage{fancyhdr}
+\usepackage{ifthen}
+\pagestyle{fancy}
+\fancyhf{}
+% Use ifthenelse to work around the fact that we wish to have alternate headers
+% but a onesided document
+% (https://tex.stackexchange.com/questions/69100/distinguish-even-odd-pages-in-header-with-oneside-option)
+\fancyhead[R]{\ifthenelse{\isodd{\value{page}}}{\thepage\hfill\textsc{\nouppercase\leftmark}}{}}
+\fancyhead[L]{\ifthenelse{\isodd{\value{page}}}{}{\textsc{\nouppercase\rightmark}\hfill\thepage}}
+\fancyfoot{}
+
+% Remove page numbers on the first page of a chapter
+% https://tex.stackexchange.com/questions/278420/remove-page-number-on-chapter-page
+\fancypagestyle{plain}{%
+  \renewcommand{\headrulewidth}{0pt}%
+  \fancyhf{}%
+}
+
+% See the excellent biblatex documentation for more information
+\usepackage[
+backend=biber,%
+style=alphabetic,%
+block=ragged,%
+backref=true,%
+useprefix=true,%
+maxnames=8,%
+minnames=7,%
+minalphanames=3,%
+maxalphanames=4,%
+backrefstyle=two]%
+{biblatex}
+\addbibresource{references.bib}
+\renewcommand{\subtitlepunct}{\addcolon\addspace}
+
+% Enumerations and tables
+\usepackage{calc}
+\usepackage[shortlabels]{enumitem}
+\setlist{nosep}
+\setlist[description]{font={\textnormal},labelindent=\parindent}
+
+\usepackage{booktabs}
+\usepackage{longtable}
+\usepackage[width=.8\textwidth]{caption}
+\captionsetup[table]{skip=1em}
+
+% Math packages
+\usepackage{mathtools}
+
+\usepackage{savesym}
+\usepackage{amsmath}
+\savesymbol{openbox}
+\usepackage{amsthm}
+
+\usepackage{thmtools}
+\savesymbol{Bbbk}
+\usepackage{amssymb}
+\usepackage{stmaryrd}
+
+
+% tocbibind allows us to have the toc in the toc
+\usepackage[notbib,notindex]{tocbibind}
+% Supposedly it should also allow us to have the index and the bibliography in
+% the toc, but it has some bugs (e.g. displaying the right page number in the
+% toc, but getting the wrong link with hyperref), so we disable those options
+% here and use corresponding separate options for the index, index of symbols
+% (nomenclature) and bibliography instead.
+%
+% The whole is rather finicky and it is somehow crucial that tocbibind is loaded
+% *before* imakeidx.
+
+\usepackage{imakeidx}
+\makeindex[intoc,columns=2]
+\usepackage[refpage,intoc,noprefix]{nomencl}
+% Set fixed width so that descriptions in the index of symbols are aligned.
+\setlength{\nomlabelwidth}{5cm}
+\renewcommand{\nomname}{Index of symbols}
+% Make page numbers links
+\renewcommand*{\pagedeclaration}[1]{\unskip, \hyperpage{#1}}
+\makenomenclature%
+
+% Used in hyperref's setup, and must be loaded before tikz-cd.
+\usepackage[dvipsnames]{xcolor}
+\usepackage[most]{tcolorbox}
+\usepackage{tikz-cd}
+
+\usepackage[
+  colorlinks=true  % Remove the boxes
+, linktocpage=true % Make page numbers (not section titles) links in ToC
+, linkcolor=NavyBlue    % Colour for internal links
+, citecolor=Green  % Colour for bibliographical citations
+, urlcolor=BrickRed % Colour for (external) urls
+%
+% Metadata
+%
+, pdftitle={Domain theory and denotational semantics}%
+, pdfauthor={Tom de Jong}%
+, pdfsubject={Lecture notes and exercises for MGS 2023}%
+, pdfkeywords={domain theory, denotational semantics, PCF, operational semantics, soundness, computational adequacy}
+]{hyperref}
+
+\usepackage[noabbrev,capitalize]{cleveref}
+\creflabelformat{equation}{#2\textup{#1}#3} % Write Equation x.y.z instead of Equation (x.y.z)

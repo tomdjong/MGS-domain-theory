@@ -1,0 +1,119 @@
+\documentclass[a4paper, oneside, 12pt, openany]{book}
+\pdfoutput=1
+
+\usepackage{packages}
+\usepackage{macros}
+
+% Label tables just like equations, theorems, definitions, etc.
+%
+% NB: This can be confusing if LaTeX does not place the table at the point of
+% writing (e.g. for lack of space)!
+\numberwithin{equation}{section}
+\numberwithin{table}{section}
+\makeatletter
+\let\c@equation\c@table
+\makeatother
+
+% Setting up the coloured environments
+%
+\newbool{shade-envs}
+% This can be used to toggle the coloured environments on or off.
+\setboolean{shade-envs}{true}
+
+%%
+\ifthenelse{\boolean{shade-envs}}{%
+  % Colours are as in Andrej Bauer's notes on realizability:
+  % https://github.com/andrejbauer/notes-on-realizability
+  \colorlet{ShadeOfPurple}{blue!5!white}
+  \colorlet{ShadeOfYellow}{yellow!5!white}
+  \colorlet{ShadeOfGreen} {green!5!white}
+  \colorlet{ShadeOfBrown} {brown!10!white}
+  % But we also shade proofs
+  \colorlet{ShadeOfGray}  {gray!10!white}
+}
+% If we don't want to have shaded environments, then we use a closing symbol
+% \lozenge to mark the end of remarks, definitions and examples.
+{%
+  \declaretheoremstyle[
+      spaceabove=6pt,
+      spacebelow=6pt,
+      bodyfont=\normalfont,
+      qed=\(\lozenge\)
+  ]{definitionwithbox}
+  \declaretheoremstyle[
+      headfont=\itshape,
+      bodyfont=\normalfont,
+      qed=\(\lozenge\)
+      ]{remarkwithbox}
+}
+
+\ifthenelse{\boolean{shade-envs}}{%
+  \declaretheorem[sibling=equation]{theorem}
+  \declaretheorem[sibling=theorem]{lemma,proposition,corollary}
+  \declaretheorem[sibling=theorem,style=definition]{definition}
+  \declaretheorem[sibling=theorem,style=definition]{example}
+  \declaretheorem[sibling=theorem,style=remark]{remark}
+  % Now we set the shading using the tcolorbox package.
+  %
+  % The related thmtools' option "shaded" and the package mdframed seem to have
+  % issues: the former does not allow for page breaks in shaded environments and
+  % the latter puts double spacing between two shaded environments.
+  \tcbset{shadedenv/.style={
+      colback={#1},
+      frame hidden,
+      enhanced,
+      breakable,
+      boxsep=0pt,
+      left=2mm,
+      right=2mm,
+      % LaTeX thinks this is too wide (as becomes clear from the many "Overfull
+      % \hbox" warnings, but optically it looks spot on.
+      add to width=1.1mm,
+      enlarge left by=-0.6mm}
+  }
+  %
+  \tcolorboxenvironment{theorem}    {shadedenv={ShadeOfPurple}}
+  \tcolorboxenvironment{lemma}      {shadedenv={ShadeOfPurple}}
+  \tcolorboxenvironment{proposition}{shadedenv={ShadeOfPurple}}
+  \tcolorboxenvironment{corollary}  {shadedenv={ShadeOfPurple}}
+  \tcolorboxenvironment{definition} {shadedenv={ShadeOfYellow}}
+  \tcolorboxenvironment{example}    {shadedenv={ShadeOfGreen}}
+  \tcolorboxenvironment{remark}     {shadedenv={ShadeOfBrown}}
+  \tcolorboxenvironment{proof}      {shadedenv={ShadeOfGray}}
+}{% Use closing symbols if we don't have colours
+  \declaretheorem[sibling=equation]{theorem}
+  \declaretheorem[sibling=theorem]{lemma,proposition,corollary}
+  \declaretheorem[sibling=theorem,style=definitionwithbox]{definition}
+  \declaretheorem[sibling=theorem,style=definitionwithbox]{example}
+  \declaretheorem[sibling=theorem,style=remarkwithbox]{remark}
+  }
+  \declaretheorem[sibling=theorem,style=remark,numbered=no]{claim}
+
+
+% Note that proofs will still have the \qed symbol at the end, even when shaded,
+% because we prefer to keep up the tradition.
+
+\begin{document}
+
+\frontmatter
+
+\include{frontmatter/titlepage}
+\restoregeometry%
+
+\include{frontmatter/abstract}
+
+\setcounter{tocdepth}{2}
+\tableofcontents
+
+\mainmatter%
+
+\include{mainmatter/introduction}
+\include{mainmatter/lecture-1}
+\include{mainmatter/lecture-2}
+\include{mainmatter/lecture-3}
+\include{mainmatter/lecture-4}
+
+\backmatter%
+%\printbibliography[heading=bibintoc]%
+
+\end{document}
