@@ -1,5 +1,48 @@
 \chapter{PCF and its operational semantics}
 
+\section{PCF}
+
+\begin{figure}[h]
+  \begin{center}
+  \def\fCenter{\ \vdash\ }
+
+  \AxiomC{}
+  \UnaryInf$\Gamma,\var{x}:\sigma,\Delta \fCenter \var{x} : \sigma$
+  \DisplayProof\hspace{3cm}
+  \Axiom$\Gamma , \var{x} : \sigma \fCenter M : \tau$
+  \UnaryInf$\Gamma \fCenter (\lambdadot{\var{x} : \sigma}{M}) : \sigma \pcffun \tau$
+  \DisplayProof\vspace{1cm}\\
+  \Axiom$\Gamma \fCenter M : \sigma \pcffun \tau$
+  \Axiom$\Gamma \fCenter N : \sigma$
+  \BinaryInf$\Gamma \fCenter M(N) : \tau$
+  \DisplayProof\hspace{3cm}
+  \Axiom$\Gamma \fCenter M : \sigma \pcffun \sigma$
+  \UnaryInf$\Gamma \fCenter \fix_\sigma(M) : \sigma$
+  \DisplayProof\vspace{1cm}\\
+  \AxiomC{}
+  \UnaryInf$\Gamma \fCenter \pcfzero : \pcfnat$
+  \DisplayProof\quad\quad\quad
+  \Axiom$\Gamma \fCenter M : \pcfnat$
+  \UnaryInf$\Gamma \fCenter \pcfsuc(M) : \pcfnat$
+  \DisplayProof\quad\quad\quad
+  \Axiom$\Gamma \fCenter M : \pcfnat$
+  \UnaryInf$\Gamma \fCenter \pcfpred(M) : \pcfnat$
+  \DisplayProof\vspace{1cm}\\
+  \Axiom$\Gamma \fCenter M : \pcfnat$
+  \Axiom$\Gamma \fCenter N : \pcfnat$
+  \Axiom$\Gamma \fCenter K : \pcfnat$
+  \TrinaryInf$\Gamma \fCenter \pcfifz(M,N,K) : \pcfnat$
+  \DisplayProof
+  \end{center}
+  \caption{Typing rules for PCF}
+\end{figure}
+
+
+\section{Operational semantics}
+
+\subsection{Small-step operational semantics}
+
+\subsection{Big-step operational semantics}
 
 
 
