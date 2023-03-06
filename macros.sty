@@ -1,13 +1,24 @@
-%\DeclarePairedDelimiter{\set}{\{}{\}}
-%\DeclareMathOperator{\id}{id}
+\DeclarePairedDelimiter{\set}{\{}{\}}
+\DeclarePairedDelimiter{\pa}{(}{)}
+% \DeclareMathOperator{\id}{id}
+
+
+\newcommand{\Nat}{\mathbb N}
+\DeclareMathOperator{\add}{add}
+\DeclareMathOperator{\suc}{succ}
+\DeclareMathOperator{\pred}{pred}
 
 \newcommand{\pcffun}{\Rightarrow}
 \newcommand{\pcffont}{\texttt}
 \newcommand{\var}{\pcffont}
 \newcommand{\lambdadot}[2]{\mathop{\lambda}{#1}\mathrel{.}#2}
-\newcommand{\fix}{\pcffont{fix}}
+\DeclareMathOperator{\fix}{\pcffont{fix}}
 \newcommand{\pcfnat}{\pcffont{\textbf{nat}}}
 \newcommand{\pcfzero}{\pcffont{zero}}
-\newcommand{\pcfsuc}{\pcffont{succ}}
-\newcommand{\pcfpred}{\pcffont{pred}}
-\newcommand{\pcfifz}{\pcffont{ifzero}}
+\DeclareMathOperator{\pcfsuc}{\pcffont{succ}}
+\DeclareMathOperator{\pcfpred}{\pcffont{pred}}
+\DeclareMathOperator{\pcfifz}{\pcffont{ifzero}}
+
+\newcommand{\numeral}[1]{\underline{#1}}
+
+\DeclareMathOperator{\pcfadd}{\pcffont{add}}

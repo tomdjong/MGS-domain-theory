@@ -8,8 +8,8 @@
 %
 % NB: This can be confusing if LaTeX does not place the table at the point of
 % writing (e.g. for lack of space)!
-\numberwithin{equation}{section}
-\numberwithin{table}{section}
+\numberwithin{equation}{chapter}
+\numberwithin{table}{chapter}
 \makeatletter
 \let\c@equation\c@table
 \makeatother
@@ -30,6 +30,8 @@
   \colorlet{ShadeOfBrown} {brown!10!white}
   % But we also shade proofs
   \colorlet{ShadeOfGray}  {gray!10!white}
+  % For exercises
+  \colorlet{ShadeOfRed}   {red!10!white}
 }
 % If we don't want to have shaded environments, then we use a closing symbol
 % \lozenge to mark the end of remarks, definitions and examples.
@@ -53,6 +55,7 @@
   \declaretheorem[sibling=theorem,style=definition]{definition}
   \declaretheorem[sibling=theorem,style=definition]{example}
   \declaretheorem[sibling=theorem,style=remark]{remark}
+  \declaretheorem[sibling=theorem,style=remark]{exercise}
   % Now we set the shading using the tcolorbox package.
   %
   % The related thmtools' option "shaded" and the package mdframed seem to have
@@ -80,15 +83,16 @@
   \tcolorboxenvironment{example}    {shadedenv={ShadeOfGreen}}
   \tcolorboxenvironment{remark}     {shadedenv={ShadeOfBrown}}
   \tcolorboxenvironment{proof}      {shadedenv={ShadeOfGray}}
+  \tcolorboxenvironment{exercise}   {shadedenv={ShadeOfRed}}
 }{% Use closing symbols if we don't have colours
   \declaretheorem[sibling=equation]{theorem}
   \declaretheorem[sibling=theorem]{lemma,proposition,corollary}
   \declaretheorem[sibling=theorem,style=definitionwithbox]{definition}
   \declaretheorem[sibling=theorem,style=definitionwithbox]{example}
   \declaretheorem[sibling=theorem,style=remarkwithbox]{remark}
+  \declaretheorem[sibling=theorem,style=remarkwithbox]{exercise}
   }
   \declaretheorem[sibling=theorem,style=remark,numbered=no]{claim}
-
 
 % Note that proofs will still have the \qed symbol at the end, even when shaded,
 % because we prefer to keep up the tradition.

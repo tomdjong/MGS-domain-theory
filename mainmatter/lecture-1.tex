@@ -42,6 +42,59 @@
 
 \subsection{Small-step operational semantics}
 
+\begin{example}[Addition by \(n\) in PCF]
+  For a natural number \(n \in \Nat\), consider addition by \(n\) as a
+  recursively defined function:
+  \begin{alignat*}{3}
+    &\add_n : \Nat \to && \Nat && \\
+    &\add_n(0) &&\coloneqq n, && \\
+    &\add_n(k+1) &&\coloneqq \add_n(k) + 1. &&
+  \end{alignat*}
+  We show how to write this function as a PCF programme. We start by slightly
+  rewriting \(\add_n\) as:
+  \begin{equation*}\label{add_n-alt}\tag{\(\ast\)}
+    \add_n(m) \coloneqq
+    \begin{cases}
+      n &\text{if } m = 0, \\
+      \suc\pa*{\add_n(\pred(m))} &\text{else}.
+    \end{cases}
+  \end{equation*}
+  Looking at the above, we see that we have most of the analogues readily
+  available in PCF: \(\pcfifz\), \(\pcfsuc\) and \(\pcfpred\), as well as the
+  numeral \(\underline n\) (recall\cref{TODO}).
+
+  To get the recursive calls, we use \(\fix\). In the end, we wish to construct
+  \[
+    \pcfadd_n : \pcfnat \pcffun \pcfnat,
+  \]
+  so we use
+  \[
+    \fix_{\pcfnat \pcffun \pcfnat} : \pa*{\pa*{\pcfnat \pcffun \pcfnat}
+      \pcffun \pa*{\pcfnat \pcffun \pcfnat}} \pcffun \pa{\pcfnat \pcffun \pcfnat}.
+  \]
+  We define a programme
+  \(t : \pa*{\pcfnat \pcffun \pcfnat} \pcffun \pa*{\pcfnat \pcffun \pcfnat}\) as
+  follows:
+  \[
+    t \coloneqq \lambdadot{\var x : \pa{\pcfnat \pcffun
+        \pcfnat}}{\lambdadot{\var y : \pcfnat}%
+      {\pcfifz\pa*{\var y,\numeral{n},%
+          \pcfsuc\pa*{\var x\pa*{\pcfpred \, \var y }}}}}
+  \]
+  and finally define \(\pcfadd_n\) as:
+  \[
+    \pcfadd_n \coloneqq \fix_{\pcfnat \pcffun \pcfnat}(t).
+  \]
+  In the programme \(t\), the variable \(\var y\) plays the role of \(m\) in
+  \eqref{add_n-alt} and \(\var x\) is like a placeholder for the recursive call.
+\end{example}\
+
+\begin{exercise}
+  Construct PCF programmes
+  \(\pcfadd,\pcffont{mult} : \pcfnat \pcffun \pcfnat \pcffun \pcfnat\)
+  implementing addition and multiplication, respectively.
+\end{exercise}
+
 \subsection{Big-step operational semantics}
 
 
