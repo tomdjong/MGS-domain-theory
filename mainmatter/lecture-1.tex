@@ -2,7 +2,21 @@
 
 \section{PCF}
 
-\begin{figure}[h]
+\begin{definition}[Types of PCF, \(\pcfnat\), \(\sigma \pcffun \tau\)]
+  The \emph{types of PCF} are inductively defined as:
+  \begin{enumerate}[(i)]
+  \item \(\pcfnat\) is the \emph{base type} of PCF, and
+  \item if \(\sigma\) and \(\tau\) are types of PCF, then we have the
+    \emph{function type} \(\sigma \pcffun \tau\).
+  \end{enumerate}
+\end{definition}
+
+\begin{definition}[Typing rules of PCF, \(\Gamma \vdash M : \sigma\)]
+  We inductively define when a \emph{term~\(M\) has type \(\sigma\) in context
+    \(\Gamma\)}, written \(\Gamma \vdash M : \sigma\), by the following
+  inductive clauses:
+  %
+
   \begin{center}
   \def\fCenter{\ \vdash\ }
 
@@ -34,13 +48,20 @@
   \TrinaryInf$\Gamma \fCenter \pcfifz(M,N,K) : \pcfnat$
   \DisplayProof
   \end{center}
-  \caption{Typing rules for PCF}
-\end{figure}
+\end{definition}
 
+\begin{definition}[Numeral, \(\numeral{n}\)]
+  For a natural number \(n \in \Nat\), we define the
+  \emph{numeral}~\(\numeral n\) in PCF inductively:
+  \(\numeral 0 \coloneqq \pcfzero\) and
+  \(\numeral{m+1} \coloneqq \pcfsuc(\numeral m)\).
+\end{definition}
 
-\section{Operational semantics}
-
-\subsection{Small-step operational semantics}
+\begin{example}
+  We can translate the programme \verb|if (x+1 == 0) then 5 else 3|, written in
+  pseudocode, to the PCF programme
+  \(\lambdadot{\var x : \pcfnat}{\pcfifz(\pcfsuc(\var x),\numeral 5,\numeral 3)}\).
+\end{example}
 
 \begin{example}[Addition by \(n\) in PCF]
   For a natural number \(n \in \Nat\), consider addition by \(n\) as a
@@ -61,41 +82,51 @@
   \end{equation*}
   Looking at the above, we see that we have most of the analogues readily
   available in PCF: \(\pcfifz\), \(\pcfsuc\) and \(\pcfpred\), as well as the
-  numeral \(\underline n\) (recall\cref{TODO}).
+  numeral \(\underline n\).
 
-  To get the recursive calls, we use \(\fix\). In the end, we wish to construct
-  \[
-    \pcfadd_n : \pcfnat \pcffun \pcfnat,
-  \]
-  so we use
-  \[
-    \fix_{\pcfnat \pcffun \pcfnat} : \pa*{\pa*{\pcfnat \pcffun \pcfnat}
-      \pcffun \pa*{\pcfnat \pcffun \pcfnat}} \pcffun \pa{\pcfnat \pcffun \pcfnat}.
-  \]
-  We define a programme
+  We next define the programme
   \(t : \pa*{\pcfnat \pcffun \pcfnat} \pcffun \pa*{\pcfnat \pcffun \pcfnat}\) as
   follows:
   \[
     t \coloneqq \lambdadot{\var x : \pa{\pcfnat \pcffun
         \pcfnat}}{\lambdadot{\var y : \pcfnat}%
       {\pcfifz\pa*{\var y,\numeral{n},%
-          \pcfsuc\pa*{\var x\pa*{\pcfpred \, \var y }}}}}
-  \]
-  and finally define \(\pcfadd_n\) as:
-  \[
-    \pcfadd_n \coloneqq \fix_{\pcfnat \pcffun \pcfnat}(t).
+          \pcfsuc\pa*{\var x\pa*{\pcfpred \, \var y }}}}}.
   \]
   In the programme \(t\), the variable \(\var y\) plays the role of \(m\) in
   \eqref{add_n-alt} and \(\var x\) is like a placeholder for the recursive call.
-\end{example}\
 
-\begin{exercise}
+  Mirroring~\eqref{add_n-alt} further, roughly what we want is a programme
+  \(f : \pcfnat \pcffun \pcfnat\) such that the ``equation''
+  \(f = t\,f\) holds. That is, we want a \emph{fixed point} of \(t\).
+  %
+  Hence, we finally define \(\pcfadd_n\) as:
+  \[
+    \pcfadd_n \coloneqq \fix_{\pcfnat \pcffun \pcfnat}(t).
+  \]
+  % \[
+  %   \fix_{\pcfnat \pcffun \pcfnat} : \pa*{\pa*{\pcfnat \pcffun \pcfnat}
+  %     \pcffun \pa*{\pcfnat \pcffun \pcfnat}} \pcffun \pa{\pcfnat \pcffun \pcfnat}.
+  % \]
+\end{example}
+
+\begin{exercise}\label{exer:pcf-add-mult}
   Construct PCF programmes
   \(\pcfadd,\pcffont{mult} : \pcfnat \pcffun \pcfnat \pcffun \pcfnat\)
   implementing addition and multiplication, respectively.
 \end{exercise}
 
+\section{Operational semantics}
+
+\subsection{Small-step operational semantics}
+
 \subsection{Big-step operational semantics}
+
+\section{List of exercises}
+\begin{enumerate}
+\item \cref{exer:pcf-add-mult}: On defining addition and multiplication in PCF.
+\end{enumerate}
+
 
 
 
