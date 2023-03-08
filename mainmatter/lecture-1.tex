@@ -15,12 +15,10 @@
   We inductively define when a \emph{term~\(M\) has type \(\sigma\) in context
     \(\Gamma\)}, written \(\Gamma \vdash M : \sigma\), by the following
   inductive clauses:
-  %
-
   \begin{center}
   \def\fCenter{\ \vdash\ }
 
-  \AxiomC{}
+  \AxiomC{\phantom{$\fCenter$}}
   \UnaryInf$\Gamma,\var{x}:\sigma,\Delta \fCenter \var{x} : \sigma$
   \DisplayProof\hspace{3cm}
   \Axiom$\Gamma , \var{x} : \sigma \fCenter M : \tau$
@@ -85,24 +83,24 @@
   numeral \(\underline n\).
 
   We next define the programme
-  \(t : \pa*{\pcfnat \pcffun \pcfnat} \pcffun \pa*{\pcfnat \pcffun \pcfnat}\) as
+  \(F : \pa*{\pcfnat \pcffun \pcfnat} \pcffun \pa*{\pcfnat \pcffun \pcfnat}\) as
   follows:
   \[
-    t \coloneqq \lambdadot{\var x : \pa{\pcfnat \pcffun
+    F \coloneqq \lambdadot{\var x : \pa{\pcfnat \pcffun
         \pcfnat}}{\lambdadot{\var y : \pcfnat}%
       {\pcfifz\pa*{\var y,\numeral{n},%
           \pcfsuc\pa*{\var x\pa*{\pcfpred \, \var y }}}}}.
   \]
-  In the programme \(t\), the variable \(\var y\) plays the role of \(m\) in
+  In the programme \(F\), the variable \(\var y\) plays the role of \(m\) in
   \eqref{add_n-alt} and \(\var x\) is like a placeholder for the recursive call.
 
   Mirroring~\eqref{add_n-alt} further, roughly what we want is a programme
   \(f : \pcfnat \pcffun \pcfnat\) such that the ``equation''
-  \(f = t\,f\) holds. That is, we want a \emph{fixed point} of \(t\).
+  \(f = F\,f\) holds. That is, we want a \emph{fixed point} of \(F\).
   %
   Hence, we finally define \(\pcfadd_n\) as:
   \[
-    \pcfadd_n \coloneqq \fix_{\pcfnat \pcffun \pcfnat}(t).
+    \pcfadd_n \coloneqq \fix_{\pcfnat \pcffun \pcfnat}(F).
   \]
   % \[
   %   \fix_{\pcfnat \pcffun \pcfnat} : \pa*{\pa*{\pcfnat \pcffun \pcfnat}
