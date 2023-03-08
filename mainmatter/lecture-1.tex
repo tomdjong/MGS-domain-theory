@@ -118,6 +118,46 @@
 
 \subsection{Small-step operational semantics}
 
+\begin{definition}[Small-step operational semantics of PCF, \(M \smallstep N\)]
+  We inductively define when a term \(M\) \emph{(small-step) reduces} to another
+  term \(N\) (of the same type), written \(M \smallstep N\), by the following
+  inductive clauses:
+  \begin{center}
+  \AxiomC{\phantom{${\smallstep}$}}
+  \UnaryInfC{\((\lambdadot{\var x : \sigma}{M})N \smallstep M[N/x]\)}
+  \DisplayProof\hspace{3cm}
+  \AxiomC{\phantom{${\smallstep}$}}
+  \UnaryInfC{\(\fix_\sigma(M) \smallstep M\pa*{\fix_\sigma(M)}\)}
+  \DisplayProof\vspace{1cm}\\
+  \AxiomC{\phantom{${\smallstep}$}}
+  \UnaryInfC{\(\pcfpred(\numeral 0) \smallstep \numeral 0\)}
+  \DisplayProof\hspace{3cm}
+  \AxiomC{\phantom{${\smallstep}$}}
+  \UnaryInfC{\(\pcfpred(\numeral{n+1}) \smallstep \numeral n\)}
+  \DisplayProof\vspace{1cm}\\
+  \AxiomC{\phantom{${\smallstep}$}}
+  \UnaryInfC{\(\pcfifz(\numeral 0,M,N) \smallstep M\)}
+  \DisplayProof\quad\quad\quad
+  \AxiomC{\phantom{${\smallstep}$}}
+  \UnaryInfC{\(\pcfifz(\numeral {n+1},M,N) \smallstep N\)}
+  \DisplayProof\vspace{1cm}\\
+  %
+  \AxiomC{\(M_1 \smallstep M_2\)}
+  \UnaryInfC{\(M_1(N) \smallstep M_2(N)\)}
+  \DisplayProof\quad\quad\quad
+  %
+  \AxiomC{\(M_1 \smallstep M_2\)}
+  \UnaryInfC{\(\pcfsuc(M_1) \smallstep \pcfsuc(M_2)\)}
+  \DisplayProof\vspace{1cm}\\
+  \AxiomC{\(M_1 \smallstep M_2\)}
+  \UnaryInfC{\(\pcfpred(M_1) \smallstep \pcfpred(M_2)\)}
+  \DisplayProof\quad\quad\quad
+  \AxiomC{\(M_1 \smallstep M_2\)}
+  \UnaryInfC{\(\pcfifz(M_1,N_1,N_2) \smallstep \pcfifz(M_2,N_1,N_2)\)}
+  \DisplayProof
+  \end{center}
+\end{definition}
+
 \subsection{Big-step operational semantics}
 
 \section{List of exercises}
