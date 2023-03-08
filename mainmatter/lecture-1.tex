@@ -41,9 +41,9 @@
   \UnaryInf$\Gamma \fCenter \pcfpred(M) : \pcfnat$
   \DisplayProof\vspace{1cm}\\
   \Axiom$\Gamma \fCenter M : \pcfnat$
-  \Axiom$\Gamma \fCenter N : \pcfnat$
-  \Axiom$\Gamma \fCenter K : \pcfnat$
-  \TrinaryInf$\Gamma \fCenter \pcfifz(M,N,K) : \pcfnat$
+  \Axiom$\Gamma \fCenter N_1 : \pcfnat$
+  \Axiom$\Gamma \fCenter N_2 : \pcfnat$
+  \TrinaryInf$\Gamma \fCenter \pcfifz(M,N_1,N_2) : \pcfnat$
   \DisplayProof
   \end{center}
 \end{definition}
@@ -114,9 +114,9 @@
   implementing addition and multiplication, respectively.
 \end{exercise}
 
-\section{Operational semantics}
+%\section{Operational semantics}
 
-\subsection{Small-step operational semantics}
+%\subsection{Small-step operational semantics}
 
 \begin{definition}[Small-step operational semantics of PCF, \(M \smallstep N\)]
   We inductively define when a term \(M\) \emph{(small-step) reduces} to another
@@ -125,13 +125,13 @@
   \begin{center}
   \AxiomC{\phantom{${\smallstep}$}}
   \UnaryInfC{\((\lambdadot{\var x : \sigma}{M})N \smallstep M[N/x]\)}
-  \DisplayProof\hspace{3cm}
+  \DisplayProof\quad\quad\quad
   \AxiomC{\phantom{${\smallstep}$}}
   \UnaryInfC{\(\fix_\sigma(M) \smallstep M\pa*{\fix_\sigma(M)}\)}
   \DisplayProof\vspace{1cm}\\
   \AxiomC{\phantom{${\smallstep}$}}
   \UnaryInfC{\(\pcfpred(\numeral 0) \smallstep \numeral 0\)}
-  \DisplayProof\hspace{3cm}
+  \DisplayProof\quad\quad\quad
   \AxiomC{\phantom{${\smallstep}$}}
   \UnaryInfC{\(\pcfpred(\numeral{n+1}) \smallstep \numeral n\)}
   \DisplayProof\vspace{1cm}\\
@@ -158,7 +158,48 @@
   \end{center}
 \end{definition}
 
-\subsection{Big-step operational semantics}
+\section{Big-step operational semantics}
+
+\begin{definition}[Big-step operational semantics of PCF, \(M \bigstep V\)]
+  We inductively define when a term \(M\) \emph{(big-step) reduces} to a value
+  \(V\), written \(M \bigstep V\), by the following inductive clauses:
+  \begin{center}
+  \AxiomC{\phantom{${\bigstep}$}}
+  \UnaryInfC{\(\var x \bigstep \var x\)}
+  \DisplayProof\quad\quad\quad\quad\quad\quad\quad
+  \AxiomC{\phantom{${\bigstep}$}}
+  \UnaryInfC{\(\lambdadot{\var x : \sigma}{M} \bigstep \lambdadot{\var x : \sigma}{M}\)}
+  \DisplayProof\vspace{1cm}\\
+  \AxiomC{\(M \bigstep \lambdadot{\var x : \sigma}{E}\)}
+  \AxiomC{\(E[N/x] \bigstep V\)}
+  \BinaryInfC{\(M(N) \bigstep V\)}
+  \DisplayProof\quad\quad\quad
+  \AxiomC{\(M(\fix_{\sigma}(M)) \bigstep V\)}
+  \UnaryInfC{\(\fix_{\sigma}(M) \bigstep V\)}
+  \DisplayProof\vspace{1cm}\\
+  \AxiomC{\phantom{${\bigstep}$}}
+  \UnaryInfC{\(\numeral 0 \bigstep \numeral 0\)}
+  \DisplayProof\quad\quad\quad
+  \AxiomC{\(M \bigstep \numeral{n}\)}
+  \UnaryInfC{\(\pcfsuc(M) \bigstep \numeral{n+1}\)}
+  \DisplayProof\vspace{1cm}\\
+  \AxiomC{\(M \bigstep \numeral 0\)}
+  \UnaryInfC{\(\pcfpred(M) \bigstep \numeral 0\)}
+  \DisplayProof\quad\quad\quad
+  %
+  \AxiomC{\(M \bigstep \numeral {n+1}\)}
+  \UnaryInfC{\(\pcfpred(M) \bigstep \numeral n\)}
+  \DisplayProof\vspace{1cm}\\
+  \AxiomC{\(M \bigstep \numeral 0\)}
+  \AxiomC{\(N_1 \bigstep V\)}
+  \BinaryInfC{\(\pcfifz(M,N_1,N_2) \bigstep V\)}
+  \DisplayProof\quad\quad\quad
+  \AxiomC{\(M \bigstep \numeral {n+1}\)}
+  \AxiomC{\(N_2 \bigstep V\)}
+  \BinaryInfC{\(\pcfifz(M,N_1,N_2) \bigstep V\)}
+  \DisplayProof
+  \end{center}
+\end{definition}
 
 \section{List of exercises}
 \begin{enumerate}
