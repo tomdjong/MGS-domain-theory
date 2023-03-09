@@ -1,4 +1,4 @@
-name: Compile PDF
+name: Compile PDFs
 on:
   push:
     branches:
@@ -25,7 +25,7 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           release_name: ${{ steps.name.outputs.name }}
-          tag_name: ${{ steps.name.outputs.name }}
+          tag_name: ${{ steps.name.outputs.name }} 
       - name: Upload the PDF to the release
         uses: actions/upload-release-asset@v1
         env:
@@ -35,6 +35,22 @@ jobs:
           asset_path: main.pdf
           asset_name: MGS-domain-theory.pdf
           asset_content_type: pdf
+
+      - name: Toggle b&w (colourless) version
+        run: sed -i 's/setboolean{shade-envs}{true}/setboolean{shade-envs}{false}/' main.tex
+      - name: Compile b&w PDF
+        uses: xu-cheng/latex-action@v2
+        with:
+          root_file: main.tex      
+      - name: Upload the PDF to the release
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          asset_path: main.pdf
+          asset_name: MGS-domain-theory-no-colour.pdf
+          asset_content_type: pdf          
           
       - name: Delete older releases
         uses: dev-drprasad/delete-older-releases@v0.2.0
