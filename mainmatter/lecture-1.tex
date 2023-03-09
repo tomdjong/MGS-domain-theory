@@ -1,8 +1,8 @@
 \chapter{PCF and its operational semantics}
 
-PCF~\cite{Plotkin} is a typed functional programming language with general
+PCF~\cite{Plotkin1977} is a typed functional programming language with general
 recursion. We can think of PCF as a simpler, well-behaved fragment of a modern
-functional programming language such as Haskell~\cite{Haskell}.
+functional programming language such as Haskell~\cite{Haskell2010}.
 %
 The point of PCF is not to be a particularly convenient or rich programming
 language. Instead, it's meant to be a simple and principled language enabling us
@@ -10,7 +10,7 @@ to study it from a mathematical viewpoint without having to deal with complex
 features that you might find in modern, real-world programming languages.
 %
 The techniques that we will employ could, with some effort, be extended to more
-complex programming languages however~\cite{PlotkinPisa}.
+complex programming languages however, see e.g.~\cite{Plotkin1983}.
 
 \section{PCF}
 
@@ -275,10 +275,12 @@ as the following one:
 
 In our investigations into the denotational semantics of PCF, we will typically
 not be interested in intermediate reduction steps, e.g.\ we don't really care
-about the sequence
-\(\pcfsuc(\pcfpred\,\numeral{n+1}) \smallstep \pcfsuc(\numeral{n}) \smallstep
-\numeral{n+1}\); all we care about is that \(\pcfsuc(\pcfpred\,\numeral{n+1})\)
-computes to the numeral \(\numeral{n+1}\).
+about the whole sequence
+\(\pcfifz(\pcfpred\,\numeral{3},\numeral{5},\pcfpred\,\numeral{7}) \smallstep
+\pcfifz(\numeral{2},\numeral{5},\pcfpred\,\numeral{7}) \smallstep
+\pcfpred\,\numeral{7} \smallstep \numeral{6}\); all we care about is that
+\(\pcfifz(\pcfpred\,\numeral{3},\numeral{5},\pcfpred\,\numeral{7})\) computes to
+the numeral \(\numeral{6}\).
 %
 The big-step operational semantics of PCF is a way of formalising this
 desideratum.
