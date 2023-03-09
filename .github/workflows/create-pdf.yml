@@ -11,13 +11,10 @@ jobs:
     steps:
       - name: Check out repository
         uses: actions/checkout@v3
-      - name: Compile the main document
-        uses: xu-cheng/latex-action@v2
-        with:
-          root_file: main.tex
+
       - name: Set release name
         id: name
-        run: echo "name=$(date +'%Y-%m-%d-%H%M')" >> $GITHUB_OUTPUT
+        run: echo "PDFs" >> $GITHUB_OUTPUT
       - name: Create a new release
         uses: actions/create-release@v1
         id: create_release
@@ -25,7 +22,12 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           release_name: ${{ steps.name.outputs.name }}
-          tag_name: ${{ steps.name.outputs.name }} 
+          tag_name: ${{ steps.name.outputs.name }}
+
+      - name: Compile the main document
+        uses: xu-cheng/latex-action@v2
+        with:
+          root_file: main.tex
       - name: Upload the PDF to the release
         uses: actions/upload-release-asset@v1
         env:
@@ -41,7 +43,7 @@ jobs:
       - name: Compile b&w PDF
         uses: xu-cheng/latex-action@v2
         with:
-          root_file: main.tex      
+          root_file: main.tex
       - name: Upload the PDF to the release
         uses: actions/upload-release-asset@v1
         env:
@@ -50,8 +52,8 @@ jobs:
           upload_url: ${{ steps.create_release.outputs.upload_url }}
           asset_path: main.pdf
           asset_name: MGS-domain-theory-no-colour.pdf
-          asset_content_type: pdf          
-          
+          asset_content_type: pdf
+
       - name: Delete older releases
         uses: dev-drprasad/delete-older-releases@v0.2.0
         with:
