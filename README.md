@@ -8,6 +8,6 @@ denotational semantics at the
 Under active development.
 
 The notes are available in [full
-colour](https://github.com/tomdjong/MGS-domain-theory/releases/download/PDFs/MGS-domain-theory.pdf)
+colour](https://github.com/tomdjong/MGS-domain-theory/releases/latest/download/MGS-domain-theory.pdf)
 and [black and
-white](https://github.com/tomdjong/MGS-domain-theory/releases/download/PDFs/MGS-domain-theory_no-colour.pdf).
+white](https://github.com/tomdjong/MGS-domain-theory/releases/latest/download/MGS-domain-theory_no-colour.pdf).
