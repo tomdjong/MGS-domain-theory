@@ -273,52 +273,133 @@ as the following one:
 
 \section{Big-step operational semantics}
 
+In our investigations into the denotational semantics of PCF, we will typically
+not be interested in intermediate reduction steps, e.g.\ we don't really care
+about the sequence
+\(\pcfsuc(\pcfpred\,\numeral{n+1}) \smallstep \pcfsuc(\numeral{n}) \smallstep
+\numeral{n+1}\); all we care about is that \(\pcfsuc(\pcfpred\,\numeral{n+1})\)
+computes to the numeral \(\numeral{n+1}\).
+%
+The big-step operational semantics of PCF is a way of formalising this
+desideratum.
+
 \begin{definition}[Big-step operational semantics of PCF, \(M \bigstep V\)]
-  We inductively define when a term \(M\) \emph{(big-step) reduces} to a value
-  \(V\), written \(M \bigstep V\), by the following inductive clauses:
-  \begin{center}
+  We inductively define when a term \(M\) \emph{(big-step) reduces} to another
+  term \(V\) (of the same type, in the same context), written
+  \(M \bigstep V\), by the following inductive clauses:
+  \begin{longtable}{cc}
   \AxiomC{\phantom{${\bigstep}$}}
   \UnaryInfC{\(\var x \bigstep \var x\)}
-  \DisplayProof\quad\quad\quad\quad\quad\quad\quad
+  \DisplayProof
+  &
   \AxiomC{\phantom{${\bigstep}$}}
   \UnaryInfC{\(\lambdadot{\var x : \sigma}{M} \bigstep \lambdadot{\var x : \sigma}{M}\)}
   \DisplayProof\vspace{1cm}\\
   \AxiomC{\(M \bigstep \lambdadot{\var x : \sigma}{E}\)}
   \AxiomC{\(E[N/x] \bigstep V\)}
   \BinaryInfC{\(M \, N \bigstep V\)}
-  \DisplayProof\quad\quad\quad
+  \DisplayProof
+  &
   \AxiomC{\(M(\pcffix_{\sigma} \, M) \bigstep V\)}
   \UnaryInfC{\({\pcffix_{\sigma} \, M} \bigstep V\)}
   \DisplayProof\vspace{1cm}\\
   \AxiomC{\phantom{${\bigstep}$}}
   \UnaryInfC{\(\numeral 0 \bigstep \numeral 0\)}
-  \DisplayProof\quad\quad\quad
+  \DisplayProof
+  &
   \AxiomC{\(M \bigstep \numeral{n}\)}
   \UnaryInfC{\(\pcfsuc \, M \bigstep \numeral{n+1}\)}
   \DisplayProof\vspace{1cm}\\
   \AxiomC{\(M \bigstep \numeral 0\)}
   \UnaryInfC{\(\pcfpred \, M \bigstep \numeral 0\)}
-  \DisplayProof\quad\quad\quad
-  %
+  \DisplayProof
+  &
   \AxiomC{\(M \bigstep \numeral {n+1}\)}
   \UnaryInfC{\(\pcfpred \, M \bigstep \numeral n\)}
   \DisplayProof\vspace{1cm}\\
   \AxiomC{\(M \bigstep \numeral 0\)}
   \AxiomC{\(N_1 \bigstep V\)}
   \BinaryInfC{\(\pcfifz(M,N_1,N_2) \bigstep V\)}
-  \DisplayProof\quad\quad\quad
+  \DisplayProof
+  &
   \AxiomC{\(M \bigstep \numeral {n+1}\)}
   \AxiomC{\(N_2 \bigstep V\)}
   \BinaryInfC{\(\pcfifz(M,N_1,N_2) \bigstep V\)}
   \DisplayProof
-  \end{center}
+  \end{longtable}
 \end{definition}
+
+\begin{definition}[Value]
+  A term is a \emph{value} if it is either a variable, a numeral or a
+  \(\lambda\)-abstraction, i.e.\ it is of the form
+  \(\lambdadot{\var x : \sigma}{N}\) for some term \(N\).
+
+  Note that the values of type \(\pcfnat\) in the empty context are precisely
+  the numerals.
+\end{definition}
+
+The reason that we use \(V\) in the big-step semantics is the following:
+
+\begin{lemma}
+  If \(M \bigstep V\), then \(V\) is a value.
+\end{lemma}
+
+Moreover, values do not reduce any further:
+
+\begin{lemma}
+  If \(V\) is a value, then
+  \begin{enumerate}[(i)]
+  \item there is no term \(N\) such that \(V \smallstep N\), and
+  \item whenever \(V \bigstep N\), we have \(V = N\).
+  \end{enumerate}
+\end{lemma}
+
+Thus, the big-step operational semantics reduces a term all the way to a value,
+forgetting about the intermediary reductions.
+
+Furthermore, the values computed by the big-step operational semantics are
+unique:
+\begin{lemma}[Big-step is deterministic]
+  If \(M \bigstep V\) and \(M \bigstep W\), then \(V = W\).
+\end{lemma}
+
+(Actually, the small-step operational semantics is also deterministic.)
+
+The lemmas are proved by induction on the structure of derivations of
+\(M \bigstep V\) and inspection of the small-step operational semantics.
+
+Finally, we relate the small-step and big-step operational semantics:
+%
+We write \(\smallstep^\ast\) for the reflexive transitive closure of
+\(\smallstep\). That is, we have \(M \smallstep^\ast N\) exactly if there is a
+sequence \(M = M_0 \smallstep M_1 \smallstep \dots \smallstep M_{n-1} = N\). For
+\(n = 0\), this reads \(M = N\), and for \(n = 1\), it reads \(M \smallstep N\).
+
+\begin{exercise}\label{exer:small-and-big-step}
+  Show that:
+  \begin{enumerate}[(i)]
+  \item\label{bigstep-implies-smallstep} if \(M \bigstep V\), then \(M \smallstep^\ast V\);
+  \item\label{smallstep-gives-bigstep} if \(M \smallstep N\), then
+    \(N \bigstep V\) implies \(M \bigstep V\) for all values \(V\);
+  \item\label{smallstep-gives-bigstep'} if \(M \smallstep^\ast N\), then
+    \(N \bigstep V\) implies \(M \bigstep V\) for all values \(V\).
+  \end{enumerate}
+  For~\ref{bigstep-implies-smallstep} and \ref{smallstep-gives-bigstep}, use
+  induction on the structure of the derivations; for
+  \ref{smallstep-gives-bigstep'} you can repeatedly
+  apply~\ref{smallstep-gives-bigstep}.
+
+  Conclude that \(M \bigstep V\) if and only if \(M \smallstep^\ast V\) for all
+  terms \(M\) and values \(V\).
+\end{exercise}
 
 \section{List of exercises}
 \begin{enumerate}
 \item \cref{exer:small-step-addition}: On computing additions using the
   small-step operational semantics.
 \item \cref{exer:pcf-add-mult}: On defining addition and multiplication in PCF.
+\item \cref{exer:small-and-big-step}: On relating the small-step and big-step
+  operational semantics.
 \end{enumerate}
 
 
