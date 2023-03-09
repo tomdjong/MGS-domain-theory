@@ -100,24 +100,6 @@ backrefstyle=two]%
 
 % tocbibind allows us to have the toc in the toc
 \usepackage[notbib,notindex]{tocbibind}
-% Supposedly it should also allow us to have the index and the bibliography in
-% the toc, but it has some bugs (e.g. displaying the right page number in the
-% toc, but getting the wrong link with hyperref), so we disable those options
-% here and use corresponding separate options for the index, index of symbols
-% (nomenclature) and bibliography instead.
-%
-% The whole is rather finicky and it is somehow crucial that tocbibind is loaded
-% *before* imakeidx.
-
-\usepackage{imakeidx}
-\makeindex[intoc,columns=2]
-\usepackage[refpage,intoc,noprefix]{nomencl}
-% Set fixed width so that descriptions in the index of symbols are aligned.
-\setlength{\nomlabelwidth}{5cm}
-\renewcommand{\nomname}{Index of symbols}
-% Make page numbers links
-\renewcommand*{\pagedeclaration}[1]{\unskip, \hyperpage{#1}}
-\makenomenclature%
 
 % Used in hyperref's setup, and must be loaded before tikz-cd.
 \usepackage[dvipsnames]{xcolor}
@@ -141,3 +123,4 @@ backrefstyle=two]%
 
 \usepackage[noabbrev,capitalize]{cleveref}
 \creflabelformat{equation}{#2\textup{#1}#3} % Write Equation x.y.z instead of Equation (x.y.z)
+\Crefname{exercise}{Exercise}{eEercises}
