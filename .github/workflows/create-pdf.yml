@@ -14,7 +14,7 @@ jobs:
 
       - name: Set release name
         id: name
-        run: echo "PDFs" >> $GITHUB_OUTPUT
+        run: echo "name=PDFs" >> $GITHUB_OUTPUT
       - name: Create a new release
         uses: actions/create-release@v1
         id: create_release
@@ -51,7 +51,7 @@ jobs:
         with:
           upload_url: ${{ steps.create_release.outputs.upload_url }}
           asset_path: main.pdf
-          asset_name: MGS-domain-theory-no-colour.pdf
+          asset_name: MGS-domain-theory_no-colour.pdf
           asset_content_type: pdf
 
       - name: Delete older releases
