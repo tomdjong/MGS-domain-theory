@@ -1,6 +1,122 @@
-\chapter{Basic domain theory}
+\chapter[{Denotational semantics and domain theory}]{Denotational semantics and \\ domain theory}
 
+Previously we introduced the operational semantics of PCF. Next, we wish to
+introduce a \emph{denotational semantics} to PCF. The basic idea is to assign to
+each type \(\sigma\) of PCF some kind of \emph{mathematical} object
+\(\densem{\sigma}\).
+%
+A programme \(M\) (i.e.\ closed terms) of type \(\sigma\) is then interpreted as
+an element \(\densem{M}\) of \(\densem{\sigma}\).
+%
+More generally, we extend the interpretation of types to contexts and
+\(\Gamma \vdash M : \sigma\) will then be interpreted as a certain function
+(morphism) from \(\densem{\Gamma}\) to \(\densem{\sigma}\).
 
+For the denotational semantics we have three desiderata:
+
+\begin{itemize}[itemsep=2mm,topsep=3mm]
+\item\emph{Compositionality}: This can be summarised as follows:
+  \begin{displayquote}
+    \emph{The interpretation of a composite is the composite of the interpretations}.
+  \end{displayquote}
+
+  %
+  For example, the interpretation of a function type \(\sigma \pcffun \tau\)
+  will be a certain set of functions from \(\densem{\sigma}\) to
+  \(\densem{\tau}\), and if we have programmes \(M : \sigma \pcffun \tau\) and
+  \(N : \sigma\), then \(\densem{M \, N} = \densem{M}(\densem{N})\).
+\item\emph{Soundness}: We want our interpretation to respect the operational
+  semantics, i.e.\ if we have terms \(M\) and \(N\) with
+  \(M \bigstep N\), then their interpretations should be equal.
+\item\emph{Computational adequacy}: We should be able to use our
+  interpretation to compute, i.e.\ if \(M\) is a programme of type \(\pcfnat\)
+  and \(\densem{M} = n\) for some natural number \(n\), then
+  \(M \bigstep \numeral{n}\).
+\end{itemize}
+
+Soundness and computational adequacy will be proved
+in~\cref{chap:soundness-comp-adequacy}, while compositionality will be a direct
+consequence of our definitions.
+
+\section{Towards domain theory}
+
+All this leaves the question what kind of mathematical objects we have in mind
+for interpreting the types of PCF. A first, naive attempt may be to interpret
+each type \(\sigma\) as a set \(\densem{\sigma}\) with:
+\begin{align*}
+  \densem{\pcfnat} &\coloneqq \text{the set \(\Nat\) of natural numbers}, \text{ and} \\
+  \densem{\sigma \pcffun \tau} &\coloneqq \text{the set \(\set{f \colon \densem{\sigma} \to
+    \densem{\tau}}\) of all functions from \(\densem{\sigma}\) to \(\densem{\tau}\)}.
+\end{align*}
+
+There are two problems with this naive approach.
+%
+The first problem is that \(\densem{\pcfnat}\) should not only offer natural
+numbers, but it should also offer an interpretation of programmes of type
+\(\pcfnat\) that do not terminate such as the one
+in~\cref{exam:non-termination}.
+%
+Right now, this programme \(M\) would have to be interpreted as some natural
+number \(n\), forcing us to make some arbitrary choice. Moreover, it is not true
+that \(M \bigstep \numeral n\), whatever choice we make, so we would violate
+computational adequacy.
+
+This problem is easily solved by introducing a new, special element
+\(\bot_\sigma \in \densem{\sigma}\) that interprets non-terminating programmes
+of type \(\sigma\). And indeed, this will be a part of our eventual interpretation.
+
+However, it does not solve the second, more serious problem, namely that, in
+order to interpret PCF's \(\pcffix_\sigma\) we would need every function
+\(f \colon \densem{\sigma} \to \densem{\sigma}\) to have a fixed point.
+%
+But this is easily seen to \emph{false}, e.g. consider
+\begin{align*}
+  f \colon \Nat \cup \{\bot\} &\to \Nat \cup \{\bot\} \\
+  \bot &\mapsto 0, \\
+  n &\mapsto n+1.
+\end{align*}
+
+This is where domain theory comes to the rescue: Instead of using plain sets, we
+will interpret types as so-called \emph{\(\omega\)-cppos}: these are
+\emph{partially ordered} sets with a \emph{least} element \(\bot\) and
+\emph{least upper bounds} of increasing sequences.
+%
+A \emph{morphism} between two \(\omega\)-cppos is a function on the underlying
+sets that preserves the order and these least upper bounds.
+%
+The upshot of restricting to such functions is that these morphisms can be shown
+to have (least) fixed points, thus solving our second problem.
+
+\section{Basic definitions}
+
+We give the definitions of \(\omega\)-cppos and their morphisms.
+
+\begin{definition}[Poset]
+  A \emph{partially ordered set}, or \emph{poset}, is a set \(X\) together with
+  a binary relation \({\below}\) satisfying:
+  \begin{enumerate}[(i)]
+  \item \emph{reflexivity}: for every \(x \in X\), we have \(x \below x\);
+  \item \emph{transitivity}: for every \(x,y,z \in X\), if \(x \below y\) and
+    \(y \below z\), then \(x \below z\);
+  \item \emph{antisymmetry}: for every \(x,y \in X\), if \(x \below y\) and
+    \(y \below x\), then \(x = y\).
+  \end{enumerate}
+\end{definition}
+
+\begin{example}
+  The natural numbers, rational numbers and real numbers with their usual
+  orderings are all examples of posets.
+\end{example}
+
+\begin{definition}[\(\omega\)-chain, least upper bound, \(\omega\)-cpo]
+
+\end{definition}
+
+\section{Products}
+
+\section{Exponentials}
+
+\section{Least fixed points}
 
 %%% Local Variables:
 %%% mode: latexmk
