@@ -109,14 +109,172 @@ We give the definitions of \(\omega\)-cppos and their morphisms.
 \end{example}
 
 \begin{definition}[\(\omega\)-chain, least upper bound, \(\omega\)-cpo]
-
+  Let \((X,{\below})\) be a poset.
+  \begin{enumerate}[(i)]
+  \item An \(\omega\)-chain in \(X\) is a subset
+    \(\set{x_0,x_1,x_2,\dots} \subseteq X\) of increasing elements, i.e.\ we
+    have \(x_0 \below x_1\), \(x_1 \below x_2\), \(x_2 \below x_3\), and so
+    on.% \below \dots\).
+  \item An \emph{upper bound} of a subset \(S \subseteq X\) is an element
+    \(x \in X\) such that \(s \below x\) for every \(s \in S\).
+  \item A \emph{least upper bound} of a subset \(S \subseteq X\) is an upper
+    bound \(x \in X\) of \(S\) such that for every upper bound \(y \in X\) of
+    \(S\) we have \(x \below y\).
+  \item The poset \(X\) is \emph{\(\omega\)-chain complete} if every
+    \(\omega\)-chain in \(X\) has a least upper bound.% in \(X\).
+  \end{enumerate}
+  An \(\omega\)-chain complete poset will be called an \emph{\(\omega\)-cpo}.
 \end{definition}
+
+\begin{exercise}\label{exer:least-upper-bounds-are-unique}
+  Show that least upper bounds are unique. That is, if \(x\) and \(y\) are least
+  upper bounds of some subset \(S\) of a poset \(X\), then \(x = y\).
+
+  \emph{Hint}: Use antisymmetry.
+\end{exercise}
+
+Because least upper bounds are unique, we will speak of \emph{the} least upper
+bound (of a given subset) and in the case of \(\omega\)-chain
+\(x_0 \below x_1 \dots\), we will denote the least upper bound by
+\(\bigsqcup_{n \in \Nat}x_n\).
+
+\begin{definition}[Least element, \(\omega\)-cppo]
+  Let \((X,{\below})\) be a poset.
+  \begin{enumerate}[(i)]
+  \item A \emph{least element} of \(X\) is an element \(x \in X\) such that
+    \(x \below y\) for every \(y \in X\).
+  \item An \(\omega\)-cpo is called \emph{pointed} if it has a least element.
+  \end{enumerate}
+  A pointed \(\omega\)-cpo will be called an \emph{\(\omega\)-cppo}.
+\end{definition}
+
+\begin{exercise}\label{exer:least-element-is-unique}
+  Let \(X\) be a poset with a least element \(x\). Show that \(x\) is the least
+  upper bound of the empty subset and hence conclude that \(x\) must be unique.
+\end{exercise}
+
+Because least elements are unique, we will speak of \emph{the} least element and
+will typically denote it by \(\bot\).
+
+\begin{example}[\(\Nat_\bot\)]\label{N-bot}
+  A fundamental example of an \(\omega\)-cppo is the \emph{flat} \(\omega\)-cppo
+  \(\Nat_\bot\), which is given by the set \(\Nat \cup \{\bot\}\) ordered as
+  depicted in the following diagram:
+  \[
+    \begin{tikzcd}
+      0 & 1 & 2 & 3 & \ldots \\
+      & & \bot \ar[ull,no head] \ar[ul,no head] \ar[u,no head] \ar[ur, no head]
+      \ar[urr, no head]
+    \end{tikzcd}
+  \]
+  Here we interpret a line going up from an element \(x\) to an element \(y\) as
+  saying that \(x \below y\).
+  %
+  Thus, the element \(\bot\) is the least element and all other elements are
+  unrelated.
+  %
+  In particular, we have do \emph{not} have \(0 \below 1\) as in the usual
+  ordering of the natural numbers.
+
+  The intuition here is that the partial order \({\below}\) does not reflect the
+  numerical value, but rather how ``defined'' an element is with \(\bot\)
+  representing an ``undefined''.
+  %
+  In our interpretation of PCF, we will interpret \(\pcfnat\) as \(\Nat_\bot\)
+  and \(\bot\) will serve as an interpretation of non-terminating programmes.
+\end{example}
+
+\begin{exercise}\label{exer:N_bot}
+  Show that the \(\omega\)-chains in \(\Nat_\bot\) are precisely \(\set{\bot}\),
+  \(\set{n}\) and \(\set{\bot,n}\) for a natural number \(n \in \Nat\).
+  %
+  Use this to check that \(\Nat_\bot\) is indeed an \(\omega\)-cpo.
+\end{exercise}
+
+\begin{remark}
+  It is perhaps a bit arbitrary that to exhibit
+  \(\set{\bot,n} \subseteq \Nat_\bot\) as an \(\omega\)-chain we have to repeat
+  elements and order them linearly.
+  %
+  One way to address this is to replace the notion of \(\omega\)-chain by that
+  of a \emph{directed} (see~\cref{exer:directedness}) subset, and to consider
+  \emph{dcpos}: posets with least upper bounds for all directed subsets.
+
+  For general domain theory the notion of dcpo is arguably the better notion
+  (see also~\cite[Section~2.2.4]{AbramskyJung1994}, but for the denotational
+  semantics of PCF and in particular, the existence of least fixed
+  points~(\cref{least-fixed-point}), the notion of \(\omega\)-cpo suffices.
+\end{remark}
+
+\begin{exercise}\label{exer:directedness}
+  Let \((X,{\below})\) be a poset. A subset \(S \subseteq X\) is \emph{directed}
+  if it is non-empty and for every two elements \(x,y \in S\), there exists a
+  element \(z \in S\) with \(x \below z\) and \(y \below z\).
+  \begin{enumerate}[(i)]
+  \item Show that every \(\omega\)-chain is a directed subset.
+  \item Conversely, use the axiom of choice to show that every countable,
+    directed subset is an \(\omega\)-chain.
+  \end{enumerate}
+\end{exercise}
+
+We proceed by defining the morphisms of (pointed) \(\omega\)-cpos.
+\begin{definition}[Morphism of \(\omega\)-cpos]\label{def:morphism}
+  A \emph{morphism} between two \(\omega\)-cpos \(A\) and \(B\) is a function
+  \(f\) on the underlying sets of \(A\) and \(B\) such that
+  \begin{enumerate}[(i)]
+  \item\label{monotone} it is \emph{monotone} (or \emph{order preserving}),
+    i.e.\ if \(x \below y\) in \(A\), then \(f(x) \below f(y)\) in \(B\);
+  \item\label{preserve-lub-of-omega-chains} it \emph{preserves least upper
+      bounds of \(\omega\)-chains}, i.e.\ if \(\set{x_0,x_1,\dots}\) is an
+    \(\omega\)-chain in \(A\) with least upper bound \(a\), then \(f(a)\) is the
+    least upper bound in \(B\) of the subset \(\set{f(x_0),f(x_1),\dots}\).
+  \end{enumerate}
+\end{definition}
+
+It follows from monotonicity that \(\set{f(x_0),f(x_1),\dots}\) is an
+\(\omega\)-chain in \(B\) and hence we could rewrite the second condition as:
+\[
+  f\pa*{\textstyle\bigsqcup_{n \in \Nat}x_n} = \textstyle\bigsqcup_{n \in
+    \Nat}f(x_n).
+\]
+%
+But actually, monotonicity is redundant as the following exercise ask you to
+check:
+
+\begin{exercise}\label{exer:monotonicity-follows}
+  Show that if a function \(f\) between \(\omega\)-cpos satisfies
+  item~\ref{preserve-lub-of-omega-chains} of~\cref{def:morphism}, then \(f\)
+  must be monotone.
+
+  \emph{Hint}: If \(x \below y\), then \(\set{x,y}\) is an \(\omega\)-chain with
+  least upper bound \(y\).
+\end{exercise}
+
+The point of introducing morphisms of \(\omega\)-cpos is made clear by the
+following fundamental result:
+
+\begin{theorem}[Knaster--Tarski fixed point theorem]\label{least-fixed-point}
+  Every morphism \(f \colon X \to X\) on an \(\omega\)-cpo \(X\) has a least
+  fixed point \(x_0\). In fact,
+  \begin{enumerate}[(i)]
+  \item \(x_0 = f(x_0)\), and
+  \item for every \(y \in X\) with \(f(y) \below y\), we have \(x_0 \below y\).
+  \end{enumerate}
+  Moreover, we can explicitly calculate \(x_0\) as the least upper bound of the
+  \(\omega\)-chain \(\set{\bot,f(\bot),f(f(\bot)),\dots}\).
+\end{theorem}
+
 
 \section{Products}
 
 \section{Exponentials}
 
-\section{Least fixed points}
+
+\section{List of exercises}
+\begin{enumerate}
+\item \cref{exer:least-upper-bounds-are-unique}: On the uniqueness of least upper bounds.
+\item \cref{exer:least-element-is-unique}: On the uniqueness of least elements.
+\end{enumerate}
 
 %%% Local Variables:
 %%% mode: latexmk
