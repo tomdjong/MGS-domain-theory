@@ -255,14 +255,44 @@ following fundamental result:
 
 \begin{theorem}[Knaster--Tarski fixed point theorem]\label{least-fixed-point}
   Every morphism \(f \colon X \to X\) on an \(\omega\)-cpo \(X\) has a least
-  fixed point \(x_0\). In fact,
-  \begin{enumerate}[(i)]
-  \item \(x_0 = f(x_0)\), and
-  \item for every \(y \in X\) with \(f(y) \below y\), we have \(x_0 \below y\).
-  \end{enumerate}
-  Moreover, we can explicitly calculate \(x_0\) as the least upper bound of the
-  \(\omega\)-chain \(\set{\bot,f(\bot),f(f(\bot)),\dots}\).
+  fixed point given by the least upper bound of the \(\omega\)-chain
+  \[
+    \bot \below f(\bot) \below f(f(\bot)) \dots.
+  \]
 \end{theorem}
+\begin{proof}[Proof sketch]
+  We write \(f^n(\bot)\) for the \(n\)-fold application of \(f\) to the least
+  element \(\bot\).
+  %
+  We first check that \(\set{f^n(\bot) \mid n \in \Nat}\) is indeed an
+  \(\omega\)-chain.
+  %
+  Since \(\bot\) is the least element, we certainly have
+  \(\bot \below f(\bot)\). But now we also have \(f(\bot) \below f^2(\bot)\) by
+  monotonicity of \(f\). It follows by induction on \(n\) that
+  \(f^n(\bot) \below f^{n+1}(\bot)\), as desired.
+  %
+  Now we calculate:
+  \begin{align*}
+    f\pa*{\textstyle\bigsqcup_{n \in \Nat}f_n(\bot)}
+    &= \bigsqcup_{n \in \Nat}f\pa*{f^n(\bot)}
+    &\text{(since \(f\) preserves least upper bounds of \(\omega\)-chains)} \\
+    &= \bigsqcup_{n \in \Nat}f^{n+1}(\bot)
+    &\text{(by definition)} \\
+    &= \bigsqcup_{n \in \Nat}f^{n}(\bot)
+    &\text{(by antisymmetry and calculation)}
+  \end{align*}
+  so we have a fixed point, as claimed. That it is the least follows
+  from~\cref{exer:least-fixed-point}.
+\end{proof}
+
+\begin{exercise}\label{exer:least-fixed-point}
+  Write \(x_0\) for the fixed point constructed in~\cref{least-fixed-point}.
+  %
+  Show that for every \(y \in X\) with \(f(y) \below y\), we have \(x_0 \below y\).
+  %
+  Conclude that \(x_0\) is indeed the \emph{least} fixed point.
+\end{exercise}
 
 
 \section{Products}
