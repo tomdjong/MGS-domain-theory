@@ -156,7 +156,7 @@ bound (of a given subset) and in the case of \(\omega\)-chain
 Because least elements are unique, we will speak of \emph{the} least element and
 will typically denote it by \(\bot\).
 
-\begin{example}[\(\Nat_\bot\)]\label{N-bot}
+\begin{example}[\(\Nat_\bot\)]\label{exam:N_bot}
   A fundamental example of an \(\omega\)-cppo is the \emph{flat} \(\omega\)-cppo
   \(\Nat_\bot\), which is given by the set \(\Nat \cup \{\bot\}\) ordered as
   depicted in the following diagram:
@@ -294,6 +294,40 @@ following fundamental result:
   Conclude that \(x_0\) is indeed the \emph{least} fixed point.
 \end{exercise}
 
+\begin{exercise}\label{exer:category-of-cpos}
+  Show that \(\omega\)-cpos and their morphisms form a \emph{category}, i.e.\
+  \begin{enumerate}
+  \item if \(X\) is an \(\omega\)-cpo, then the identity function
+    \(x \mapsto x\) on \(X\) is a morphism of \(\omega\)-cpos, and
+  \item if we have morphisms of \(\omega\)-cpos \(f \colon A \to B\) and
+    \(g \colon B \to C\), then so is their composition (as functions)
+    \(g \circ f \colon A \to C\).
+  \end{enumerate}
+\end{exercise}
+
+\begin{exercise}[For those familiar with category theory]\label{exer:adjunctions}
+
+  Write \(\omegaCPO\) for the category constructed above and \(\omegaCPPObot\)
+  for the category of \emph{pointed} \(\omega\)-cpos and those morphisms of
+  \(\omega\)-cpos that preserve the least element.
+
+  Construct adjunctions
+  \[
+  \begin{tikzcd}
+    \Set
+    \arrow[r, ""{name=F}, bend left=35] &
+    \omegaCPO
+    \arrow[l, ""{name=G}, bend left=25]
+    \arrow[phantom, from=F, to=G, "\dashv" rotate=-90]
+    \arrow[r, ""{name=F}, bend left=25] &
+    \omegaCPPObot
+    \arrow[l, ""{name=G}, bend left=20]
+    \arrow[phantom, from=F, to=G, "\dashv" rotate=-90]
+  \end{tikzcd}
+\]
+\emph{Hint}: The composite functor \(\Set \to \omegaCPPObot\) takes the set \(\Nat\) to
+the \(\omega\)-cppo \(\Nat_\bot\) from~\cref{exam:N_bot}.
+\end{exercise}
 
 \section{Products: interpreting contexts}
 
@@ -310,6 +344,9 @@ following fundamental result:
   least upper bounds of \(\omega\)-chains.
 \item \cref{least-fixed-point}: On showing that the Knaster--Tarski fixed point
   is the least.
+\item \cref{exer:category-of-cpos}: On the category of \(\omega\)-cpos.
+\item \cref{exer:adjunctions}: On adjunctions between the categories of sets and
+  (pointed) \(\omega\)-cpos.
 \end{enumerate}
 
 %%% Local Variables:
