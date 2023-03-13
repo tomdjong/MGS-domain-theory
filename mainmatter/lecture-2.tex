@@ -375,6 +375,26 @@ The empty context will be interpreted as follows:
   element \(\pa*{\bot_A , \bot_B}\).
 \end{definition}
 
+\begin{example}
+  The product of the \(\omega\)-cppos %
+  \(\begin{tikzcd}
+    x \\
+    \bot \ar[u, no head]
+  \end{tikzcd}\)
+  and \( \begin{tikzcd}
+    y \\
+    \bot \ar[u, no head]
+  \end{tikzcd}
+  \) looks like this:
+  \[
+    \begin{tikzcd}
+      & (x,y) \\
+      (x,\bot) \ar[ur, no head]& & (\bot,y) \ar[ul, no head] \\
+      & (\bot,\bot) \ar[ur,no head] \ar[ul, no head]
+    \end{tikzcd}
+  \]
+\end{example}
+
 \begin{example}[An illustration of the \(\omega\)-cppo \(\Nat_\bot \times \Nat_\bot\)]
   \[
     \begin{tikzcd}[column sep=1pt, row sep=50pt]
