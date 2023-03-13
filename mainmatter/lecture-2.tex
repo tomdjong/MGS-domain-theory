@@ -424,6 +424,24 @@ The empty context will be interpreted as follows:
   \]
 \end{example}
 
+The construction of least upper bounds of \(\omega\)-chains in the product
+ensures that we have the following result:
+\begin{lemma}
+  Given two \(\omega\)-cpos \(A\) and \(B\), the \emph{projections}
+  \begin{align*}
+    \pi_1 \colon A \times B &\to A &&& \pi_2 \colon A \times B &\to B \\
+    (x,y) &\mapsto x &&& (x,y) &\mapsto y
+  \end{align*}
+  are morphisms of \(\omega\)-cpos.
+\end{lemma}
+
+\begin{exercise}\label{exer:product-pairwise}
+  Show that a function \(f \colon A \times B \to C\) between \(\omega\)-cpos is
+  a morphism of \(\omega\)-cpos if and only if the functions
+  \(f(x,-) \colon B \to C\) and \(f(-,y) \colon A \to C\) are morphisms of
+  \(\omega\)-cpos for every \(x \in A\) and \(y \in B\).
+\end{exercise}
+
 \section{Exponentials: interpreting function types}
 
 
