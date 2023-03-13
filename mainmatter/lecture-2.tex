@@ -331,6 +331,79 @@ the \(\omega\)-cppo \(\Nat_\bot\) from~\cref{exam:N_bot}.
 
 \section{Products: interpreting contexts}
 
+As explained in the introduction to this chapter our goal is to interpret the
+types of PCF as \(\omega\)-cppos. Thus, we will have an \(\omega\)-cppo
+\(\densem{\sigma}\) for each PCF type \(\sigma\).
+%
+Moreover, we wish to extend this interpretation to contexts, which are lists of
+typed variables. In a context
+\(\Gamma = [\var x_0 : \sigma_0, \var x_1 : \sigma_1 , \dots , \var x_n :
+\sigma_{n-1}]\) the variables themselves are not really important; it's the
+types that matter. Accordingly, we will interpret such a context as the
+\emph{product}
+\(\densem{\sigma_0} \times \densem{\sigma_1} \times \cdots \times
+\densem{\sigma_{n-1}}\) of the interpretations of the types.
+
+The empty context will be interpreted as follows:
+
+\begin{example}[The one point \(\omega\)-cppo \(\One\)]
+  The one point \(\omega\)-cppo \(\One\) is the unique \(\omega\)-cppo with the
+  singleton \(\set{\star}\) as its underlying set.
+\end{example}
+
+\begin{definition}[Binary product of \(\omega\)-cpos, \(A \times B\)]
+  Given two \(\omega\)-cpos \(A\) and \(B\), their \emph{binary product}
+  \(A \times B\) is defined by taking the cartesian product of their underlying
+  sets with pairwise partial order:
+  \[
+    (x_1 , y_1) \below_{A \times B} (x_2 , y_2) %
+    \coloneqq (x_1 \below_A x_2) \text{ and } (y_1 \below_B y_2).
+  \]
+  Given an \(\omega\)-chain \(\set{(x_0,y_0),(x_1,y_1),\dots}\) in
+  \(A \times B\), one verifies that \(\set{x_0,x_1,\dots}\) and
+  \(\set{y_0,y_1,\dots}\) are \(\omega\)-chains in \(A\) and \(B\),
+  respectively.
+  %
+  Hence, we can consider their least upper bounds \(\bigsqcup_{n \in \Nat}x_n\)
+  and \(\bigsqcup_{n \in \Nat}y_n\) in \(A\) and \(B\).
+  %
+  One then checks that the least upper bound of the original \(\omega\)-chain in
+  \(A \times B\) is given by the pair of least upper bounds
+  \(\pa*{\bigsqcup_{n \in \Nat}x_n , \bigsqcup_{n \in \Nat}y_n}\).
+
+  Finally, if \(A\) and \(B\) are pointed, then so is \(A \times B\) with least
+  element \(\pa*{\bot_A , \bot_B}\).
+\end{definition}
+
+\begin{example}[An illustration of the \(\omega\)-cppo \(\Nat_\bot \times \Nat_\bot\)]
+  \[
+    \begin{tikzcd}[column sep=1pt, row sep=50pt]
+      & (0,0) & (0,1) & (1,0) & (1,1) & \dots \\
+      (\bot,0) \ar[ur, no head, shift right=5pt]
+      \ar[urrr, no head, shift right=5pt]
+      %\ar[urrrrr, no head, shift right=5pt]
+      & (\bot,1)
+      \ar[ur, no head, shift right=5pt]
+      \ar[urrr, no head, shift right=5pt]
+      %\ar[urrrr, no head, shift right=5pt]
+      & \dots
+      &
+      & (0,\bot)
+      \ar[ulll, no head, shift left=5pt]
+      \ar[ull, no head, shift left=5pt]
+      & (1,\bot)
+      \ar[ull, no head, shift left=5pt]
+      \ar[ul, no head, shift left=5pt]
+      & \dots \\
+      & & & (\bot,\bot)
+      %
+      \ar[ulll,no head, shift left=5pt] \ar[ull, no head, shift left=5pt]
+      \ar[ul, no head, shift left=5pt] \ar[ur, no head, shift right=5pt]
+      \ar[urr, no head, shift right=5pt] \ar[urrr, no head, shift right=5pt]
+    \end{tikzcd}
+  \]
+\end{example}
+
 \section{Exponentials: interpreting function types}
 
 
