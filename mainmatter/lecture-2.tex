@@ -507,6 +507,24 @@ To interpret the function type \(\sigma \Rightarrow \tau\) of PCF using
   element \(x \mapsto \bot\).
 \end{definition}
 
+\begin{example}
+  Consider the \(\omega\)-cpo \(\Two \coloneqq
+  \begin{tikzcd}[row sep=5pt]
+    \top \ar[d,no head] \\ \bot
+  \end{tikzcd}\). Writing \([x,y]\) for the function
+  \({f \colon \Two \to \Two}\) given by \(f(\bot) \coloneqq x\) and
+  \(f(\top) \coloneqq y\), we picture the exponential \(\Two^\Two\) as:
+  \[
+  \begin{tikzcd}[row sep=10pt]
+    {[\top,\top]} \ar[d, no head] \\
+    {[\bot,\top]} \ar[d, no head] \\
+    {[\bot,\bot]}
+  \end{tikzcd}
+  \]
+  Note that \([\top,\bot]\) is \emph{not} an element of \(\Two^\Two\), because
+  it isn't monotone.
+\end{example}
+
 \begin{exercise}\label{exer:approximating-successor}
   For each natural number \(k \in \Nat\), define the function
   \(s_k \colon \Nat_\bot \to \Nat_\bot\) by
