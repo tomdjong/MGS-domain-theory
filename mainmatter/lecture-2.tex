@@ -509,20 +509,27 @@ To interpret the function type \(\sigma \Rightarrow \tau\) of PCF using
 
 \begin{exercise}\label{exer:approximating-successor}
   For each natural number \(k \in \Nat\), define the function
-  \begin{align*}
-    s_k \colon \Nat_\bot &\to \Nat_\bot \\
-    \bot &\mapsto \bot \\
-    n &\mapsto \begin{cases} n+1 &\text{if \(n \leq k\)}, \\ \bot &\text{else}. \end{cases}
-  \end{align*}
+  \(s_k \colon \Nat_\bot \to \Nat_\bot\) by
+  \[
+    s_k(\bot) \coloneqq \bot
+    \quad\text{and}\quad
+    s_k(n) \coloneqq
+    \begin{cases}
+      n+1 &\text{if \(n \leq k\)},
+      \\ \bot &\text{else}.
+    \end{cases}
+  \]
   \begin{enumerate}[(i)]
   \item Show that each \(s_k\) is \(\omega\)-continuous.
   \item Show that \(\set{s_k \mid k \in \Nat}\) is an \(\omega\)-chain in
-    \(\Nat_\bot^{\Nat_\bot}\) with least upper bound
-    \begin{align*}
-      s \colon \Nat_\bot &\to \Nat_\bot \\
-      \bot &\mapsto \bot \\
-      n &\mapsto n+1.
-    \end{align*}
+    \(\Nat_\bot^{\Nat_\bot}\) and its least upper bound is
+    \(s \colon \Nat_\bot \to \Nat_\bot\) with \(s(\bot) \coloneqq \bot\) and
+    \(s(n) \coloneqq n+1\).
+    % \begin{align*}
+    %   s \colon \Nat_\bot &\to \Nat_\bot \\
+    %   \bot &\mapsto \bot \\
+    %   n &\mapsto n+1.
+    % \end{align*}
   \end{enumerate}
   Thus, the functions \((s_k)_{k \in \Nat}\) are increasingly better approximations of the
   successor map on \(\Nat_\bot\).
@@ -555,7 +562,9 @@ To interpret the function type \(\sigma \Rightarrow \tau\) of PCF using
 \end{exercise}
 
 The following theorem says that the construction of the Knaster--Tarski least
-fixed point (\cref{least-fixed-point}) is continuous.
+fixed point (\cref{least-fixed-point}) is continuous and will be used to
+interpret PCF's fixed point operator
+\(\pcffix_\sigma : \pa*{\sigma \pcffun \sigma} \pcffun \sigma\).
 \begin{theorem}\label{least-fixed-point-is-continuous}
   For every \(\omega\)-cpo \(A\), the assignment
   \begin{align*}
@@ -585,11 +594,6 @@ fixed point (\cref{least-fixed-point}) is continuous.
   calculate that \(F(f) = \mu(f)\) for every \(f \in A^A\), so that \(\mu\)
   must be \(\omega\)-continuous.
 \end{proof}
-
-The \(\omega\)-continuous function
-\(\mu \colon \densem{\sigma}^{\densem\sigma} \to \densem\sigma\) will be used to
-interpret PCF's fixed point operator
-\(\pcffix_\sigma : \pa*{\sigma \pcffun \sigma} \pcffun \sigma\).
 
 \section{List of exercises}
 \begin{enumerate}
