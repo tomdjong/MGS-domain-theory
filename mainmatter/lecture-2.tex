@@ -254,6 +254,20 @@ check:
   least upper bound \(y\).
 \end{exercise}
 
+\begin{example}
+  The function \(f \colon \Nat_\bot \to \Nat_\bot\) given by \(\bot \mapsto 0\)
+  and \(n \mapsto n + 1\) is \emph{not} \(\omega\)-continuous, because it is not
+  monotone: \(\bot \below 1\), but \(f(\bot) = 0\) is not below \(f(1) = 2\) in
+  the ordering of \(\Nat_\bot\).
+
+  On the other hand, the function \(g \colon \Nat_\bot \to \Nat_\bot\) given by
+  \(\bot \mapsto \bot\) and \(n \mapsto n+1\) is \(\omega\)-continuous.
+  %
+  In fact, it will serve as the interpretation of the PCF programme
+  \(\lambdadot{\var x : \pcfnat}{\pcfsuc\,\var x}\) of type
+  \(\pcfnat \pcffun \pcfnat\).
+\end{example}
+
 The point of introducing \(\omega\)-continuity is made clear by the following
 fundamental result:
 
