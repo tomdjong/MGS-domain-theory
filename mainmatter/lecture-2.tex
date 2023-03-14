@@ -484,7 +484,7 @@ To interpret the function type \(\sigma \Rightarrow \tau\) of PCF using
 \(\omega\)-cpos, we are going to construct an \(\omega\)-cpo of
 \(\omega\)-continuous functions: the \emph{exponential}.
 
-\begin{definition}[Exponential of \(\omega\)-cpos, \(B^A\)]
+\begin{definition}[Exponential of \(\omega\)-cpos, \(B^A\)]\label{def:exponential}
   Given two \(\omega\)-cpos \(A\) and \(B\), their \emph{exponential} \(B^A\) is
   defined by equipping the set of \(\omega\)-continuous functions from
   \(A\)~to~\(B\) with the \emph{pointwise} order:
@@ -506,6 +506,27 @@ To interpret the function type \(\sigma \Rightarrow \tau\) of PCF using
   Finally, if \(B\) is pointed, then so is \(B^A\) with least
   element \(x \mapsto \bot\).
 \end{definition}
+
+\begin{exercise}\label{exer:approximating-successor}
+  For each natural number \(k \in \Nat\), define the function
+  \begin{align*}
+    s_k \colon \Nat_\bot &\to \Nat_\bot \\
+    \bot &\mapsto \bot \\
+    n &\mapsto \begin{cases} n+1 &\text{if \(n \leq k\)}, \\ \bot &\text{else}. \end{cases}
+  \end{align*}
+  \begin{enumerate}[(i)]
+  \item Show that each \(s_k\) is \(\omega\)-continuous.
+  \item Show that \(\set{s_k \mid k \in \Nat}\) is an \(\omega\)-chain in
+    \(\Nat_\bot^{\Nat_\bot}\) with least upper bound
+    \begin{align*}
+      s \colon \Nat_\bot &\to \Nat_\bot \\
+      \bot &\mapsto \bot \\
+      n &\mapsto n+1.
+    \end{align*}
+  \end{enumerate}
+  Thus, the functions \((s_k)_{k \in \Nat}\) are increasingly better approximations of the
+  successor map on \(\Nat_\bot\).
+\end{exercise}
 
 \begin{lemma}\label{evaluation-is-continuous}
   Given two \(\omega\)-cpos \(A\) and \(B\), the \emph{evaluation} function
@@ -565,6 +586,11 @@ fixed point (\cref{least-fixed-point}) is continuous.
   must be \(\omega\)-continuous.
 \end{proof}
 
+The \(\omega\)-continuous function
+\(\mu \colon \densem{\sigma}^{\densem\sigma} \to \densem\sigma\) will be used to
+interpret PCF's fixed point operator
+\(\pcffix_\sigma : \pa*{\sigma \pcffun \sigma} \pcffun \sigma\).
+
 \section{List of exercises}
 \begin{enumerate}
 \item \cref{exer:least-upper-bounds-are-unique}: On the uniqueness of least upper bounds.
@@ -582,6 +608,8 @@ fixed point (\cref{least-fixed-point}) is continuous.
   in each argument of the product.
 \item \cref{exer:product-induced}: On \(\omega\)-continuity of the induced map
   to the product.
+\item \cref{exer:approximating-successor}: On approximating the successor map on
+  \(\Nat_\bot\).
 \item \cref{exer:evaluation-is-continuous}: On \(\omega\)-continuity of the evaluation map.
 \item \cref{exer:curry-is-continuous}: On \(\omega\)-continuity of the curried map.
 \end{enumerate}
