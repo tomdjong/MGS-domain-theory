@@ -438,14 +438,30 @@ ensures that we have the following result:
     \pi_1 \colon A \times B &\to A &&& \pi_2 \colon A \times B &\to B \\
     (x,y) &\mapsto x &&& (x,y) &\mapsto y
   \end{align*}
-  are morphisms of \(\omega\)-cpos.
+  are \(\omega\)-continuous.
 \end{lemma}
 
 \begin{exercise}\label{exer:product-pairwise}
   Show that a function \(f \colon A \times B \to C\) between \(\omega\)-cpos is
-  a morphism of \(\omega\)-cpos if and only if the functions
-  \(f(x,-) \colon B \to C\) and \(f(-,y) \colon A \to C\) are morphisms of
-  \(\omega\)-cpos for every \(x \in A\) and \(y \in B\).
+  \(\omega\)-continuous if and only if the functions \(f(x,-) \colon B \to C\) and
+  \(f(-,y) \colon A \to C\) are \(\omega\)-continuous for every \(x \in A\) and
+  \(y \in B\).
+
+  Thus, \(\omega\)-continuity of \(f\) can be checked in each argument
+  separately.
+\end{exercise}
+
+\begin{exercise}\label{exer:product-induced}
+  Prove that if \(f \colon C \to A\) and \(g \colon C \to B\) are
+  \(\omega\)-continuous functions between \(\omega\)-cpos, then so is the
+  induced map
+  \begin{align*}
+    \langle f , g \rangle  \colon C &\to A \times B \\
+    x &\mapsto (f(x),g(x)).
+  \end{align*}
+
+  For those who are familiar with category theory: conclude that the category
+  \(\omegaCPO\) has finite products.
 \end{exercise}
 
 \section{Exponentials: interpreting function types}
@@ -459,11 +475,15 @@ ensures that we have the following result:
 \item \cref{exer:directedness}: On directed subsets and \(\omega\)-chains.
 \item \cref{exer:monotonicity-follows}: On deriving monotonicity from preservation of
   least upper bounds of \(\omega\)-chains.
-\item \cref{least-fixed-point}: On showing that the Knaster--Tarski fixed point
+\item \cref{exer:least-fixed-point}: On showing that the Knaster--Tarski fixed point
   is the least.
 \item \cref{exer:category-of-cpos}: On the category of \(\omega\)-cpos.
 \item \cref{exer:adjunctions}: On adjunctions between the categories of sets and
   (pointed) \(\omega\)-cpos.
+\item \cref{exer:product-pairwise}: On checking \(\omega\)-continuity in each
+  argument of the product.
+\item \cref{exer:product-induced}: On \(\omega\)-continuity of the induced map
+  to the product.
 \end{enumerate}
 
 %%% Local Variables:
