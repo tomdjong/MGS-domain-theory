@@ -397,17 +397,17 @@ The empty context will be interpreted as follows:
 
 \begin{example}
   The product of the \(\omega\)-cppos %
-  \(\begin{tikzcd}
+  \(\begin{tikzcd}[row sep=8pt]
     x \\
     \bot \ar[u, no head]
   \end{tikzcd}\)
-  and \( \begin{tikzcd}
+  and \( \begin{tikzcd}[row sep=8pt]
     y \\
     \bot \ar[u, no head]
   \end{tikzcd}
   \) looks like this:
   \[
-    \begin{tikzcd}
+    \begin{tikzcd}[row sep=15pt,column sep=1pt]
       & (x,y) \\
       (x,\bot) \ar[ur, no head]& & (\bot,y) \ar[ul, no head] \\
       & (\bot,\bot) \ar[ur,no head] \ar[ul, no head]
