@@ -43,11 +43,11 @@ For each type \(\sigma\), we assume to have a countably infinite set of typed
 variables, typically denoted by \(\var x : \sigma\), \(\var y : \sigma\), or
 \(\var x_1 : \sigma\), \(\var x_2 : \sigma\), etc.
 
-\begin{definition}[Context, \(\Gamma\)]
+\begin{definition}[Context, \(\Gamma\)]\label{def:context}
   A \emph{context} \(\Gamma\) is a list of variables:
   \[
-    \Gamma = (\var x_0 : \sigma_1 , \var x_2 : \sigma_2 , \dots , \var x_{n-1} :
-    \sigma_{n-1}).
+    \Gamma = [\var x_0 : \sigma_0 , \var x_1 : \sigma_1 , \dots , \var x_{n-1} :
+    \sigma_{n-1}].
   \]
   For \(n = 0\), we get the \emph{empty context}: an empty list with no
   variables.

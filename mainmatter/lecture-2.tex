@@ -9,8 +9,9 @@ A programme \(M\) (i.e.\ closed terms) of type \(\sigma\) is then interpreted as
 an element \(\densem{M}\) of \(\densem{\sigma}\).
 %
 More generally, we extend the interpretation of types to contexts and
-\(\Gamma \vdash M : \sigma\) will then be interpreted as a certain function
-(morphism) from \(\densem{\Gamma}\) to \(\densem{\sigma}\).
+\(\Gamma \vdash M : \sigma\) will then be interpreted as a certain
+(\(\omega\)-continuous) function from \(\densem{\Gamma}\) to
+\(\densem{\sigma}\).
 
 For the denotational semantics we have three desiderata:
 
@@ -81,15 +82,17 @@ will interpret types as so-called \emph{\(\omega\)-cppos}: these are
 \emph{partially ordered} sets with a \emph{least} element \(\bot\) and
 \emph{least upper bounds} of increasing sequences.
 %
-A \emph{morphism} between two \(\omega\)-cppos is a function on the underlying
-sets that preserves the order and these least upper bounds.
+A function between (the underlying sets of) two \(\omega\)-cppos is
+\emph{\(\omega\)-continuous} if it preserves the order and these least upper
+bounds.
 %
-The upshot of restricting to such functions is that these morphisms can be shown
-to have (least) fixed points, thus solving our second problem.
+The upshot of restricting to such \(\omega\)-continuous functions is that these
+can be shown to have (least) fixed points, thus solving our second problem.
 
 \section{Basic definitions and the least fixed point theorem}
 
-We give the definitions of \(\omega\)-cppos and their morphisms.
+We give the definitions of \(\omega\)-cppos and \(\omega\)-continuous functions
+between them.
 
 \begin{definition}[Poset]
   A \emph{partially ordered set}, or \emph{poset}, is a set \(X\) together with
@@ -217,10 +220,11 @@ will typically denote it by \(\bot\).
   \end{enumerate}
 \end{exercise}
 
-We proceed by defining the morphisms of (pointed) \(\omega\)-cpos.
-\begin{definition}[Morphism of \(\omega\)-cpos]\label{def:morphism}
-  A \emph{morphism} between two \(\omega\)-cpos \(A\) and \(B\) is a function
-  \(f\) on the underlying sets of \(A\) and \(B\) such that
+We proceed by defining the \(\omega\)-continuous maps between (pointed)
+\(\omega\)-cpos.
+\begin{definition}[\(\omega\)-continuity]\label{def:continuity}
+  A function between the underlying sets of two \(\omega\)-cpos \(A\) and \(B\)
+  is \emph{\(\omega\)-continuous} if
   \begin{enumerate}[(i)]
   \item\label{monotone} it is \emph{monotone} (or \emph{order preserving}),
     i.e.\ if \(x \below y\) in \(A\), then \(f(x) \below f(y)\) in \(B\);
@@ -243,19 +247,20 @@ check:
 
 \begin{exercise}\label{exer:monotonicity-follows}
   Show that if a function \(f\) between \(\omega\)-cpos satisfies
-  item~\ref{preserve-lub-of-omega-chains} of~\cref{def:morphism}, then \(f\)
+  item~\ref{preserve-lub-of-omega-chains} of~\cref{def:continuity}, then \(f\)
   must be monotone.
 
   \emph{Hint}: If \(x \below y\), then \(\set{x,y}\) is an \(\omega\)-chain with
   least upper bound \(y\).
 \end{exercise}
 
-The point of introducing morphisms of \(\omega\)-cpos is made clear by the
-following fundamental result:
+The point of introducing \(\omega\)-continuity is made clear by the following
+fundamental result:
 
 \begin{theorem}[Knaster--Tarski fixed point theorem]\label{least-fixed-point}
-  Every morphism \(f \colon X \to X\) on an \(\omega\)-cpo \(X\) has a least
-  fixed point given by the least upper bound of the \(\omega\)-chain
+  Every \(\omega\)-continuous function \(f \colon X \to X\) on an \(\omega\)-cpo
+  \(X\) has a least fixed point given by the least upper bound of the
+  \(\omega\)-chain
   \[
     \bot \below f(\bot) \below f(f(\bot)) \dots.
   \]
@@ -295,11 +300,12 @@ following fundamental result:
 \end{exercise}
 
 \begin{exercise}\label{exer:category-of-cpos}
-  Show that \(\omega\)-cpos and their morphisms form a \emph{category}, i.e.\
+  Show that \(\omega\)-cpos and \(\omega\)-continuous functions form a
+  \emph{category}, i.e.\
   \begin{enumerate}
   \item if \(X\) is an \(\omega\)-cpo, then the identity function
-    \(x \mapsto x\) on \(X\) is a morphism of \(\omega\)-cpos, and
-  \item if we have morphisms of \(\omega\)-cpos \(f \colon A \to B\) and
+    \(x \mapsto x\) on \(X\) is \(\omega\)-continuous, and
+  \item if we have \(\omega\)-continuous functions \(f \colon A \to B\) and
     \(g \colon B \to C\), then so is their composition (as functions)
     \(g \circ f \colon A \to C\).
   \end{enumerate}
@@ -331,6 +337,133 @@ the \(\omega\)-cppo \(\Nat_\bot\) from~\cref{exam:N_bot}.
 
 \section{Products: interpreting contexts}
 
+As explained in the introduction to this chapter our goal is to interpret the
+types of PCF as \(\omega\)-cppos. Thus, we will have an \(\omega\)-cppo
+\(\densem{\sigma}\) for each PCF type \(\sigma\).
+%
+Moreover, we wish to extend this interpretation to contexts, which are lists of
+typed variables. In a context
+\(\Gamma = [\var x_0 : \sigma_0, \var x_1 : \sigma_1 , \dots , \var x_n :
+\sigma_{n-1}]\) the variables themselves are not really important; it's the
+types that matter. Accordingly, we will interpret such a context as the
+\emph{product}
+\(\densem{\sigma_0} \times \densem{\sigma_1} \times \cdots \times
+\densem{\sigma_{n-1}}\) of the interpretations of the types.
+
+The empty context will be interpreted as follows:
+
+\begin{example}[The one point \(\omega\)-cppo \(\One\)]
+  The one point \(\omega\)-cppo \(\One\) is the unique \(\omega\)-cppo with the
+  singleton \(\set{\star}\) as its underlying set.
+\end{example}
+
+\begin{definition}[Binary product of \(\omega\)-cpos, \(A \times B\)]
+  Given two \(\omega\)-cpos \(A\) and \(B\), their \emph{binary product}
+  \(A \times B\) is defined by taking the cartesian product of their underlying
+  sets with pairwise partial order:
+  \[
+    (x_1 , y_1) \below_{A \times B} (x_2 , y_2) %
+    \coloneqq (x_1 \below_A x_2) \text{ and } (y_1 \below_B y_2).
+  \]
+  Given an \(\omega\)-chain \(\set{(x_0,y_0),(x_1,y_1),\dots}\) in
+  \(A \times B\), one verifies that \(\set{x_0,x_1,\dots}\) and
+  \(\set{y_0,y_1,\dots}\) are \(\omega\)-chains in \(A\) and \(B\),
+  respectively.
+  %
+  Hence, we can consider their least upper bounds \(\bigsqcup_{n \in \Nat}x_n\)
+  and \(\bigsqcup_{n \in \Nat}y_n\) in \(A\) and \(B\).
+  %
+  One then checks that the least upper bound of the original \(\omega\)-chain in
+  \(A \times B\) is given by the pair of least upper bounds
+  \(\pa*{\bigsqcup_{n \in \Nat}x_n , \bigsqcup_{n \in \Nat}y_n}\).
+
+  Finally, if \(A\) and \(B\) are pointed, then so is \(A \times B\) with least
+  element \(\pa*{\bot_A , \bot_B}\).
+\end{definition}
+
+\begin{example}
+  The product of the \(\omega\)-cppos %
+  \(\begin{tikzcd}
+    x \\
+    \bot \ar[u, no head]
+  \end{tikzcd}\)
+  and \( \begin{tikzcd}
+    y \\
+    \bot \ar[u, no head]
+  \end{tikzcd}
+  \) looks like this:
+  \[
+    \begin{tikzcd}
+      & (x,y) \\
+      (x,\bot) \ar[ur, no head]& & (\bot,y) \ar[ul, no head] \\
+      & (\bot,\bot) \ar[ur,no head] \ar[ul, no head]
+    \end{tikzcd}
+  \]
+\end{example}
+
+\begin{example}[An illustration of the \(\omega\)-cppo \(\Nat_\bot \times \Nat_\bot\)]
+  \[
+    \begin{tikzcd}[column sep=1pt, row sep=50pt]
+      & (0,0) & (0,1) & (1,0) & (1,1) & \dots \\
+      (\bot,0) \ar[ur, no head, shift right=5pt]
+      \ar[urrr, no head, shift right=5pt]
+      %\ar[urrrrr, no head, shift right=5pt]
+      & (\bot,1)
+      \ar[ur, no head, shift right=5pt]
+      \ar[urrr, no head, shift right=5pt]
+      %\ar[urrrr, no head, shift right=5pt]
+      & \dots
+      &
+      & (0,\bot)
+      \ar[ulll, no head, shift left=5pt]
+      \ar[ull, no head, shift left=5pt]
+      & (1,\bot)
+      \ar[ull, no head, shift left=5pt]
+      \ar[ul, no head, shift left=5pt]
+      & \dots \\
+      & & & (\bot,\bot)
+      %
+      \ar[ulll,no head, shift left=5pt] \ar[ull, no head, shift left=5pt]
+      \ar[ul, no head, shift left=5pt] \ar[ur, no head, shift right=5pt]
+      \ar[urr, no head, shift right=5pt] \ar[urrr, no head, shift right=5pt]
+    \end{tikzcd}
+  \]
+\end{example}
+
+The construction of least upper bounds of \(\omega\)-chains in the product
+ensures that we have the following result:
+\begin{lemma}
+  Given two \(\omega\)-cpos \(A\) and \(B\), the \emph{projections}
+  \begin{align*}
+    \pi_1 \colon A \times B &\to A &&& \pi_2 \colon A \times B &\to B \\
+    (x,y) &\mapsto x &&& (x,y) &\mapsto y
+  \end{align*}
+  are \(\omega\)-continuous.
+\end{lemma}
+
+\begin{exercise}\label{exer:product-pairwise}
+  Show that a function \(f \colon A \times B \to C\) between \(\omega\)-cpos is
+  \(\omega\)-continuous if and only if the functions \(f(x,-) \colon B \to C\) and
+  \(f(-,y) \colon A \to C\) are \(\omega\)-continuous for every \(x \in A\) and
+  \(y \in B\).
+
+  Thus, \(\omega\)-continuity of \(f\) can be checked in each argument
+  separately.
+\end{exercise}
+
+\begin{exercise}\label{exer:product-induced}
+  Prove that if \(f \colon C \to A\) and \(g \colon C \to B\) are
+  \(\omega\)-continuous functions between \(\omega\)-cpos, then so is the
+  induced map
+  \begin{align*}
+    \langle f , g \rangle  \colon C &\to A \times B \\
+    x &\mapsto (f(x),g(x)).
+  \end{align*}
+
+  For those who are familiar with category theory: conclude that the category
+  \(\omegaCPO\) has finite products.
+\end{exercise}
+
 \section{Exponentials: interpreting function types}
 
 
@@ -342,11 +475,15 @@ the \(\omega\)-cppo \(\Nat_\bot\) from~\cref{exam:N_bot}.
 \item \cref{exer:directedness}: On directed subsets and \(\omega\)-chains.
 \item \cref{exer:monotonicity-follows}: On deriving monotonicity from preservation of
   least upper bounds of \(\omega\)-chains.
-\item \cref{least-fixed-point}: On showing that the Knaster--Tarski fixed point
+\item \cref{exer:least-fixed-point}: On showing that the Knaster--Tarski fixed point
   is the least.
 \item \cref{exer:category-of-cpos}: On the category of \(\omega\)-cpos.
 \item \cref{exer:adjunctions}: On adjunctions between the categories of sets and
   (pointed) \(\omega\)-cpos.
+\item \cref{exer:product-pairwise}: On checking \(\omega\)-continuity in each
+  argument of the product.
+\item \cref{exer:product-induced}: On \(\omega\)-continuity of the induced map
+  to the product.
 \end{enumerate}
 
 %%% Local Variables:
