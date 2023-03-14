@@ -466,6 +466,64 @@ ensures that we have the following result:
 
 \section{Exponentials: interpreting function types}
 
+To interpret the function type \(\sigma \Rightarrow \tau\) of PCF using
+\(\omega\)-cpos, we are going to construct an \(\omega\)-cpo of
+\(\omega\)-continuous functions: the \emph{exponential}.
+
+\begin{definition}[Exponential of \(\omega\)-cpos, \(B^A\)]
+  Given two \(\omega\)-cpos \(A\) and \(B\), their \emph{exponential} \(B^A\) is
+  defined by equipping the set of \(\omega\)-continuous functions from
+  \(A\)~to~\(B\) with the \emph{pointwise} order:
+  \[
+    f \below g
+    \coloneqq \forall_{x \in A} \, \pa{f(x) \below_B g(x)}.
+  \]
+  Given an \(\omega\)-chain \(\set{f_0,f_1,\dots}\) in \(B^A\), one verifies
+  that \(\set{f_0(x),f_1(x),\dots}\) is an \(\omega\)-chain in \(B\) for every
+  \(x \in A\).
+  %
+  Hence, for every \(x \in A\), we can consider the least upper bound
+  \(\bigsqcup_{n \in \Nat}f_n(x)\) in \(B\).
+  %
+  One then checks that the function \(x \mapsto \bigsqcup_{n \in \Nat}f_n(x)\)
+  is \(\omega\)-continuous and moreover, that it is the least upper bound of the
+  original \(\omega\)-chain in \(B^A\).
+
+  Finally, if \(B\) is pointed, then so is \(B^A\) with least
+  element \(x \mapsto \bot\).
+\end{definition}
+
+The following theorem says that the construction of the Knaster--Tarski least
+fixed point (\cref{least-fixed-point}) is continuous.
+\begin{theorem}\label{least-fixed-point-continuous}
+  For every \(\omega\)-cpo \(A\), the assignment
+  \begin{align*}
+    \mu \colon A^A &\to A \\
+    f &\mapsto \textstyle\bigsqcup_{n \in \Nat}f^n(\bot)
+  \end{align*}
+  of an \(\omega\)-continuous endofunction on \(A\) to its least fixed point is
+  \(\omega\)-continuous.
+\end{theorem}
+\begin{proof}[Proof sketch]
+  For each natural number \(n \in \Nat\), define
+  \begin{align*}
+    \iter_n \colon A^A &\to A \\
+    f &\mapsto f^n(\bot).
+  \end{align*}
+  By induction on \(n\), we see that each \(\iter_n\) is \(\omega\)-continuous.
+  %
+  Thus, they are elements of the exponential \(A^{\pa{A^A}}\).
+  %
+  Moreover, \(\set{\iter_n \mid n \in \Nat}\) is an \(\omega\)-chain in this
+  \(\omega\)-cpo.
+  %
+  Hence, we can take its least fixed point \(F \in A^{\pa{A^A}}\) which is an
+  \(\omega\)-continuous function by construction.
+  %
+  Finally, from the construction of least upper bounds in the exponential, we
+  calculate that \(F(f) = \mu(f)\) for every \(f \in A^A\), so that \(\mu\)
+  must be \(\omega\)-continuous.
+\end{proof}
 
 \section{List of exercises}
 \begin{enumerate}
