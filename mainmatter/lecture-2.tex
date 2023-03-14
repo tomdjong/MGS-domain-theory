@@ -441,7 +441,7 @@ ensures that we have the following result:
   are \(\omega\)-continuous.
 \end{lemma}
 
-\begin{exercise}\label{exer:product-pairwise}
+\begin{exercise}\label{exer:continuity-in-each-argument}
   Show that a function \(f \colon A \times B \to C\) between \(\omega\)-cpos is
   \(\omega\)-continuous if and only if the functions \(f(x,-) \colon B \to C\) and
   \(f(-,y) \colon A \to C\) are \(\omega\)-continuous for every \(x \in A\) and
@@ -460,7 +460,7 @@ ensures that we have the following result:
     x &\mapsto (f(x),g(x)).
   \end{align*}
 
-  For those who are familiar with category theory: conclude that the category
+  For those familiar with category theory: conclude that the category
   \(\omegaCPO\) has finite products.
 \end{exercise}
 
@@ -493,9 +493,35 @@ To interpret the function type \(\sigma \Rightarrow \tau\) of PCF using
   element \(x \mapsto \bot\).
 \end{definition}
 
+\begin{lemma}\label{evaluation-is-continuous}
+  Given two \(\omega\)-cpos \(A\) and \(B\), the \emph{evaluation} function
+  \begin{align*}
+    B^A \times A &\to B \\
+    (f,x) &\mapsto f(x)
+  \end{align*}
+  is \(\omega\)-continuous.
+\end{lemma}
+\begin{exercise}\label{exer:evaluation-is-continuous}
+  Prove~\cref{evaluation-is-continuous}.
+
+  \emph{Hint}: Use~\cref{exer:continuity-in-each-argument}.
+\end{exercise}
+
+\begin{exercise}\label{exer:curry-is-continuous}
+  Show that if \(f \colon C \times A \to B\) is an \(\omega\)-continuous
+  function between \(\omega\)-cpos, then so is the \emph{curried} function
+  \begin{align*}
+    \hat{f} \colon C &\to B^A \\
+    \hat{f}(c) &\coloneqq a \mapsto f(c,a).
+  \end{align*}
+
+  For those familiar with category theory: conclude that the category
+  \(\omegaCPO\) is cartesian closed.
+\end{exercise}
+
 The following theorem says that the construction of the Knaster--Tarski least
 fixed point (\cref{least-fixed-point}) is continuous.
-\begin{theorem}\label{least-fixed-point-continuous}
+\begin{theorem}\label{least-fixed-point-is-continuous}
   For every \(\omega\)-cpo \(A\), the assignment
   \begin{align*}
     \mu \colon A^A &\to A \\
@@ -538,10 +564,12 @@ fixed point (\cref{least-fixed-point}) is continuous.
 \item \cref{exer:category-of-cpos}: On the category of \(\omega\)-cpos.
 \item \cref{exer:adjunctions}: On adjunctions between the categories of sets and
   (pointed) \(\omega\)-cpos.
-\item \cref{exer:product-pairwise}: On checking \(\omega\)-continuity in each
-  argument of the product.
+\item \cref{exer:continuity-in-each-argument}: On checking \(\omega\)-continuity
+  in each argument of the product.
 \item \cref{exer:product-induced}: On \(\omega\)-continuity of the induced map
   to the product.
+\item \cref{exer:evaluation-is-continuous}: On \(\omega\)-continuity of the evaluation map.
+\item \cref{exer:curry-is-continuous}: On \(\omega\)-continuity of the curried map.
 \end{enumerate}
 
 %%% Local Variables:
