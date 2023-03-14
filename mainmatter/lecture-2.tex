@@ -9,8 +9,9 @@ A programme \(M\) (i.e.\ closed terms) of type \(\sigma\) is then interpreted as
 an element \(\densem{M}\) of \(\densem{\sigma}\).
 %
 More generally, we extend the interpretation of types to contexts and
-\(\Gamma \vdash M : \sigma\) will then be interpreted as a certain function
-(morphism) from \(\densem{\Gamma}\) to \(\densem{\sigma}\).
+\(\Gamma \vdash M : \sigma\) will then be interpreted as a certain
+(\(\omega\)-continuous) function from \(\densem{\Gamma}\) to
+\(\densem{\sigma}\).
 
 For the denotational semantics we have three desiderata:
 
@@ -81,15 +82,17 @@ will interpret types as so-called \emph{\(\omega\)-cppos}: these are
 \emph{partially ordered} sets with a \emph{least} element \(\bot\) and
 \emph{least upper bounds} of increasing sequences.
 %
-A \emph{morphism} between two \(\omega\)-cppos is a function on the underlying
-sets that preserves the order and these least upper bounds.
+A function between (the underlying sets of) two \(\omega\)-cppos is
+\emph{\(\omega\)-continuous} if it preserves the order and these least upper
+bounds.
 %
-The upshot of restricting to such functions is that these morphisms can be shown
-to have (least) fixed points, thus solving our second problem.
+The upshot of restricting to such \(\omega\)-continuous functions is that these
+can be shown to have (least) fixed points, thus solving our second problem.
 
 \section{Basic definitions and the least fixed point theorem}
 
-We give the definitions of \(\omega\)-cppos and their morphisms.
+We give the definitions of \(\omega\)-cppos and \(\omega\)-continuous functions
+between them.
 
 \begin{definition}[Poset]
   A \emph{partially ordered set}, or \emph{poset}, is a set \(X\) together with
@@ -217,10 +220,11 @@ will typically denote it by \(\bot\).
   \end{enumerate}
 \end{exercise}
 
-We proceed by defining the morphisms of (pointed) \(\omega\)-cpos.
-\begin{definition}[Morphism of \(\omega\)-cpos]\label{def:morphism}
-  A \emph{morphism} between two \(\omega\)-cpos \(A\) and \(B\) is a function
-  \(f\) on the underlying sets of \(A\) and \(B\) such that
+We proceed by defining the \(\omega\)-continuous maps between (pointed)
+\(\omega\)-cpos.
+\begin{definition}[\(\omega\)-continuity]\label{def:continuity}
+  A function between the underlying sets of two \(\omega\)-cpos \(A\) and \(B\)
+  is \emph{\(\omega\)-continuous} if
   \begin{enumerate}[(i)]
   \item\label{monotone} it is \emph{monotone} (or \emph{order preserving}),
     i.e.\ if \(x \below y\) in \(A\), then \(f(x) \below f(y)\) in \(B\);
@@ -243,19 +247,20 @@ check:
 
 \begin{exercise}\label{exer:monotonicity-follows}
   Show that if a function \(f\) between \(\omega\)-cpos satisfies
-  item~\ref{preserve-lub-of-omega-chains} of~\cref{def:morphism}, then \(f\)
+  item~\ref{preserve-lub-of-omega-chains} of~\cref{def:continuity}, then \(f\)
   must be monotone.
 
   \emph{Hint}: If \(x \below y\), then \(\set{x,y}\) is an \(\omega\)-chain with
   least upper bound \(y\).
 \end{exercise}
 
-The point of introducing morphisms of \(\omega\)-cpos is made clear by the
-following fundamental result:
+The point of introducing \(\omega\)-continuity is made clear by the following
+fundamental result:
 
 \begin{theorem}[Knaster--Tarski fixed point theorem]\label{least-fixed-point}
-  Every morphism \(f \colon X \to X\) on an \(\omega\)-cpo \(X\) has a least
-  fixed point given by the least upper bound of the \(\omega\)-chain
+  Every \(\omega\)-continuous function \(f \colon X \to X\) on an \(\omega\)-cpo
+  \(X\) has a least fixed point given by the least upper bound of the
+  \(\omega\)-chain
   \[
     \bot \below f(\bot) \below f(f(\bot)) \dots.
   \]
@@ -295,11 +300,12 @@ following fundamental result:
 \end{exercise}
 
 \begin{exercise}\label{exer:category-of-cpos}
-  Show that \(\omega\)-cpos and their morphisms form a \emph{category}, i.e.\
+  Show that \(\omega\)-cpos and \(\omega\)-continuous functions form a
+  \emph{category}, i.e.\
   \begin{enumerate}
   \item if \(X\) is an \(\omega\)-cpo, then the identity function
-    \(x \mapsto x\) on \(X\) is a morphism of \(\omega\)-cpos, and
-  \item if we have morphisms of \(\omega\)-cpos \(f \colon A \to B\) and
+    \(x \mapsto x\) on \(X\) is \(\omega\)-continuous, and
+  \item if we have \(\omega\)-continuous functions \(f \colon A \to B\) and
     \(g \colon B \to C\), then so is their composition (as functions)
     \(g \circ f \colon A \to C\).
   \end{enumerate}
