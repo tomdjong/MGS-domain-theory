@@ -91,9 +91,9 @@ We are now ready to define the (well-typed) terms of PCF.
   \DisplayProof
 \end{center}
 When \(\Gamma\) is the empty context, we simply write \(\vdash M : \sigma\) and
-we call \(M\) a \emph{closed} term or a \emph{programme}.
+we call \(M\) a \emph{closed} term or a \emph{program}.
 %
-Note that programmes do not contain any free variables.
+Note that programs do not contain any free variables.
 
 We will often write \(M \, N\) instead of \(M(N)\) to ease readability.
 \end{definition}
@@ -176,8 +176,8 @@ unfolding of a recursive definition, as illustrated
 in~\cref{exer:small-step-addition,exam:non-termination}.
 
 \begin{example}\label{exam:ifzero}
-  We can translate the programme \verb|if (x + 1 == 0) then 5 else 3|, written in
-  pseudocode, to the PCF programme
+  We can translate the program \verb|if (x + 1 == 0) then 5 else 3|, written in
+  pseudocode, to the PCF program
   \(\lambdadot{\var x : \pcfnat}{\pcfifz(\pcfsuc \, \var x, \numeral 5, \numeral 3)}\).
 \end{example}
 
@@ -194,7 +194,7 @@ explain with an example now.
     &\add_n(0) &&\coloneqq n, && \\
     &\add_n(k+1) &&\coloneqq \add_n(k) + 1. &&
   \end{alignat*}
-  We show how to write this function as a PCF programme. We start by slightly
+  We show how to write this function as a PCF program. We start by slightly
   rewriting \(\add_n\) as:
   \begin{equation*}\label{add_n-alt}\tag{\(\ast\)}
     \add_n(m) \coloneqq
@@ -207,7 +207,7 @@ explain with an example now.
   available in PCF: \(\pcfifz\), \(\pcfsuc\) and \(\pcfpred\), as well as the
   numeral \(\underline n\).
 
-  We next define the programme
+  We next define the program
   \(F : \pa*{\pcfnat \pcffun \pcfnat} \pcffun \pa*{\pcfnat \pcffun \pcfnat}\) as
   follows:
   \[
@@ -216,10 +216,10 @@ explain with an example now.
       {\pcfifz\pa*{\var y,\numeral{n},%
           \pcfsuc\pa*{\var x\pa*{\pcfpred \, \var y }}}}}.
   \]
-  In the programme \(F\), the variable \(\var y\) plays the role of \(m\) in
+  In the program \(F\), the variable \(\var y\) plays the role of \(m\) in
   \eqref{add_n-alt} and \(\var x\) is like a placeholder for the recursive call.
 
-  Mirroring~\eqref{add_n-alt} further, what we want is a programme
+  Mirroring~\eqref{add_n-alt} further, what we want is a program
   \(f : \pcfnat \pcffun \pcfnat\) such that \(f\) is ``equal'' to \(F\,f\). That
   is, we want a \emph{fixed point} of \(F\).
   %
@@ -240,18 +240,18 @@ explain with an example now.
 \end{exercise}
 
 \begin{exercise}\label{exer:pcf-add-mult}
-  Construct PCF programmes
+  Construct PCF programs
   \(\pcfadd,\pcffont{mult} : \pcfnat \pcffun \pcfnat \pcffun \pcfnat\)
   implementing addition and multiplication, respectively.
 \end{exercise}
 
-Having general recursion also means that we have non-terminating programmes, such
+Having general recursion also means that we have non-terminating programs, such
 as the following one:
 
 \begin{example}\label{exam:non-termination}
   Define
   \(S \coloneqq \pa*{\lambdadot{\var x : \pcfnat}{\pcfsuc \, \var x}} : \pcfnat
-  \pcffun \pcfnat\) and consider the PCF programme
+  \pcffun \pcfnat\) and consider the PCF program
   \(M \coloneqq \pcffix_{\pcfnat}(S) : \pcfnat\).  Repeatedly applying the
   small-step operational semantics, we get:
   \begin{alignat*}{3}

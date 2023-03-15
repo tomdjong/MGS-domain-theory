@@ -5,7 +5,7 @@ introduce a \emph{denotational semantics} to PCF. The basic idea is to assign to
 each type \(\sigma\) of PCF some kind of \emph{mathematical} object
 \(\densem{\sigma}\).
 %
-A programme \(M\) (i.e.\ closed terms) of type \(\sigma\) is then interpreted as
+A program \(M\) (i.e.\ closed terms) of type \(\sigma\) is then interpreted as
 an element \(\densem{M}\) of \(\densem{\sigma}\).
 %
 More generally, we extend the interpretation of types to contexts and
@@ -24,13 +24,13 @@ For the denotational semantics we have three desiderata:
   %
   For example, the interpretation of a function type \(\sigma \pcffun \tau\)
   will be a certain set of functions from \(\densem{\sigma}\) to
-  \(\densem{\tau}\), and if we have programmes \(M : \sigma \pcffun \tau\) and
+  \(\densem{\tau}\), and if we have programs \(M : \sigma \pcffun \tau\) and
   \(N : \sigma\), then \(\densem{M \, N} = \densem{M}(\densem{N})\).
 \item\emph{Soundness}: We want our interpretation to respect the operational
   semantics, i.e.\ if we have terms \(M\) and \(N\) with
   \(M \bigstep N\), then their interpretations should be equal.
 \item\emph{Computational adequacy}: We should be able to use our
-  interpretation to compute, i.e.\ if \(M\) is a programme of type \(\pcfnat\)
+  interpretation to compute, i.e.\ if \(M\) is a program of type \(\pcfnat\)
   and \(\densem{M} = n\) for some natural number \(n\), then
   \(M \bigstep \numeral{n}\).
 \end{itemize}
@@ -53,17 +53,17 @@ each type \(\sigma\) as a set \(\densem{\sigma}\) with:
 There are two problems with this naive approach.
 %
 The first problem is that \(\densem{\pcfnat}\) should not only offer natural
-numbers, but it should also offer an interpretation of programmes of type
+numbers, but it should also offer an interpretation of programs of type
 \(\pcfnat\) that do not terminate such as the one
 in~\cref{exam:non-termination}.
 %
-Right now, this programme \(M\) would have to be interpreted as some natural
+Right now, this program \(M\) would have to be interpreted as some natural
 number \(n\), forcing us to make some arbitrary choice. Moreover, it is not true
 that \(M \bigstep \numeral n\), whatever choice we make, so we would violate
 computational adequacy.
 
 This problem is easily solved by introducing a new, special element
-\(\bot_\sigma \in \densem{\sigma}\) that interprets non-terminating programmes
+\(\bot_\sigma \in \densem{\sigma}\) that interprets non-terminating programs
 of type \(\sigma\). And indeed, this will be a part of our eventual interpretation.
 
 However, it does not solve the second, more serious problem, namely that, in
@@ -184,7 +184,7 @@ will typically denote it by \(\bot\).
   representing an ``undefined''.
   %
   In our interpretation of PCF, we will interpret \(\pcfnat\) as \(\Nat_\bot\)
-  and \(\bot\) will serve as an interpretation of non-terminating programmes.
+  and \(\bot\) will serve as an interpretation of non-terminating programs.
 \end{example}
 
 \begin{exercise}\label{exer:N_bot}
@@ -263,7 +263,7 @@ check:
   On the other hand, the function \(g \colon \Nat_\bot \to \Nat_\bot\) given by
   \(\bot \mapsto \bot\) and \(n \mapsto n+1\) is \(\omega\)-continuous.
   %
-  In fact, it will serve as the interpretation of the PCF programme
+  In fact, it will serve as the interpretation of the PCF program
   \(\lambdadot{\var x : \pcfnat}{\pcfsuc\,\var x}\) of type
   \(\pcfnat \pcffun \pcfnat\).
 \end{example}
