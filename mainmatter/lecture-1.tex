@@ -1,4 +1,4 @@
-\chapter{PCF and its operational semantics}
+\chapter{PCF and its operational semantics}\label{chap:PCF}
 
 PCF~\cite{Plotkin1977} is a typed functional programming language with general
 recursion. We can think of PCF as a simpler, well-behaved fragment of a modern
@@ -55,7 +55,7 @@ variables, typically denoted by \(\var x : \sigma\), \(\var y : \sigma\), or
 
 We are now ready to define the (well-typed) terms of PCF.
 
-\begin{definition}[Terms of PCF, \(\Gamma \vdash M : \sigma\)]
+\begin{definition}[Terms of PCF, \(\Gamma \vdash M : \sigma\)]\label{def:PCF-terms}
   We inductively define the \emph{terms \(M\) of type~\(\sigma\) in
     context~\(\Gamma\)}, written \(\Gamma \vdash M : \sigma\), by the following
   clauses:

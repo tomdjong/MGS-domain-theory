@@ -1,4 +1,4 @@
-\chapter[{Denotational semantics and domain theory}]{Denotational semantics and \\ domain theory}
+\chapter[{Denotational semantics and domain theory}]{Denotational semantics and \\ domain theory}\label{chap:domains}
 
 Previously we introduced the operational semantics of PCF. Next, we wish to
 introduce a \emph{denotational semantics} to PCF. The basic idea is to assign to
@@ -366,7 +366,7 @@ types that matter. Accordingly, we will interpret such a context as the
 
 The empty context will be interpreted as follows:
 
-\begin{example}[The one point \(\omega\)-cppo \(\One\)]
+\begin{example}[The one point \(\omega\)-cppo \(\One\)]\label{exam:one-point}
   The one point \(\omega\)-cppo \(\One\) is the unique \(\omega\)-cppo with the
   singleton \(\set{\star}\) as its underlying set.
 \end{example}
@@ -446,7 +446,7 @@ The empty context will be interpreted as follows:
 
 The construction of least upper bounds of \(\omega\)-chains in the product
 ensures that we have the following result:
-\begin{lemma}
+\begin{lemma}\label{projections}
   Given two \(\omega\)-cpos \(A\) and \(B\), the \emph{projections}
   \begin{align*}
     \pi_1 \colon A \times B &\to A &&& \pi_2 \colon A \times B &\to B \\
@@ -506,6 +506,10 @@ To interpret the function type \(\sigma \Rightarrow \tau\) of PCF using
   Finally, if \(B\) is pointed, then so is \(B^A\) with least
   element \(x \mapsto \bot\).
 \end{definition}
+
+We illustrate the exponential with the following example and exercise before
+proceeding to develop the required machinery for interpreting PCF using
+\(\omega\)-cppos and \(\omega\)-continuous maps.
 
 \begin{example}
   Consider the \(\omega\)-cpo \(\Two \coloneqq

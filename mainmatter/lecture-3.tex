@@ -1,5 +1,139 @@
 \chapter{The Scott model of PCF}
 
+We started these notes by introducing PCF and its operational semantics
+in~\cref{chap:PCF}. We then developed sufficient domain theory
+in~\cref{chap:domains} to give a denotational semantics of PCF, where we
+interpret the types of PCF as \(\omega\)-cppos and terms as
+\(\omega\)-continuous maps. This chapter is devoted to precisely defining that
+interpretation, known as the Scott model of PCF.
+
+\begin{definition}[Interpretation of PCF types]
+  We inductively assign an \(\omega\)-cppo \(\densem{\sigma}\) to each type
+  \(\sigma\) of PCF:
+  \begin{alignat*}{3}
+    &\densem{\pcfnat} &&\coloneqq \Nat_\bot, \text{and} \\
+    &\densem{\sigma \pcffun \tau} &&\coloneqq \densem{\tau}^{\densem{\sigma}},
+  \end{alignat*}
+  where we recall \(\Nat_\bot\) from~\cref{exam:N_bot} and the exponential
+  from~\cref{def:exponential}.
+\end{definition}
+
+This interpretation extends to contexts by using iterated binary products.
+\begin{definition}[Interpretation of contexts]
+  A context
+  \(\Gamma = [\var x_0 : \sigma_0, \dots , \var x_{n-1} :
+  \sigma_{n-1}]\)
+  is interpreted as
+  \[
+    \densem{\Gamma} \coloneqq \densem{\sigma_0} \times \cdots \times
+    \densem{\sigma_{n-1}}
+  \]
+  with the convention that the empty context is interpreted as the empty
+  product: the one point \(\omega\)-cppo \(\One\) from~\cref{exam:one-point}.
+\end{definition}
+
+The interpretation of the terms of PCF proceeds by yet another inductive
+definition:
+
+\begin{definition}[Interpretation of PCF terms]
+  A term \(\Gamma \vdash M : \sigma\) of type \(\sigma\) in context~\(\Gamma\)
+  will be interpreted as an \emph{\(\omega\)-continuous} function
+  \[
+    \densem{\Gamma} \xrightarrow{\densem{M}} \densem{\sigma}
+  \]
+  according to the following clauses which mirror~\cref{def:PCF-terms}:
+  \begin{enumerate}[(i)]
+  \item
+    The interpretation of
+    \[
+      \def\fCenter{\ \vdash\ }
+      \AxiomC{\phantom{$\fCenter$}}
+      \UnaryInf$\Gamma,\var{x}:\sigma,\Delta \fCenter \var{x} : \sigma$
+      \DisplayProof
+    \]
+    is
+    \[
+      \densem{\Gamma} \times \densem{\sigma} \times {\densem{\Delta}}
+      \xrightarrow{\pi} \densem{\sigma},
+    \]
+    where \(\pi\) is a suitable composition of projections
+    (recall~\cref{projections}), which is \(\omega\)-continuous, because
+    \(\omega\)-continuous functions are closed under composition
+    (recall~\cref{exer:category-of-cpos}).
+  \item
+    To interpret
+    \[
+      \def\fCenter{\ \vdash\ }
+      \Axiom$\Gamma , \var{x} : \sigma \fCenter M : \tau$
+      \UnaryInf$\Gamma \fCenter (\lambdadot{\var{x} : \sigma}{M}) : \sigma
+      \pcffun \tau$ \DisplayProof
+    \]
+    we first remark that we have
+    \[
+      \densem{\Gamma} \times \densem{\sigma} \xrightarrow{\densem{M}} \densem{\tau}
+    \]
+    by induction hypothesis, so that we can define
+    \[
+      \densem{\Gamma} \xrightarrow{\densem{\lambdadot{\var x : \sigma}{M}}}
+      \densem{\tau}^{\densem{\sigma}}
+    \]
+    as the curried (recall~\cref{exer:curry-is-continuous}) version of
+    \(\densem{M}\), i.e.\ for \(\gamma \in \densem{\Gamma}\), we have
+    \(\densem{\lambdadot{\var x : \sigma}{M}}(\gamma) \coloneqq x \mapsto
+    \densem{M}(\gamma,x)\).
+  \item
+    To interpret
+    \[
+      \def\fCenter{\ \vdash\ }
+      \Axiom$\Gamma \fCenter M : \sigma \pcffun \tau$
+      \Axiom$\Gamma \fCenter N : \sigma$
+      \BinaryInf$\Gamma \fCenter M \, N : \tau$
+      \DisplayProof
+    \]
+    we first remark that we have
+    \[
+      \densem{\Gamma} \xrightarrow{\densem{M}} \densem{\tau}^{\densem{\sigma}}
+      \quad\text{and}\quad
+      \densem{\Gamma} \xrightarrow{\densem{N}} \densem{\sigma}
+    \]
+    by induction hypothesis, so that we can define
+    \[
+      \densem{\Gamma} \xrightarrow{\densem{M \, N}} \densem{\tau}
+    \]
+    by application: for \(\gamma \in \densem{\Gamma}\), we have
+    \(\densem{M \, N}(\gamma) \coloneqq
+    \densem{M}(\gamma)\pa*{\densem{N}(\gamma)}\).
+    %
+    More abstractly, it is the composition of
+    \[
+      \densem{\Gamma} \xrightarrow{\langle \densem{M} , \densem{N} \rangle}
+      \densem{\tau}^{\densem{\sigma}} \times \densem{\sigma}
+      \xrightarrow{\text{evaluation}}
+      \densem{\tau},
+    \]
+    where we recall~\cref{exer:product-induced,evaluation-is-continuous}.
+  \item
+    To interpret
+    \[
+      \def\fCenter{\ \vdash\ }
+      \Axiom$\Gamma \fCenter M : \sigma \pcffun \sigma$
+      \UnaryInf$\Gamma \fCenter \pcffix_\sigma(M) : \sigma$ \DisplayProof
+    \]
+    we first remark that we have
+    \[
+      \densem{\Gamma} \xrightarrow{\densem{M}} \densem{\sigma}^{\densem{\sigma}}
+    \]
+    by induction hypothesis, so that we can define
+    \[
+      \densem{\Gamma} \xrightarrow{\densem{\pcffix_\sigma\,M}} \densem{\sigma}
+    \]
+    as the composition
+    \(\densem{\Gamma} \xrightarrow{\densem{M}} \densem{\sigma}^{\densem{\sigma}}
+    \xrightarrow{\mu} \densem{\sigma}\), where we recall \(\mu\), which assigns
+    least fixed points, from~\cref{least-fixed-point-is-continuous}.
+  \end{enumerate}
+\end{definition}
+
 %%% Local Variables:
 %%% mode: latexmk
 %%% TeX-master: "../main"
