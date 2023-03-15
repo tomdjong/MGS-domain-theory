@@ -217,10 +217,10 @@ explain with an example now.
   \(F : \pa*{\pcfnat \pcffun \pcfnat} \pcffun \pa*{\pcfnat \pcffun \pcfnat}\) as
   follows:
   \[
-    F \coloneqq \lambdadot{\var x : \pa{\pcfnat \pcffun
+    F \coloneqq \lambdadot{\var f : \pa{\pcfnat \pcffun
         \pcfnat}}{\lambdadot{\var y : \pcfnat}%
       {\pcfifz\pa*{\var y,\numeral{n},%
-          \pcfsuc\pa*{\var x\pa*{\pcfpred \, \var y }}}}}.
+          \pcfsuc\pa*{\var f\pa*{\pcfpred \, \var y }}}}}.
   \]
   In the program \(F\), the variable \(\var y\) plays the role of \(m\) in
   \eqref{add_n-alt} and \(\var x\) is like a placeholder for the recursive call.
