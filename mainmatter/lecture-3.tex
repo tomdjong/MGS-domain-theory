@@ -219,6 +219,26 @@ definition:
   \end{enumerate}
 \end{definition}
 
+\begin{remark}[Programmes of type \(\sigma\) are interpreted as elements of
+  \(\densem{\sigma}\)]
+  Note that a programme, i.e.\ a closed term, \({} \vdash M : \sigma\) is
+  interpreted as a function
+  \(\densem{M} \colon \One \to \densem{\sigma}\).
+  %
+  Since the underlying set of \(\One\) is the singleton \(\set{\star}\), this
+  function simply picks out an element of \(\densem{\sigma}\).
+  %
+  With this in mind, we see that programmes of type \(\sigma\) are interpreted
+  as elements of \(\densem{\sigma}\).
+\end{remark}
+
+
+\begin{exercise}\label{exer:interpretation-of-numerals}
+  Show that the numerals of PCF are interpreted as the natural numbers in
+  \(\Nat_\bot\), i.e.\ \(\densem{\numeral{n}} = n \in \Nat_\bot\) for every
+  natural number \(n \in \Nat\).
+\end{exercise}
+
 %%% Local Variables:
 %%% mode: latexmk
 %%% TeX-master: "../main"
