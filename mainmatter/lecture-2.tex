@@ -223,8 +223,8 @@ will typically denote it by \(\bot\).
 We proceed by defining the \(\omega\)-continuous maps between (pointed)
 \(\omega\)-cpos.
 \begin{definition}[\(\omega\)-continuity]\label{def:continuity}
-  A function between the underlying sets of two \(\omega\)-cpos \(A\) and \(B\)
-  is \emph{\(\omega\)-continuous} if
+  A function \(f \colon A \to B\) between the underlying sets of two
+  \(\omega\)-cpos \(A\) and \(B\) is \emph{\(\omega\)-continuous} if
   \begin{enumerate}[(i)]
   \item\label{monotone} it is \emph{monotone} (or \emph{order preserving}),
     i.e.\ if \(x \below y\) in \(A\), then \(f(x) \below f(y)\) in \(B\);
@@ -235,15 +235,51 @@ We proceed by defining the \(\omega\)-continuous maps between (pointed)
   \end{enumerate}
 \end{definition}
 
-It follows from monotonicity that \(\set{f(x_0),f(x_1),\dots}\) is an
-\(\omega\)-chain in \(B\) and hence we could rewrite the second condition as:
-\[
-  f\pa*{\textstyle\bigsqcup_{n \in \Nat}x_n} = \textstyle\bigsqcup_{n \in
-    \Nat}f(x_n).
-\]
+\begin{remark}
+  It follows from monotonicity that \(\set{f(x_0),f(x_1),\dots}\) is an
+  \(\omega\)-chain in \(B\) and hence we could rewrite the second condition as:
+  \[
+    f\pa*{\textstyle\bigsqcup_{n \in \Nat}x_n} = \textstyle\bigsqcup_{n \in
+      \Nat}f(x_n).
+  \]
+\end{remark}
+
+It is worthwhile to reflect on the computational intuitions underlying
+monotonicity and preservation of least upper bounds of \(\omega\)-chains.
 %
-But actually, monotonicity is redundant as the following exercise ask you to
-check:
+If we think of \(f \colon A \to B\) as some computational procedure, then
+monotonicity says:
+\begin{displayquote}
+  \emph{more (or better) input leads to more (or better) output},
+\end{displayquote}
+while the second condition of \(\omega\)-continuity says:
+\begin{displayquote}
+  \emph{every output can be patched together from the outputs of approximations}.
+\end{displayquote}
+The idea here is that a computational procedure can only inspect a finite amount
+of input before returning an output, so that the approximations suffice to
+determine the output.
+%
+These intuitions and ideas are nicely illustrated in the following example:
+\begin{exercise}\label{exer:cantor-domain}
+  Let \(C\) be the poset of finite and infinite binary sequences ordered by
+  prefix. For an infinite sequence \(\alpha\) we write
+  \(\alpha \upharpoonright n\) for its finite prefix of length \(n\).
+
+  \begin{enumerate}[(i)]
+  \item Show that \(C\) is an \(\omega\)-cppo.
+  \item Show that a function \(f \colon C \to C\) is \(\omega\)-continuous if
+    and only if for every infinite sequence \(\alpha\) we have
+    \(f(\alpha) = \textstyle\bigsqcup_{n \in \Nat}f(\alpha \upharpoonright n)\).
+  \end{enumerate}
+\end{exercise}
+
+% or alternatively, if we think of \(x \below y\) as expressing that \(y\) is at
+% least as informative as \(x\), then \(f(y)\) is at least as informative as
+% \(f(x)\).
+
+Actually, monotonicity, item~\ref{monotone} in~\cref{def:continuity}, is
+redundant as the following exercise ask you to check:
 
 \begin{exercise}\label{exer:monotonicity-follows}
   Show that if a function \(f\) between \(\omega\)-cpos satisfies
@@ -268,8 +304,8 @@ check:
   \(\pcfnat \pcffun \pcfnat\).
 \end{example}
 
-The point of introducing \(\omega\)-continuity is made clear by the following
-fundamental result:
+The point of introducing \(\omega\)-continuity is the following fundamental
+result:
 
 \begin{theorem}[Knaster--Tarski fixed point theorem]\label{least-fixed-point}
   Every \(\omega\)-continuous function \(f \colon X \to X\) on an \(\omega\)-cpo
@@ -406,6 +442,7 @@ The empty context will be interpreted as follows:
     \bot \ar[u, no head]
   \end{tikzcd}
   \) looks like this:
+
   \[
     \begin{tikzcd}[row sep=15pt,column sep=1pt]
       & (x,y) \\
