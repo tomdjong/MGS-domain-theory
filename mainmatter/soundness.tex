@@ -12,7 +12,8 @@ the Scott model of PCF, respects the operational semantics.
   %
   We work out two cases: the fixed point operator and application.
 
-  Recall that the former is the rule
+  \begin{itemize}
+  \item Recall that the former is the rule
   \[
     \AxiomC{\(M(\pcffix_{\sigma} \, M) \bigstep V\)}
     \UnaryInfC{\({\pcffix_{\sigma} \, M} \bigstep V\)}
@@ -35,8 +36,7 @@ the Scott model of PCF, respects the operational semantics.
     &\text{(by definition)} \\
     &= \densem{V}(\gamma) &\text{(by assumption)}.
   \end{align*}
-
-  The big-step rule for application is
+  \item   The big-step rule for application is
   \[
     \AxiomC{\(M \bigstep \lambdadot{\var x : \sigma}{E}\)}
     \AxiomC{\(E[N/x] \bigstep V\)}
@@ -51,6 +51,23 @@ the Scott model of PCF, respects the operational semantics.
   \[
     \densem{M \, N} = \densem{V}.
   \]
+  If \(M\) and \(N\) are terms in a context \(\Gamma\), then for every
+  \(\gamma \in \densem{\Gamma}\), we calculate:
+  \begin{align*}
+    \densem{M \, N}(\gamma)
+    &= \densem{M}(\gamma)\pa*{\densem{N}(\gamma)}
+    &\text{(by definition)} \\
+    &= \densem{\lambdadot{\var x : \sigma}{E}}(\gamma)\pa*{\densem{N}(\gamma)}
+    &\text{(by assumption on \(\densem{M}\))} \\
+    &= \densem*{\pa*{\lambdadot{\var x : \sigma}{E}}N}(\gamma)
+    &\text{(by definition)} \\
+    &= \densem{E[N/\var x]}(\gamma)
+    &\text{(by \cref{beta-equality})} \\
+    &= \densem{V}(\gamma)
+    &\text{(by assumption on \(\densem{N}\))},
+  \end{align*}
+  completing the proof. \qedhere
+  \end{itemize}
 \end{proof}
 
 %%% Local Variables:

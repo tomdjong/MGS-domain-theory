@@ -239,13 +239,15 @@ definition:
   natural number \(n \in \Nat\).
 \end{exercise}
 
-The next chapter will be devoted to proving the \emph{soundness} theorem, which
+\section{Towards soundness}
+
+The next section will be devoted to proving the \emph{soundness} theorem, which
 says that if \(M \bigstep N\), then \(\densem{M} = \densem{N}\). In other words,
 the interpretation respects the operational semantics.
-
-The proof of soundness relies on the following lemma, which is actually a
-particular case of the fact that \(M \smallstep N\) implies
-\(\densem{M} = \densem{N}\).
+%
+The proof of soundness relies on the following lemma:% , which is actually a
+% particular case of the fact that \(M \smallstep N\) implies
+% \(\densem{M} = \densem{N}\).
 
 \begin{lemma}[\(\beta\)-equality]\label{beta-equality}
   The Scott model of PCF validates \(\beta\)-equality. That is, if
@@ -336,6 +338,85 @@ The substitution lemma says that \eqref{subst-1} and \eqref{subst-2} agree.
   Note that the \(N_i\) in lines 2--4 refer to the terms \(N_i\) in the extended
   context \(\Delta,\var y : \tau\).
 \end{proof}
+
+\section{Soundness}\label{sec:soundness}
+
+The soundness theorem expresses that the denotational semantics, in the form of
+the Scott model of PCF, respects the operational semantics.
+
+\begin{theorem}[Soundness]\label{soundness}
+  For terms \(M\) and \(N\) of the same type in the same context, we have: if
+  \(M \bigstep N\), then \(\densem{M} = \densem{N}\).
+\end{theorem}
+\begin{proof}
+  By induction on the structure of the derivations of \(M \bigstep N\).
+  %
+  We work out two cases: the fixed point operator and application.
+
+  \begin{itemize}
+  \item Recall that the former is the rule
+  \[
+    \AxiomC{\(M(\pcffix_{\sigma} \, M) \bigstep V\)}
+    \UnaryInfC{\({\pcffix_{\sigma} \, M} \bigstep V\)}
+    \DisplayProof
+  \]
+  so that we may assume \(\densem{M(\pcffix_\sigma\,M)} = \densem{V}\) and we
+  have to prove:
+  \[
+    \densem{\pcffix_{\sigma} \, M} = \densem{V}.
+  \]
+  But this holds: if \(M\) is a term in context \(\Gamma\), then for
+  every \(\gamma \in \densem{\Gamma}\), we have
+  \begin{align*}
+    \densem{\pcffix_{\sigma} \,M}(\gamma)
+    &= \mu\pa*{\densem{M}(\gamma)}
+    &\text{(by definition)} \\
+    &= \pa*{\densem{M}(\gamma)}\pa*{\mu\pa*{\densem{M}(\gamma)}}
+    &\text{(because \(\mu\) gives a fixed point)} \\
+    &= \densem{M\pa*{\pcffix_{\sigma}\,M}}(\gamma)
+    &\text{(by definition)} \\
+    &= \densem{V}(\gamma) &\text{(by assumption)}.
+  \end{align*}
+  \item   The big-step rule for application is
+  \[
+    \AxiomC{\(M \bigstep \lambdadot{\var x : \sigma}{E}\)}
+    \AxiomC{\(E[N/x] \bigstep V\)}
+    \BinaryInfC{\(M \, N \bigstep V\)}
+    \DisplayProof
+  \]
+  so that we may assume
+  \(\densem{M} = \densem{\lambdadot{\var x : \sigma}{E}}\)
+  and
+  \(\densem{E[N/x]} = \densem{V}\),
+  and we have to prove:
+  \[
+    \densem{M \, N} = \densem{V}.
+  \]
+  If \(M\) and \(N\) are terms in a context \(\Gamma\), then for every
+  \(\gamma \in \densem{\Gamma}\), we calculate:
+  \begin{align*}
+    \densem{M \, N}(\gamma)
+    &= \densem{M}(\gamma)\pa*{\densem{N}(\gamma)}
+    &\text{(by definition)} \\
+    &= \densem{\lambdadot{\var x : \sigma}{E}}(\gamma)\pa*{\densem{N}(\gamma)}
+    &\text{(by assumption on \(\densem{M}\))} \\
+    &= \densem*{\pa*{\lambdadot{\var x : \sigma}{E}}N}(\gamma)
+    &\text{(by definition)} \\
+    &= \densem{E[N/\var x]}(\gamma)
+    &\text{(by \cref{beta-equality})} \\
+    &= \densem{V}(\gamma)
+    &\text{(by assumption on \(\densem{N}\))},
+  \end{align*}
+  completing the proof. \qedhere
+  \end{itemize}
+\end{proof}
+
+\section{List of exercises}
+\begin{enumerate}
+\item \cref{exer:interpretation-of-numerals}: On the interpretation of the numerals.
+\item \cref{exer:beta-equality}: On proving that the interpretation validates
+  \(\beta\)-equality.
+\end{enumerate}
 
 %%% Local Variables:
 %%% mode: latexmk
