@@ -1,6 +1,57 @@
 \chapter{Soundness}\label{chap:soundness}
 
+The soundness theorem expresses that the denotational semantics, in the form of
+the Scott model of PCF, respects the operational semantics.
 
+\begin{theorem}[Soundness]\label{soundness}
+  For terms \(M\) and \(N\) of the same type in the same context, we have: if
+  \(M \bigstep N\), then \(\densem{M} = \densem{N}\).
+\end{theorem}
+\begin{proof}
+  By induction on the structure of the derivations of \(M \bigstep N\).
+  %
+  We work out two cases: the fixed point operator and application.
+
+  Recall that the former is the rule
+  \[
+    \AxiomC{\(M(\pcffix_{\sigma} \, M) \bigstep V\)}
+    \UnaryInfC{\({\pcffix_{\sigma} \, M} \bigstep V\)}
+    \DisplayProof
+  \]
+  so that we may assume \(\densem{M(\pcffix_\sigma\,M)} = \densem{V}\) and we
+  have to prove:
+  \[
+    \densem{\pcffix_{\sigma} \, M} = \densem{V}.
+  \]
+  But this holds, because if \(M\) is a term in context \(\Gamma\), then for
+  every \(\gamma \in \densem{\Gamma}\), we have
+  \begin{align*}
+    \densem{\pcffix_{\sigma} \,M}(\gamma)
+    &= \mu\pa*{\densem{M}(\gamma)}
+    &\text{(by definition)} \\
+    &= \pa*{\densem{M}(\gamma)}\pa*{\mu\pa*{\densem{M}(\gamma)}}
+    &\text{(because \(\mu\) gives a fixed point)} \\
+    &= \densem{M\pa*{\pcffix_{\sigma}\,M}}(\gamma)
+    &\text{(by definition)} \\
+    &= \densem{V}(\gamma) &\text{(by assumption)}.
+  \end{align*}
+
+  The big-step rule for application is
+  \[
+    \AxiomC{\(M \bigstep \lambdadot{\var x : \sigma}{E}\)}
+    \AxiomC{\(E[N/x] \bigstep V\)}
+    \BinaryInfC{\(M \, N \bigstep V\)}
+    \DisplayProof
+  \]
+  so that we may assume
+  \(\densem{M} = \densem{\lambdadot{\var x : \sigma}{E}}\)
+  and
+  \(\densem{E[N/x]} = \densem{V}\),
+  and we have to prove:
+  \[
+    \densem{M \, N} = \densem{V}.
+  \]
+\end{proof}
 
 %%% Local Variables:
 %%% mode: latexmk
