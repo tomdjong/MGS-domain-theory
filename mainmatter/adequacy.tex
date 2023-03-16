@@ -1,6 +1,46 @@
 \chapter{Computational adequacy}\label{chap:comp-adequacy}
 
+Soundness is a nice and fundamental result, but a converse would be more
+interesting: Can we use the model to compute in PCF? More precisely, if two
+terms \(M\) and \(N\) are equal in the model, does \(M\) reduce to \(N\) (or
+vice versa) in the operational semantics?
 
+This is actually not the case, because the model is less intrinsic than PCF,
+e.g.\ the programs \(\lambdadot{\var x : \pcfnat}{\var x}\) and
+\(\lambdadot{\var x : \pcfnat}{\pcfpred\pa*{\pcfsuc\,\var x}}\) are different
+values in PCF, but their interpretations as \(\omega\)-continuous functions are
+equal.
+
+However, it \emph{is} the case that if \(M\) is a program of type \(\pcfnat\)
+and \(\densem{M} = n\), then \(M \bigstep \numeral{n}\).
+%
+This is known as the \emph{computational adequacy} of the Scott model of PCF and
+allows us to compute in PCF using the domain-theoretic denotational semantics.
+
+\begin{theorem}[Computational adequacy]\label{adequacy}
+  For every program \(M\) of type \(\pcfnat\) and natural number \(n \in \Nat\),
+  if \(\densem{M} = n\), then \(M \bigstep \numeral n\).
+\end{theorem}
+
+Unlike soundness, computational adequacy cannot be proved by a straightforward
+induction on types, or structure of the derivation of the program \(M\), since
+the statement refers to closed terms of type \(\pcfnat\) only.
+
+Therefore, instead of proving computational adequacy directly, we will derive it
+as a corollary of a more general result that does allow for a proof by
+induction on types.
+
+More specifically, we will introduce a \emph{logical
+  relation}~\cite{Plotkin1973}. It is an example of a fundamental and often used
+technique in the theory of programming languages, going back to \emph{Tait's
+  method of computability}~\cite{Tait1967} and also known as the method of
+\emph{reducibility candidates}~\cite{Girard1989}.
+
+\section{The logical relation}
+
+\section{Applicative approximation}
+
+\section{Proving computational adequacy}
 
 %%% Local Variables:
 %%% mode: latexmk
