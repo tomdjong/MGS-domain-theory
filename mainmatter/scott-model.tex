@@ -239,6 +239,104 @@ definition:
   natural number \(n \in \Nat\).
 \end{exercise}
 
+The next chapter will be devoted to proving the \emph{soundness} theorem, which
+says that if \(M \bigstep N\), then \(\densem{M} = \densem{N}\). In other words,
+the interpretation respects the operational semantics.
+
+The proof of soundness relies on the following lemma, which is actually a
+particular case of the fact that \(M \smallstep N\) implies
+\(\densem{M} = \densem{N}\).
+
+\begin{lemma}[\(\beta\)-equality]\label{beta-equality}
+  The Scott model of PCF validates \(\beta\)-equality. That is, if
+  \(\Gamma,\var x : \sigma \vdash M : \tau\) and \(\Gamma \vdash N : \sigma\),
+  then
+  \[
+    \densem*{\pa*{\lambdadot{\var x : \sigma}{M}}\,N} = \densem{M[N/\var x]}
+  \]
+\end{lemma}
+
+\begin{exercise}\label{exer:beta-equality}
+  Prove~\cref{beta-equality} from the substitution lemma given below.
+\end{exercise}
+
+
+Suppose that we have a term \(M : \tau\) in context
+\(\Gamma = [\var x_0 : \sigma_0 , \dots , \var x_{k-1} : \sigma_{k-1}]\), and
+assume that we have another context \(\Delta\) with terms
+\(\Delta \vdash N_i : \sigma_i\) for every \(0 \leq i \leq k-1\).
+%
+This yields (by a recursive definition on the structure of derivations of
+\(\Gamma \vdash M : \tau\)) a term
+\[
+  \Delta \vdash M[N_0/\var x_0,\dots,N_{k-1}/\var x_{k-1}] : \tau
+\]
+in context \(\Delta\).
+
+Thus, in our interpretation, we get
+\begin{equation*}\label{subst-1}\tag{\(\dagger\)}
+  \densem{M[N_0/\var x_0,\dots,N_{k-1}/\var x_{k-1}]}(\delta) \in \densem{\tau}
+\end{equation*}
+for every \(\delta \in \densem{\Delta}\).
+
+Alternatively, we can note that \(\densem{N_i}(\delta) \in \densem{\sigma_i}\)
+for every \(0 \leq i \leq k-1\), so that we can feed them as inputs to
+\(\densem{M} \colon \densem{\sigma_0} \times \cdots \times \densem{\sigma_{k-1}}
+\to \densem{\tau}\) which yields:
+\begin{equation*}\label{subst-2}\tag{\(\ddagger\)}
+  \densem{M}\pa*{\densem{N_0}(\delta),\dots,\densem{N_{k-1}}(\delta)} \in \densem{\tau}.
+\end{equation*}
+
+The substitution lemma says that \eqref{subst-1} and \eqref{subst-2} agree.
+
+\begin{lemma}[Substitution lemma]\label{substitution-lemma}
+  If
+  \([\var x_0 : \sigma_0,\dots,\var x_{k-1} : \sigma_{k-1}] = \Gamma \vdash M :
+  \tau\), then for every context \(\Delta\) and terms
+  \(\Delta \vdash N_i : \sigma_i\) with \(0 \leq i \leq k-1\), we have
+  \[
+    \densem{M[N_0/\var x_0,\dots,N_{k-1}/\var x_{k-1}]}(\delta)
+    =
+    \densem{M}\pa*{\densem{N_0}(\delta),\dots,\densem{N_{k-1}}(\delta)}
+  \]
+  for every \(\delta \in \densem{\Delta}\).
+\end{lemma}
+\begin{proof}
+  By induction on the structure of derivations of \(\Gamma \vdash M : \tau\).
+
+  For example, for the case of \(\lambda\)-abstraction, we consider the term
+  \(\Gamma,y : \tau \vdash M : \rho\) with
+  \([\var x_0 : \sigma_0,\dots,\var x_{k-1} : \sigma_{k-1}] = \Gamma\), and we
+  assume to have a context \(\Delta\) with terms
+  \(\Delta \vdash N_i : \sigma_i\) for \(0 \leq i \leq k-1\).
+  We have to prove that
+  \[
+    \densem*{\pa*{\lambdadot{\var y : \tau}{M}}[N_0/\var x_0 , \dots ,
+      N_{k-1}/\var x_{k-1}]}(\delta) = \densem*{\lambdadot{\var y :
+        \tau}{M}}\pa*{\densem{N_0}(\delta),\dots,\densem{N_{k-1}}(\delta)}
+  \]
+  for every \(\delta \in \densem{\Delta}\).
+
+  Note that this is an equality of elements of
+  \(\densem{\rho}^{\densem{\tau}}\), i.e.\ an equality of
+  (\(\omega\)-continuous) functions, so let \(t \in \densem{\tau}\) be
+  arbitrary and note that
+  \begin{align*}
+    &\hspace{13.5pt} \pa*{\densem*{\pa*{\lambdadot{\var y : \tau}{M}}[N_0/\var x_0 , \dots ,
+    N_{k-1}/\var x_{k-1}]}(\delta)}(t) \\
+    &= \densem*{M[N_0/\var x_0,\dots,N_{k-1}/\var x_{k-1},\var y/\var y]}(\delta,t) \\
+    &= \densem*{M}\pa*{\densem{N_0}(\delta,t),\dots,\densem{N_{k-1}}(\delta,t),\densem{\var y}(\delta,t)}
+    &\text{(by IH applied to \(\Gamma,\var y : \tau \vdash M : \rho\))} \\
+    &= \densem*{M}\pa*{\densem{N_0}(\delta,t),\dots,\densem{N_{k-1}}(\delta,t),t} \\
+    &= \pa*{\densem*{\lambdadot{\var y :
+        \tau}{M}}\pa*{\densem{N_0}(\delta),\dots,\densem{N_{k-1}}(\delta)}}(t),
+  \end{align*}
+  as desired.
+  %
+  Note that the \(N_i\) in lines 2--4 refer to the terms \(N_i\) in the extended
+  context \(\Delta,\var y : \tau\).
+\end{proof}
+
 %%% Local Variables:
 %%% mode: latexmk
 %%% TeX-master: "../main"
