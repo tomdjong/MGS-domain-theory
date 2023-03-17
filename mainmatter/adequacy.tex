@@ -152,17 +152,17 @@ establish several properties of the relation \(\logrel_\sigma\).
 
 We will need one more ingredient for proving the fundamental theorem of the
 logical relation and (hence) computational adequacy: the \emph{applicative
-  approximation} preorder.
+  approximation} relation.
 
 In~\cref{R-extend-left}, we showed that if \(x \below y\) and
 \(y \logrel_\sigma M\), then \(x \logrel_\sigma M\).
 %
-The applicative approximation may be motivated by the desire to have a similar
-property of the logical relation, but for programs, rather than elements of the
-interpretation. That is, we introduce a binary relation \(\appapprox_\sigma\) on
-programs of type \(\sigma\) and show (\cref{R-extend-right}) that if
-\(x \logrel_\sigma M\) and \(M \appapprox_\sigma N\), then
-\(x \logrel_\sigma N\).
+The applicative approximation relation may be motivated by the desire to have a
+similar property of the logical relation, but for programs, rather than elements
+of the interpretation. That is, we introduce a binary relation
+\(\appapprox_\sigma\) on programs of type \(\sigma\) and show
+(\cref{R-extend-right}) that if \(x \logrel_\sigma M\) and
+\(M \appapprox_\sigma N\), then \(x \logrel_\sigma N\).
 
 \begin{definition}[Applicative approximation]
   We define a binary relation \(\appapprox_\sigma\) on programs of type
@@ -212,7 +212,7 @@ reflexive and transitive, but not antisymmetric:
 \end{proof}
 
 The following lemma has two useful corollaries for proving the fundamental
-theorem of the logical relation.
+theorem of the logical relation:
 \begin{lemma}\label{applicative-approximation-if-big-step-implication}
   For all programs \(M\) and \(N\) of type \(\sigma\), if \(M \bigstep V\)
   implies \(N \bigstep V\) for every program \(V : \sigma\), then
@@ -245,6 +245,32 @@ theorem of the logical relation.
   of the big-step operational semantics.
 \end{proof}
 
+\cref{applicative-approximation-fix} allows us to prove that the logical
+relation is closed under the least fixed point operation \(\mu\)
+(recall~\cref{least-fixed-point}):
+
+\begin{lemma}\label{closure-under-mu}
+  If \(f \logrel_{\sigma \pcffun \sigma} M\), then \(\mu(f) \logrel_\sigma {\pcffix_\sigma\,M}\).
+\end{lemma}
+\begin{proof}
+  Suppose that \(f \logrel_{\sigma \pcffun \sigma} M\). Since
+  \(\mu(f) = \bigsqcup_{n \in \Nat}f^n(\bot)\),
+  \cref{closure-under-omega-chains} tells us that it is enough to prove that
+  \(f^n(\bot) \logrel_\sigma \pa*{\pcffix_\sigma\,M}\) for every \(n \in \Nat\).
+  %
+  We do so by induction on \(n\). The case \(n = 0\) is provided
+  by~\cref{contains-bot}. For the inductive case, suppose that
+  \(f^n(\bot) \logrel_\sigma \pa*{\pcffix_\sigma\,M}\); we show that
+  \(f^{n+1}(\bot) \logrel_\sigma \pa*{\pcffix_\sigma\,M}\).
+  %
+  By induction hypothesis and the assumption that
+  \(f \logrel_{\sigma \pcffun \sigma} M\), we see that
+  \(f\pa*{f^n(\bot)} \logrel_\sigma M\,\pa*{\pcffix_\sigma \, M}\).
+  %
+  Hence, we obtain the desired
+  \(f^{n+1}(\bot) \logrel_\sigma \pa*{\pcffix_\sigma\,M}\)
+  by \cref{R-extend-right,applicative-approximation-fix}.
+\end{proof}
 
 \section{Proving computational adequacy}
 
@@ -259,23 +285,72 @@ Finally, we have established enough properties to prove:
     \pa*{\densem{M}\pa*{s_0,\dots,s_{k-1}}} \logrel_{\tau} {M[N_0/\var x_0,\dots,N_{k-1}/\var x_{k-1}]}.
   \]
 \end{lemma}
+
 \begin{proof}
-  We proceed by induction on the structure of the derivations
-  \(\Gamma \vdash M : \tau\):
+  We abbreviate \(s_0,\dots,s_{k-1}\) as \(\vec s\) and
+  \(M[N_0/\var x_0,\dots,N_{k-1}/\var x_{k-1}]\) as
+  \(M[\vec{N}/\vec{\var{x}}]\). We proceed by induction on the structure of the
+  derivations \(\Gamma \vdash M : \tau\):
 
   \begin{itemize}
   \item For
     \([\var x_0 : \sigma_0,\dots,\var x_{k-1} : \sigma_{k-1}] \vdash \var x_i :
     \sigma_i\) and \(s_i \logrel_{\sigma_i} N_i\) for all
     \(0 \leq i \leq k-1\), we observe that
-    \[ {\densem{\var x_i}(s_0,\dots,s_{k-1})} = {s_i} \logrel_{\sigma_i} {N_i} =
-      {{\var x_i}[N_0/\var x_0,\dots,N_{k-1}/\var x_{k-1}]},
+    \[ {\densem{\var x_i}(\vec s)} = {s_i} \logrel_{\sigma_i} {N_i} =
+      {{\var x_i}[\vec N/\vec{\var{x}}]},
     \]
     as wished.
-  \item For \(\lambda\)-abstraction, we ...
-  \item For application, we ...
+  \item For application, we consider \(\Gamma \vdash M : \tau \pcffun \rho\) and
+    \(\Gamma \vdash K : \tau\) and we have to prove
+    \[
+      \densem{M \, K}(\vec s) \logrel_\rho \pa*{M \, K}[\vec N/\vec{\var x}].
+    \]
+    Our induction hypothesis yields
+    \[
+      \densem{M}(\vec s) \logrel_{\tau \pcffun \rho} M[\vec N/\vec{\var{x}}]
+      \quad\text{and}\quad
+      \densem{K}(\vec s) \logrel_\tau K[\vec N/\vec{\var x}].
+    \]
+    And hence, by definition of \(\logrel_{\tau \pcffun \rho}\),
+    \[
+      {\densem{M}(\vec s)\pa*{\densem{K}(\vec s)}} \logrel_\rho
+      M[\vec N/\vec{\var x}] \, K[\vec N/\vec {\var x}],
+    \]
+    but this is an unfolded version of what we wanted to prove.
+  \item For \(\lambda\)-abstraction, we consider
+    \(\Gamma,\var y : \tau \vdash M : \rho\) and we have to prove
+    \[
+      \densem{\lambdadot{\var y : \tau}{M}}(\vec s) \logrel_{\tau \pcffun \rho}
+      \pa*{\lambdadot{\var y: \tau}{M}}[\vec{N}/\vec{\var{x}}].
+    \]
+    So suppose that we have \(t \logrel_\tau K\); we show that
+    \[
+      \pa*{\densem{\lambdadot{\var y : \tau}{M}}(\vec s)}(t) \logrel_{\rho}
+      \pa[\big]{\pa*{\lambdadot{\var y: \tau}{M}}[\vec{N}/\vec{\var{x}}]}K.
+    \]
+    The left-hand side unfolds to \(\densem{M}(\vec s,t)\), while the right-hand
+    side unfolds to
+    \(\pa[\big]{\lambdadot{\var y : \tau}{M[\vec{N}/\vec{\var{x}}]}}K\).
+    By~\cref{R-extend-right,applicative-approximation-beta}, it thus suffices to
+    prove
+    \[
+      \densem{M}(\vec s,t) \logrel_\rho M[\vec{N}/\vec{\var x},K/\var y],
+    \]
+    which holds by induction hypothesis.
   \item
-    For \(\pcffix\), we ...
+    For \(\pcffix\), we consider \(\Gamma \vdash M : \tau \pcffun \tau\) and we have to prove
+    \[
+      \densem{\pcffix_\tau\,M}(\vec s) \logrel_\tau
+      \pa*{\pcffix_\tau\,M}[\vec{N}/\vec{\var x}].
+    \]
+    By definition,
+    \(\densem{\pcffix_\tau\,M}(\vec s) = \mu\pa*{\densem{M}(\vec s)}\) and
+    \(\pa*{\pcffix_\tau\, M}[\vec{N}/\vec{\var x}] =
+    \pcffix_\tau\pa{M[\vec{N}/\vec{\var{x}}]}\), so by~\cref{closure-under-mu},
+    it is enough to prove that
+    \(\densem{M}(\vec s) \logrel_{\tau \pcffun \tau}
+    M[\vec{N}/\vec{\var{x}}]\). But this holds by induction hypothesis.
   \item Finally, the cases for \(\pcfzero\), \(\pcfsuc\), \(\pcfzero\) and
     \(\pcfifz\) follow from~\cref{exer:closure-under-basic-operations}. \qedhere
   \end{itemize}
