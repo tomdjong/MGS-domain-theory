@@ -17,10 +17,10 @@ and \(\densem{M} = n\), then \(M \bigstep \numeral{n}\).
 This is known as the \emph{computational adequacy} of the Scott model of PCF and
 allows us to compute in PCF using the domain-theoretic denotational semantics.
 
-\begin{theorem}[Computational adequacy]\label{adequacy}
+\begin{theorem*}[Computational adequacy]\label{adequacy}
   For every program \(M\) of type \(\pcfnat\) and natural number \(n \in \Nat\),
   if \(\densem{M} = n\), then \(M \bigstep \numeral n\).
-\end{theorem}
+\end{theorem*}
 
 Unlike soundness, computational adequacy cannot be proved by a straightforward
 induction on types, or structure of the derivation of the program \(M\), since
@@ -38,9 +38,129 @@ technique in the theory of programming languages, going back to \emph{Tait's
 
 \section{The logical relation}
 
+We introduce the logical relation \(R_\sigma\), a binary relation between
+semantics and syntax of PCF, and use it to prove computational adequacy.
+
+\begin{definition}\label{def:logical-relation}
+  We define a binary relation \(\logrel_\sigma\) between elements of
+  \(\densem{\sigma}\) and programs of type \(\sigma\) by induction on types:
+  \begin{enumerate}[(i)]
+  \item\label{R-nat} \({x \logrel_{\pcfnat} M}\) holds if \(x = n\) with
+    \(n \in \Nat\) implies \(M \bigstep \numeral n\),
+  \item\label{R-fun} \(f \logrel_{\sigma \pcffun \tau} M\) holds if \(x \logrel_\sigma N\)
+    implies \({f(x)} \logrel_\tau {M \, N}\) for every element
+    \(x \in \densem{\sigma}\) and program \(N\) of type \(\sigma\).
+  \end{enumerate}
+\end{definition}
+
+Observe that computational adequacy is equivalent to the statement that for
+every program \(M : \pcfnat\) we have \(\densem{M} \logrel_\pcfnat M\).
+%
+Hence, we will have proven computational adequacy if we can show:
+
+\begin{lemma*}
+  For every program \(M : \sigma\), it holds that \(\densem{M} \logrel_\sigma M\).
+\end{lemma*}
+
+This, in turn, will follow from the fundamental theorem of the logical relation:
+
+\begin{lemma*}[Fundamental theorem of the logical relation]\label{fundamental-theorem}
+  If
+  \([\var x_0 : \sigma_0 , \dots , \var x_{k-1} : \sigma_{k-1}] = \Gamma \vdash
+  M : \tau\), then whenever we have \(\Delta \vdash N_i : \sigma_i\) and
+  \(s_i \in \densem{\sigma_i}\) such that \(s_i \logrel_{\sigma_i} N_i\) for
+  all \(0 \leq i \leq k-1\), it holds that
+  \[
+    \pa*{\densem{M}\pa*{s_0,\dots,s_{k-1}}} \logrel_{\tau} {M[N_0/\var x_0,\dots,N_{k-1}/\var x_{k-1}]}.
+  \]
+\end{lemma*}
+
+The second clause, item~\ref{R-fun}, of \cref{def:logical-relation} says that
+related inputs must go to related outputs and is designed to make proofs by
+induction on types possible.
+
+Before we can prove the fundamental theorem of the logical relation, we need to
+establish several properties of the relation \(\logrel_\sigma\).
+
+\begin{lemma}\label{R-extend-left}
+  If \(x \below y\) and \(y \logrel_\sigma M\), then \(x \logrel_\sigma M\).
+\end{lemma}
+\begin{proof}
+  We proceed by induction on the type \(\sigma\).
+  %
+  For the base case, suppose we have \(x \below y\) in \(\Nat_\bot\) and
+  \(y \logrel_\pcfnat M\), and assume that \(x = n\) for a natural number
+  \(n\). We have to prove that \(M \bigstep \numeral n\).
+  %
+  Since \(n = x \below y\), we must have \(y = n\) by definition of the partial
+  order on \(\Nat_\bot\), and hence \(M \bigstep \numeral n\) because we assumed
+  \(y \logrel_\pcfnat M\).
+
+  For function types, we assume to have \(f \below g\) in
+  \(\densem{\tau}^{\densem{\sigma}}\) with
+  \(g \logrel_{\sigma \pcffun \tau} M\), and we have to prove
+  \(f \logrel_{\sigma \pcffun \tau} M\).
+  %
+  So suppose that we have \(x \logrel_\sigma N\). Then
+  \(g(x) \logrel_\tau M\,N\) because we assumed
+  \(g \logrel_{\sigma \pcffun \tau} M\).
+  %
+  But \(f \below g\), so \(f(x) \below g(x)\) and hence, we get the desired
+  \(f(x) \logrel_\tau M\,N\) by the induction hypothesis applied at the type
+  \(\tau\).
+\end{proof}
+
+\begin{lemma}\label{contains-bot}
+  The least element is related to all programs.
+  %
+  That is, for every program \(M : \sigma\), we have \(\bot \logrel_\sigma M\),
+  where we recall that \(\bot\) denotes the least element of
+  \(\densem{\sigma}\).
+\end{lemma}
+\begin{lemma}\label{closure-under-omega-chains}
+  The logical relation is closed under least upper bounds of \(\omega\)-chains.
+  %
+  That is, for every program \(M : \sigma\) and \(\omega\)-chain
+  \(x_0 \below x_1 \dots\) in \(\densem{\sigma}\), if \(x_n \logrel_\sigma M\)
+  for every \(n \in \Nat\), then \(\pa*{\bigsqcup_{n \in \Nat}x_n} \logrel_\sigma M\).
+\end{lemma}
+
+\begin{exercise}\label{exer:contains-bot-and-closure-under-omega-chains}
+  Prove~\cref{contains-bot,closure-under-omega-chains} by induction on PCF
+  types.
+\end{exercise}
+
+\begin{exercise}\label{exer:closure-under-basic-operations}
+  Check the following closure properties of \(\logrel_\pcfnat\):
+  \begin{enumerate}[(i)]
+  \item \(0 \logrel_\pcfnat \numeral{0}\);
+  \item if \(x \logrel_\pcfnat M\), then \(s(x) \logrel_\pcfnat \pcfsuc\, M\),
+    where \(s\) is the successor map on \(\Nat_\bot\) as
+    in~\cref{def:interpretation}\ref{def:interpretation-succ};
+  \item if \(x \logrel_\pcfnat M\), then \(p(x) \logrel_\pcfnat \pcfpred\, M\),
+    where \(p\) is the predecessor map on \(\Nat_\bot\) as
+    in~\cref{def:interpretation}\ref{def:interpretation-pred};
+  \item if \(x \logrel_\pcfnat M\), \(y \logrel_\pcfnat N_1\) and
+    \(z \logrel_\pcfnat N_2\), then
+    \(c(x,y,z) \logrel_\pcfnat \pcfifz(M,N_1,N_2)\), where \(c\) is the if-zero
+    map on \(\Nat_\bot\) as
+    in~\cref{def:interpretation}\ref{def:interpretation-ifzero}.
+  \end{enumerate}
+\end{exercise}
+
 \section{Applicative approximation}
 
 \section{Proving computational adequacy}
+
+\section{List of exercises}
+\begin{enumerate}
+\item \cref{exer:contains-bot-and-closure-under-omega-chains}: On proving that
+  the logical relation contains the least element is and is closed under least
+  upper bounds of \(\omega\)-chains.
+\item \cref{exer:closure-under-basic-operations}: On showing that the logical
+  relation is suitably closed under the basic operations on the type of natural
+  numbers.
+\end{enumerate}
 
 %%% Local Variables:
 %%% mode: latexmk

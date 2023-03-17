@@ -51,7 +51,9 @@
 
 \ifthenelse{\boolean{shade-envs}}{%
   \declaretheorem[sibling=equation]{theorem}
+  \declaretheorem[unnumbered,title=Theorem]{theorem*}
   \declaretheorem[sibling=theorem]{lemma,proposition,corollary}
+  \declaretheorem[unnumbered,title=Lemma]{lemma*}
   \declaretheorem[sibling=theorem,style=definition]{definition}
   \declaretheorem[sibling=theorem,style=definition]{example}
   \declaretheorem[sibling=theorem,style=remark]{remark}
@@ -76,7 +78,9 @@
   }
   %
   \tcolorboxenvironment{theorem}    {shadedenv={ShadeOfPurple}}
+  \tcolorboxenvironment{theorem*}   {shadedenv={ShadeOfPurple}}
   \tcolorboxenvironment{lemma}      {shadedenv={ShadeOfPurple}}
+  \tcolorboxenvironment{lemma*}     {shadedenv={ShadeOfPurple}}
   \tcolorboxenvironment{proposition}{shadedenv={ShadeOfPurple}}
   \tcolorboxenvironment{corollary}  {shadedenv={ShadeOfPurple}}
   \tcolorboxenvironment{definition} {shadedenv={ShadeOfYellow}}
@@ -87,6 +91,8 @@
 }{% Use closing symbols if we don't have colours
   \declaretheorem[sibling=equation]{theorem}
   \declaretheorem[sibling=theorem]{lemma,proposition,corollary}
+  \declaretheorem[unnumbered,title=Theorem]{theorem*}
+  \declaretheorem[unnumbered,title=Lemma]{lemma*}
   \declaretheorem[sibling=theorem,style=definitionwithbox]{definition}
   \declaretheorem[sibling=theorem,style=definitionwithbox]{example}
   \declaretheorem[sibling=theorem,style=remarkwithbox]{remark}

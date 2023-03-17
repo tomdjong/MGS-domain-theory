@@ -35,7 +35,7 @@ This interpretation extends to contexts by using iterated binary products.
 The interpretation of the terms of PCF proceeds by yet another inductive
 definition:
 
-\begin{definition}[Interpretation of PCF terms]
+\begin{definition}[Interpretation of PCF terms]\label{def:interpretation}
   A term \(\Gamma \vdash M : \sigma\) of type \(\sigma\) in context~\(\Gamma\)
   will be interpreted as an \emph{\(\omega\)-continuous} function
   \[
@@ -144,7 +144,7 @@ definition:
       \densem{\Gamma} \xrightarrow{\densem{\pcfzero}} \Nat_\bot
     \]
     which is given by \(\gamma \in \densem{\Gamma} \mapsto 0 \in \Nat_\bot\).
-  \item
+  \item\label{def:interpretation-succ}
     To interpret
     \[
       \def\fCenter{\ \vdash\ }
@@ -165,7 +165,7 @@ definition:
     \Nat_\bot\), where \(s : \Nat_\bot \to \Nat_\bot\) is the successor function
     on \(\Nat_\bot\), i.e.\ \(s(\bot) \coloneqq \bot\) and
     \(s(n) \coloneqq n+1\).
-  \item
+  \item\label{def:interpretation-pred}
     To interpret
     \[
       \def\fCenter{\ \vdash\ }
@@ -186,7 +186,7 @@ definition:
     \Nat_\bot\), where \(p : \Nat_\bot \to \Nat_\bot\) is the predecessor
     function on \(\Nat_\bot\), i.e.\ \(p(\bot) \coloneqq \bot\),
     \(p(0) \coloneqq 0\) and \(p(n+1) \coloneqq n\).
-  \item
+  \item\label{def:interpretation-ifzero}
     Finally, to interpret
     \[
       \def\fCenter{\ \vdash\ }
