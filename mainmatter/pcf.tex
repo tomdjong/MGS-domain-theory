@@ -15,9 +15,10 @@ complex programming languages however, see e.g.~\cite{Plotkin1983}.
 
 At the same time, it should be mentioned that PCF is not quite a toy language
 and has a rather rich theory. For example, it captures Kleene--Kreisel
-higher-type computability~\cite{LongleyNormann2015} and an extension of PCF---with parallel-or and \(\exists\) (see~\cite{Streicher2006} for details)---can
-simulate recursively defined datatypes (such as trees and lists) using
-retracts~\cite{Streicher1994}.
+higher-type computability~\cite{LongleyNormann2015} and an extension of
+PCF---with parallel-or and \(\exists\) (see~\cite{Streicher2006} for
+details)---can simulate recursively defined datatypes (such as trees and lists)
+using retracts~\cite{Streicher1994}.
 
 \section{PCF}
 
@@ -232,7 +233,7 @@ explain with an example now.
   %
   Hence, we finally define \(\pcfadd_n\) as:
   \[
-    \pcfadd_n \coloneqq \pcffix_{\pcfnat \pcffun \pcfnat} \, F.
+    \pcfadd_n \coloneqq \pcffix_{\pcfnat \pcffun \pcfnat} \, F. \qedhere
   \]
   % \[
   %   \pcffix_{\pcfnat \pcffun \pcfnat} : \pa*{\pa*{\pcfnat \pcffun \pcfnat}
@@ -334,7 +335,7 @@ desideratum.
   \AxiomC{\(M \bigstep \numeral {n+1}\)}
   \AxiomC{\(N_2 \bigstep V\)}
   \BinaryInfC{\(\pcfifz(M,N_1,N_2) \bigstep V\)}
-  \DisplayProof
+  \DisplayProof\qedhere
   \end{longtable}
 \end{definition}
 

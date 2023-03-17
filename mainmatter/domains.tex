@@ -102,7 +102,7 @@ between them.
   \item \emph{transitivity}: for every \(x,y,z \in X\), if \(x \below y\) and
     \(y \below z\), then \(x \below z\);
   \item \emph{antisymmetry}: for every \(x,y \in X\), if \(x \below y\) and
-    \(y \below x\), then \(x = y\).
+    \(y \below x\), then \(x = y\). \qedhere
   \end{enumerate}
 \end{definition}
 
@@ -216,7 +216,7 @@ will typically denote it by \(\bot\).
   \begin{enumerate}[(i)]
   \item Show that every \(\omega\)-chain is a directed subset.
   \item Conversely, use the axiom of choice to show that every countable,
-    directed subset is an \(\omega\)-chain.
+    directed subset is an \(\omega\)-chain.\qedhere
   \end{enumerate}
 \end{exercise}
 
@@ -231,7 +231,7 @@ We proceed by defining the \(\omega\)-continuous maps between (pointed)
   \item\label{preserve-lub-of-omega-chains} it \emph{preserves least upper
       bounds of \(\omega\)-chains}, i.e.\ if \(\set{x_0,x_1,\dots}\) is an
     \(\omega\)-chain in \(A\) with least upper bound \(a\), then \(f(a)\) is the
-    least upper bound in \(B\) of the subset \(\set{f(x_0),f(x_1),\dots}\).
+    least upper bound in \(B\) of the subset \(\set{f(x_0),f(x_1),\dots}\). \qedhere
   \end{enumerate}
 \end{definition}
 
@@ -240,7 +240,7 @@ We proceed by defining the \(\omega\)-continuous maps between (pointed)
   \(\omega\)-chain in \(B\) and hence we could rewrite the second condition as:
   \[
     f\pa*{\textstyle\bigsqcup_{n \in \Nat}x_n} = \textstyle\bigsqcup_{n \in
-      \Nat}f(x_n).
+      \Nat}f(x_n). \qedhere
   \]
 \end{remark}
 
@@ -270,7 +270,7 @@ These intuitions and ideas are nicely illustrated in the following example:
   \item Show that \(C\) is an \(\omega\)-cppo.
   \item Show that a function \(f \colon C \to C\) is \(\omega\)-continuous if
     and only if for every infinite sequence \(\alpha\) we have
-    \(f(\alpha) = \textstyle\bigsqcup_{n \in \Nat}f(\alpha \upharpoonright n)\).
+    \(f(\alpha) = \textstyle\bigsqcup_{n \in \Nat}f(\alpha \upharpoonright n)\). \qedhere
   \end{enumerate}
 \end{exercise}
 
@@ -357,7 +357,7 @@ result:
     \(x \mapsto x\) on \(X\) is \(\omega\)-continuous, and
   \item if we have \(\omega\)-continuous functions \(f \colon A \to B\) and
     \(g \colon B \to C\), then so is their composition (as functions)
-    \(g \circ f \colon A \to C\).
+    \(g \circ f \colon A \to C\). \qedhere
   \end{enumerate}
 \end{exercise}
 
@@ -448,7 +448,7 @@ The empty context will be interpreted as follows:
       & (x,y) \\
       (x,\bot) \ar[ur, no head]& & (\bot,y) \ar[ul, no head] \\
       & (\bot,\bot) \ar[ur,no head] \ar[ul, no head]
-    \end{tikzcd}
+    \end{tikzcd}\qedhere
   \]
 \end{example}
 
@@ -477,7 +477,7 @@ The empty context will be interpreted as follows:
       \ar[ulll,no head, shift left=5pt] \ar[ull, no head, shift left=5pt]
       \ar[ul, no head, shift left=5pt] \ar[ur, no head, shift right=5pt]
       \ar[urr, no head, shift right=5pt] \ar[urrr, no head, shift right=5pt]
-    \end{tikzcd}
+    \end{tikzcd}\qedhere
   \]
 \end{example}
 

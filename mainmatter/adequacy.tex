@@ -49,7 +49,7 @@ semantics and syntax of PCF, and use it to prove computational adequacy.
     \(n \in \Nat\) implies \(M \bigstep \numeral n\),
   \item\label{R-fun} \(f \logrel_{\sigma \pcffun \tau} M\) holds if \(x \logrel_\sigma N\)
     implies \({f(x)} \logrel_\tau {M \, N}\) for every element
-    \(x \in \densem{\sigma}\) and program \(N\) of type \(\sigma\).
+    \(x \in \densem{\sigma}\) and program \(N\) of type \(\sigma\). \qedhere
   \end{enumerate}
 \end{definition}
 
@@ -144,7 +144,7 @@ establish several properties of the relation \(\logrel_\sigma\).
     \(z \logrel_\pcfnat N_2\), then
     \(c(x,y,z) \logrel_\pcfnat \pcfifz(M,N_1,N_2)\), where \(c\) is the if-zero
     map on \(\Nat_\bot\) as
-    in~\cref{def:interpretation}\ref{def:interpretation-ifzero}.
+    in~\cref{def:interpretation}\ref{def:interpretation-ifzero}. \qedhere
   \end{enumerate}
 \end{exercise}
 
@@ -171,7 +171,7 @@ of the interpretation. That is, we introduce a binary relation
   \item \(M \appapprox_\pcfnat N\) holds if \(M \bigstep \numeral{n}\) implies
     \(N \bigstep \numeral{n}\) for every natural number \(n\in\Nat\).
   \item \(M \appapprox_{\sigma \pcffun \tau} N\) holds if for every program
-    \(K\) of type \(\sigma\) we have \(M \, K \appapprox_\tau N \, K\).
+    \(K\) of type \(\sigma\) we have \(M \, K \appapprox_\tau N \, K\). \qedhere
   \end{enumerate}
 \end{definition}
 
