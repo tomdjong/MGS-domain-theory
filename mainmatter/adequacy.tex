@@ -203,6 +203,12 @@ reflexive and transitive, but not antisymmetric:
   For function types, we assume \(f \logrel_{\sigma \pcffun \tau} M\) and
   \(M \appapprox_{\sigma \pcffun \tau} N\). Suppose that we have
   \(x \logrel_\sigma K\); we have to prove \(f(x) \logrel_\tau N \, K\).
+  %
+  By our assumption that \(f \logrel_{\sigma \pcffun \tau} M\), we get
+  \(f(x) \logrel_\tau M \, K\). Moreover, our assumption
+  \(M \appapprox_{\sigma \pcffun \tau} N\) yields
+  \(M \, K \appapprox_\tau N \, K\), so that \(f(x) \logrel_\tau N \, K\) by the
+  induction hypothesis applied at \(\tau\), as desired.
 \end{proof}
 
 The following lemma has two useful corollaries for proving the fundamental
@@ -218,15 +224,26 @@ theorem of the logical relation.
   types.
 \end{exercise}
 
-
-
-\begin{corollary}
-
+\begin{corollary}\label{applicative-approximation-fix}
+  For every program \(M : \sigma \pcffun \sigma\), it holds
+  that \(M\pa*{\pcffix_\sigma \, M} \appapprox_\sigma \pcffix_\sigma M\).
 \end{corollary}
+\begin{proof}
+  By \cref{exer:applicative-approximation-if-big-step-implication} it is enough
+  to establish that \(M\pa*{\pcffix_\sigma\,M} \bigstep V\) implies
+  \(\pcffix_\sigma \, M \bigstep V\) for every program \(V\).
+  %
+  But this holds by definition of the big-step operational semantics.
+\end{proof}
 
-\begin{corollary}
-
+\begin{corollary}\label{applicative-approximation-beta}
+  For every term \(\var x : \sigma \vdash M : \tau\) and program \(N : \sigma\),
+  it holds that \(M[N/\var x] \appapprox_\tau \pa*{\lambdadot{\var x : \sigma}{M}}N\).
 \end{corollary}
+\begin{proof}
+  By~\cref{applicative-approximation-if-big-step-implication} and the definition
+  of the big-step operational semantics.
+\end{proof}
 
 
 \section{Proving computational adequacy}
