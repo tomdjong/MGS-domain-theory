@@ -5,7 +5,7 @@ interesting: Can we use the model to compute in PCF? More precisely, if two
 terms \(M\) and \(N\) are equal in the model, does \(M\) reduce to \(N\) (or
 vice versa) in the operational semantics?
 
-This is actually not the case, because the model is less intrinsic than PCF,
+This is actually not the case, because the model is more extensional than PCF,
 e.g.\ the programs \(\lambdadot{\var x : \pcfnat}{\var x}\) and
 \(\lambdadot{\var x : \pcfnat}{\pcfpred\pa*{\pcfsuc\,\var x}}\) are different
 values in PCF, but their interpretations as \(\omega\)-continuous functions are
@@ -41,7 +41,7 @@ technique in the theory of programming languages, going back to \emph{Tait's
 We introduce the logical relation \(R_\sigma\), a binary relation between
 semantics and syntax of PCF, and use it to prove computational adequacy.
 
-\begin{definition}\label{def:logical-relation}
+\begin{definition}[Logical relation \(\logrel_\sigma\)]\label{def:logical-relation}
   We define a binary relation \(\logrel_\sigma\) between elements of
   \(\densem{\sigma}\) and programs of type \(\sigma\) by induction on types:
   \begin{enumerate}[(i)]
@@ -150,7 +150,133 @@ establish several properties of the relation \(\logrel_\sigma\).
 
 \section{Applicative approximation}
 
+We will need one more ingredient for proving the fundamental theorem of the
+logical relation and (hence) computational adequacy: the \emph{applicative
+  approximation} preorder.
+
+In~\cref{R-extend-left}, we showed that if \(x \below y\) and
+\(y \logrel_\sigma M\), then \(x \logrel_\sigma M\).
+%
+The applicative approximation may be motivated by the desire to have a similar
+property of the logical relation, but for programs, rather than elements of the
+interpretation. That is, we introduce a binary relation \(\appapprox_\sigma\) on
+programs of type \(\sigma\) and show (\cref{R-extend-right}) that if
+\(x \logrel_\sigma M\) and \(M \appapprox_\sigma N\), then
+\(x \logrel_\sigma N\).
+
+\begin{definition}[Applicative approximation]
+  We define a binary relation \(\appapprox_\sigma\) on programs of type
+  \(\sigma\) by induction on types:
+  \begin{enumerate}[(i)]
+  \item \(M \appapprox_\pcfnat N\) holds if \(M \bigstep \numeral{n}\) implies
+    \(N \bigstep \numeral{n}\) for every natural number \(n\in\Nat\).
+  \item \(M \appapprox_{\sigma \pcffun \tau} N\) holds if for every program
+    \(K\) of type \(\sigma\) we have \(M \, K \appapprox_\tau N \, K\).
+  \end{enumerate}
+\end{definition}
+
+Note that the applicative approximation relation mirrors the partial orders on
+\(\Nat_\bot\) and the exponentials.
+%
+But the applicative approximation relation is only a \emph{preorder}; it is
+reflexive and transitive, but not antisymmetric:
+
+\begin{exercise}\label{exer:applicative-approximation-not-antisymmetric}
+  Give examples of programs \(M\) and \(N\) such that
+  \(M \appapprox_{\pcfnat \pcffun \pcfnat} N\) and
+  \(N \appapprox_{\pcfnat \pcffun \pcfnat} M\), but \(M \neq N\).
+\end{exercise}
+
+\begin{lemma}\label{R-extend-right}
+  If \(x \logrel_\sigma M\) and \(M \appapprox_\sigma N\), then
+  \(x \logrel_\sigma N\).
+\end{lemma}
+\begin{proof}
+  We proceed by induction on types.
+  %
+  For the base type, we assume \(x \logrel_\pcfnat M\) and
+  \(M \appapprox_\pcfnat N\). Suppose that \(x = n\) for \(n \in \Nat\); we have
+  to prove \(N \bigstep \numeral n\). But \(M \bigstep \numeral n\) since
+  \(x \logrel_\pcfnat M\) and hence, \(N \bigstep \numeral n\) because
+  \(M \appapprox_\pcfnat N\).
+
+  For function types, we assume \(f \logrel_{\sigma \pcffun \tau} M\) and
+  \(M \appapprox_{\sigma \pcffun \tau} N\). Suppose that we have
+  \(x \logrel_\sigma K\); we have to prove \(f(x) \logrel_\tau N \, K\).
+\end{proof}
+
+The following lemma has two useful corollaries for proving the fundamental
+theorem of the logical relation.
+\begin{lemma}\label{applicative-approximation-if-big-step-implication}
+  For all programs \(M\) and \(N\) of type \(\sigma\), if \(M \bigstep V\)
+  implies \(N \bigstep V\) for every program \(V : \sigma\), then
+  \(M \appapprox_\sigma N\).
+\end{lemma}
+
+\begin{exercise}\label{exer:applicative-approximation-if-big-step-implication}
+  Prove~\cref{applicative-approximation-if-big-step-implication} by induction on
+  types.
+\end{exercise}
+
+
+
+\begin{corollary}
+
+\end{corollary}
+
+\begin{corollary}
+
+\end{corollary}
+
+
 \section{Proving computational adequacy}
+
+Finally, we have established enough properties to prove:
+\begin{lemma}[Fundamental theorem of the logical relation]\label{fundamental-theorem}
+  If \(M : \tau\) is a term in a context
+  \(\Gamma = [\var x_0 : \sigma_0 , \dots , \var x_{k-1} : \sigma_{k-1}]\), then
+  whenever we have \(\Delta \vdash N_i : \sigma_i\) and
+  \(s_i \in \densem{\sigma_i}\) such that \(s_i \logrel_{\sigma_i} N_i\) for all
+  \(0 \leq i \leq k-1\), it holds that
+  \[
+    \pa*{\densem{M}\pa*{s_0,\dots,s_{k-1}}} \logrel_{\tau} {M[N_0/\var x_0,\dots,N_{k-1}/\var x_{k-1}]}.
+  \]
+\end{lemma}
+\begin{proof}
+  We proceed by induction on the structure of the derivations
+  \(\Gamma \vdash M : \tau\):
+
+  \begin{itemize}
+  \item For
+    \([\var x_0 : \sigma_0,\dots,\var x_{k-1} : \sigma_{k-1}] \vdash \var x_i :
+    \sigma_i\) and \(s_i \logrel_{\sigma_i} N_i\) for all
+    \(0 \leq i \leq k-1\), we observe that
+    \[ {\densem{\var x_i}(s_0,\dots,s_{k-1})} = {s_i} \logrel_{\sigma_i} {N_i} =
+      {{\var x_i}[N_0/\var x_0,\dots,N_{k-1}/\var x_{k-1}]},
+    \]
+    as wished.
+  \item For \(\lambda\)-abstraction, we ...
+  \item For application, we ...
+  \item
+    For \(\pcffix\), we ...
+  \item Finally, the cases for \(\pcfzero\), \(\pcfsuc\), \(\pcfzero\) and
+    \(\pcfifz\) follow from~\cref{exer:closure-under-basic-operations}. \qedhere
+  \end{itemize}
+\end{proof}
+
+For the special case of the empty context, we obtain:
+\begin{corollary}
+  For every program \(M : \sigma\), it holds that
+  \(\densem{M} \logrel_\sigma M\).
+\end{corollary}
+%
+By further specialising to the base type and the definition of
+\(\logrel_\pcfnat\), we get:
+\begin{theorem}[Computational adequacy]\label{adequacy}
+  For every program \(M\) of type \(\pcfnat\) and natural number \(n \in \Nat\),
+  if \(\densem{M} = n\), then \(M \bigstep \numeral n\).
+\end{theorem}
+
 
 \section{List of exercises}
 \begin{enumerate}
@@ -160,6 +286,11 @@ establish several properties of the relation \(\logrel_\sigma\).
 \item \cref{exer:closure-under-basic-operations}: On showing that the logical
   relation is suitably closed under the basic operations on the type of natural
   numbers.
+\item \cref{exer:applicative-approximation-not-antisymmetric}: On a
+  counterexample to antisymmetry of the applicative approximation relation.
+\item \cref{exer:applicative-approximation-if-big-step-implication}: On a
+  sufficient big-step condition for the applicative approximation relation to
+  hold.
 \end{enumerate}
 
 %%% Local Variables:
