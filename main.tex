@@ -49,6 +49,25 @@
       ]{remarkwithbox}
 }
 
+% Now we set the shading using the tcolorbox package.
+%
+% The related thmtools' option "shaded" and the package mdframed seem to have
+% issues: the former does not allow for page breaks in shaded environments and
+% the latter puts double spacing between two shaded environments.
+\tcbset{shadedenv/.style={
+    colback={#1},
+    frame hidden,
+    enhanced,
+    breakable,
+    boxsep=0pt,
+    left=2mm,
+    right=2mm,
+    % LaTeX thinks this is too wide (as becomes clear from the many "Overfull
+    % \hbox" warnings, but optically it looks spot on.
+    add to width=1.1mm,
+    enlarge left by=-0.6mm}
+}
+
 \ifthenelse{\boolean{shade-envs}}{%
   \declaretheorem[sibling=equation]{theorem}
   \declaretheorem[unnumbered,title=Theorem]{theorem*}
@@ -57,25 +76,7 @@
   \declaretheorem[sibling=theorem,style=definition]{definition}
   \declaretheorem[sibling=theorem,style=definition]{example}
   \declaretheorem[sibling=theorem,style=remark]{remark}
-  \declaretheorem[sibling=theorem,style=remark]{exercise}
-  % Now we set the shading using the tcolorbox package.
-  %
-  % The related thmtools' option "shaded" and the package mdframed seem to have
-  % issues: the former does not allow for page breaks in shaded environments and
-  % the latter puts double spacing between two shaded environments.
-  \tcbset{shadedenv/.style={
-      colback={#1},
-      frame hidden,
-      enhanced,
-      breakable,
-      boxsep=0pt,
-      left=2mm,
-      right=2mm,
-      % LaTeX thinks this is too wide (as becomes clear from the many "Overfull
-      % \hbox" warnings, but optically it looks spot on.
-      add to width=1.1mm,
-      enlarge left by=-0.6mm}
-  }
+  \declaretheorem[sibling=theorem,style=definition]{exercise}
   %
   \tcolorboxenvironment{theorem}    {shadedenv={ShadeOfPurple}}
   \tcolorboxenvironment{theorem*}   {shadedenv={ShadeOfPurple}}
@@ -96,7 +97,18 @@
   \declaretheorem[sibling=theorem,style=definitionwithbox]{definition}
   \declaretheorem[sibling=theorem,style=definitionwithbox]{example}
   \declaretheorem[sibling=theorem,style=remarkwithbox]{remark}
-  \declaretheorem[sibling=theorem,style=remarkwithbox]{exercise}
+  \declaretheorem[sibling=theorem,style=definitionwithbox]{exercise}
+  \tcolorboxenvironment{theorem}    {shadedenv={white}}
+  \tcolorboxenvironment{theorem*}   {shadedenv={white}}
+  \tcolorboxenvironment{lemma}      {shadedenv={white}}
+  \tcolorboxenvironment{lemma*}     {shadedenv={white}}
+  \tcolorboxenvironment{proposition}{shadedenv={white}}
+  \tcolorboxenvironment{corollary}  {shadedenv={white}}
+  \tcolorboxenvironment{definition} {shadedenv={white}}
+  \tcolorboxenvironment{example}    {shadedenv={white}}
+  \tcolorboxenvironment{remark}     {shadedenv={white}}
+  \tcolorboxenvironment{proof}      {shadedenv={white}}
+  \tcolorboxenvironment{exercise}   {shadedenv={white}}
   }
   \declaretheorem[sibling=theorem,style=remark,numbered=no]{claim}
 
