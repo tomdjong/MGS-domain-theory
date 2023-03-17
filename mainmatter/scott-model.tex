@@ -7,23 +7,28 @@ interpret the types of PCF as \(\omega\)-cppos and terms as
 \(\omega\)-continuous maps. This chapter is devoted to precisely defining that
 interpretation, known as the Scott model of PCF.
 
-\begin{definition}[Interpretation of PCF types]
+\begin{definition}[Interpretation of PCF types, \(\densem{\sigma}\)]
   We inductively assign an \(\omega\)-cppo \(\densem{\sigma}\) to each type
   \(\sigma\) of PCF:
-  \begin{alignat*}{3}
-    &\densem{\pcfnat} &&\coloneqq \Nat_\bot, \text{and} \\
-    &\densem{\sigma \pcffun \tau} &&\coloneqq \densem{\tau}^{\densem{\sigma}},
-  \end{alignat*}
+  \[
+    \densem{\pcfnat} \coloneqq \Nat_\bot
+    \quad\text{and}\quad
+    \densem{\sigma \pcffun \tau} \coloneqq \densem{\tau}^{\densem{\sigma}},
+  \]
+  % \begin{alignat*}{3}
+  %   &\densem{\pcfnat} &&\coloneqq \Nat_\bot, \text{and} \\
+  %   &\densem{\sigma \pcffun \tau} &&\coloneqq \densem{\tau}^{\densem{\sigma}},
+  % \end{alignat*}
   where we recall \(\Nat_\bot\) from~\cref{exam:N_bot} and the exponential
   from~\cref{def:exponential}.
 \end{definition}
 
-This interpretation extends to contexts by using iterated binary products.
-\begin{definition}[Interpretation of contexts]
-  A context
+This interpretation extends to contexts by using iterated binary products:
+\begin{definition}[Interpretation of contexts, \(\densem{\Gamma}\)]
+  The interpretation of a context
   \(\Gamma = [\var x_0 : \sigma_0, \dots , \var x_{n-1} :
   \sigma_{n-1}]\)
-  is interpreted as
+  is
   \[
     \densem{\Gamma} \coloneqq \densem{\sigma_0} \times \cdots \times
     \densem{\sigma_{n-1}}
@@ -35,7 +40,7 @@ This interpretation extends to contexts by using iterated binary products.
 The interpretation of the terms of PCF proceeds by yet another inductive
 definition:
 
-\begin{definition}[Interpretation of PCF terms]\label{def:interpretation}
+\begin{definition}[Interpretation of PCF terms, \(\densem{M}\)]\label{def:interpretation}
   A term \(\Gamma \vdash M : \sigma\) of type \(\sigma\) in context~\(\Gamma\)
   will be interpreted as an \emph{\(\omega\)-continuous} function
   \[
@@ -226,7 +231,7 @@ definition:
   \(\densem{M} \colon \One \to \densem{\sigma}\).
   %
   Since the underlying set of \(\One\) is the singleton \(\set{\star}\), this
-  function simply picks out an element of \(\densem{\sigma}\).
+  function simply picks out an element. % of \(\densem{\sigma}\).
   %
   With this in mind, we see that programs of type \(\sigma\) are interpreted
   as elements of \(\densem{\sigma}\).

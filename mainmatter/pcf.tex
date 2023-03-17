@@ -1,8 +1,9 @@
 \chapter{PCF and its operational semantics}\label{chap:PCF}
 
-PCF~\cite{Plotkin1977} is a typed functional programming language with general
-recursion. We can think of PCF as a simpler, well-behaved fragment of a modern
-functional programming language such as Haskell~\cite{Haskell2010}.
+PCF (Programming Computable Functions)~\cite{Plotkin1977} is a typed functional
+programming language with general recursion. We can think of PCF as a simpler,
+well-behaved fragment of a modern functional programming language such as
+Haskell~\cite{Haskell2010}.
 %
 The point of PCF is not to be a particularly convenient or rich programming
 language. Instead, it's meant to be a simple and principled language enabling us
@@ -13,10 +14,10 @@ The techniques that we will employ could, with some effort, be extended to more
 complex programming languages however, see e.g.~\cite{Plotkin1983}.
 
 At the same time, it should be mentioned that PCF is not quite a toy language
-and has a rather rich theory. For example, \textcolor{red}{TO DO:
-  Finish}~\cite{LongleyNormann2015} and an extension of PCF (with parallel-or
-and \(\exists\), see~\cite{Streicher2006} for details) can simulate recursively
-defined datatypes (such as trees and lists) using retracts~\cite{Streicher1994}.
+and has a rather rich theory. For example, it captures Kleene--Kreisel
+higher-type computability~\cite{LongleyNormann2015} and an extension of PCF---with parallel-or and \(\exists\) (see~\cite{Streicher2006} for details)---can
+simulate recursively defined datatypes (such as trees and lists) using
+retracts~\cite{Streicher1994}.
 
 \section{PCF}
 
@@ -282,9 +283,9 @@ as the following one:
 In our investigations into the denotational semantics of PCF, we will typically
 not be interested in intermediate reduction steps, e.g.\ we don't really care
 about the whole sequence
-\(\pcfifz(\pcfpred\,\numeral{3},\numeral{5},\pcfpred\,\numeral{7}) \smallstep
-\pcfifz(\numeral{2},\numeral{5},\pcfpred\,\numeral{7}) \smallstep
-\pcfpred\,\numeral{7} \smallstep \numeral{6}\); all we care about is that
+\({\pcfifz(\pcfpred\,\numeral{3},\numeral{5},\pcfpred\,\numeral{7})} \smallstep
+{\pcfifz(\numeral{2},\numeral{5},\pcfpred\,\numeral{7})} \smallstep
+{\pcfpred\,\numeral{7}} \smallstep {\numeral{6}}\); we only care that
 \(\pcfifz(\pcfpred\,\numeral{3},\numeral{5},\pcfpred\,\numeral{7})\) computes to
 the numeral \(\numeral{6}\).
 %
@@ -371,7 +372,7 @@ unique:
   If \(M \bigstep V\) and \(M \bigstep W\), then \(V = W\).
 \end{lemma}
 
-(Actually, the small-step operational semantics is also deterministic.)
+%(Actually, the small-step operational semantics is also deterministic.)
 
 The lemmas are proved by induction on the structure of derivations of
 \(M \bigstep V\) and inspection of the small-step operational semantics.
