@@ -26,3 +26,14 @@ The notes are available in [full
 colour](https://github.com/tomdjong/MGS-domain-theory/releases/latest/download/MGS-domain-theory.pdf)
 and [black and
 white](https://github.com/tomdjong/MGS-domain-theory/releases/latest/download/MGS-domain-theory_no-colour.pdf).
+
+## Fixing inaccuracies
+
+If you find an inaccuracy of any kind in the notes, then please help me fix it:
+
+- If you know how to fix it and are comfortable using GitHub, please consider
+  making a **pull request** with your fix.
+- If you don't know how to fix it and are comfortable using GitHub, please
+  consider creating an **issue** addressing the inaccuracy.
+- If you don't wish to use GitHub, please inform me of the inaccuracy by
+  sending me an email at `tom.dejong[symbol]nottingham.ac.uk`.
