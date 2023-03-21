@@ -9,7 +9,7 @@ denotational semantics* at the
 
 ## Abstract
 
-*Denotational semantics aims to understand computer programmes by assigning
+*Denotational semantics aims to understand computer programs by assigning
 mathematical meaning to the syntax of a programming language. In this course we
 will study a simple functional programming language called PCF. Notably, this
 language has general recursion through a fixed point operator. This means a
@@ -17,7 +17,7 @@ simple denotational semantics based on sets is not suitable. Instead, we
 interpret the types of PCF as certain partially ordered sets leading to domain
 theory and Scott's model of PCF in particular. The central theorems of soundness
 and computational adequacy, formulated and proved by Plotkin, then tell us that
-a PCF programme computes to a value if and only if their interpretations in the
+a PCF program computes to a value if and only if their interpretations in the
 model are equal.*
 
 ## Links to the notes
