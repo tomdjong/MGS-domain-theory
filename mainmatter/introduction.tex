@@ -33,10 +33,39 @@ program and the value are equal.
 Put differently, we might say that the operational and denotational semantics of
 PCF are ``in sync''.
 
-
-\cite{Escardo2007b}
-
 \section{Aims}
+
+We hope that these notes provide a self-contained and accessible introduction to
+domain-theoretic denotational semantics for graduate students in theoretical
+computer science.
+
+Domain theory~\cite{AbramskyJung1994,GierzEtAl2003} is a fruitful mathematical
+subject with applications outside the semantics of programming languages, e.g.\
+in algebra, higher-type computability~\cite{LongleyNormann2015} and
+topology~\cite{GierzEtAl2003}.
+
+For some, it may be fairly abstract, however, and for this reason we have chosen
+to motivate the definitions and constructions of domain theory by appealing to
+its (intended) application of modelling the programming language PCF.
+
+In our investigations we are not only introduced to basic domain theory, but,
+when proving computational adequacy, also to the fundamental technique of
+logical relations.
+
+Moreover, although no knowledge of category theory is required for these notes,
+there are several exercises touching on category theory which hopefully provide
+an illustration of abstract categorical concepts for those already familiar with
+category theory, or, alternatively, might encourage those unfamiliar to study it.
+
+More generally, we hope that this course will be taken up as an invitation to
+explore the wonderful interplay between mathematics and computer science.
+%
+A striking example of this is Escard\'o's collection of ``seemingly impossible''
+programs that perform fast exhaustive search on infinite datatypes
+(see~\cite{Escardo2007b} and the references therein).
+%
+While the programs can be understood without knowledge of domain theory, their
+conception and proofs of correctness do rely on domain theory and topology.
 
 \section{References}
 
@@ -64,7 +93,7 @@ Additionally, one may wish to consult the
 textbooks~\cite{Winskel1993,Gunther1992} or the lecture
 notes~\cite{Plotkin1983,PittsWinskelFiore2012} for more on domain-theoretic denotational
 semantics.
-
+%
 For more on general domain theory, we
 recommend~\cite{AbramskyJung1994,GierzEtAl2003}.
 
