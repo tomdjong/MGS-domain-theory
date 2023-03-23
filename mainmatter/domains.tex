@@ -159,6 +159,12 @@ bound (of a given subset) and in the case of \(\omega\)-chain
 Because least elements are unique, we will speak of \emph{the} least element and
 will typically denote it by \(\bot\).
 
+\begin{example}
+  The set of natural numbers \(\Nat\) with the usual order is \emph{not} an
+  \(\omega\)-cpo, because the \(\omega\)-chain
+  \(\set{0,1,\dots}\) does not have a (least) upper bound.
+\end{example}
+
 \begin{example}[\(\Nat_\bot\)]\label{exam:N_bot}
   A fundamental example of an \(\omega\)-cppo is the \emph{flat} \(\omega\)-cppo
   \(\Nat_\bot\), which is given by the set \(\Nat \cup \{\bot\}\) ordered as
@@ -341,12 +347,11 @@ result:
   from~\cref{exer:least-fixed-point}.
 \end{proof}
 
-\begin{exercise}\label{exer:least-fixed-point}
-  Write \(x_0\) for the fixed point constructed in~\cref{least-fixed-point}.
+\begin{exercise}[Park induction]\label{exer:least-fixed-point}
+  Show that for every \(y \in X\) with \(f(y) \below y\), we have
+  \(\bigsqcup_{n \in \Nat}f^n(\bot) \below y\).
   %
-  Show that for every \(y \in X\) with \(f(y) \below y\), we have \(x_0 \below y\).
-  %
-  Conclude that \(x_0\) is indeed the \emph{least} fixed point.
+  Conclude that \(\bigsqcup_{n \in \Nat}f^n(\bot)\) is indeed the \emph{least} fixed point.
 \end{exercise}
 
 \begin{exercise}\label{exer:category-of-cpos}
