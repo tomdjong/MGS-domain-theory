@@ -369,6 +369,60 @@ By further specialising to the base type and the definition of
   if \(\densem{M} = n\), then \(M \bigstep \numeral n\).
 \end{theorem}
 
+We end these notes with an exercise illustrating two uses of computational
+adequacy: one on establishing the computational behaviour of a program, and one
+on using a domain-theoretic argument to show that a certain program cannot
+exist.
+
+\begin{exercise}\label{exer:finding-roots}
+  Consider the following pseudocode:
+
+\begin{verbatim}
+  root : (Nat -> Nat) -> Nat
+  root M = root' M 0
+
+  root' : (Nat -> Nat) -> Nat -> Nat
+  root' M m = if   M 0 == 0
+              then m
+              else root' (shift M) (m + 1)
+
+  shift : (Nat -> Nat) -> Nat -> Nat
+  shift M n = M (n + 1)
+\end{verbatim}
+  \begin{enumerate}[(i), itemsep=5pt]
+  \item Translate the above pseudocode to corresponding programs \(\pcfroot\),
+    \(\pcfrootprime\) and \(\pcfshift\) in PCF.
+  \item Use computational adequacy to prove that for every program
+    \(M : \pcfnat \pcffun \pcfnat\) and natural number \(n\), we have
+    \[
+      \pcfroot\,M \bigstep \numeral{n} \iff %
+      M \, \numeral{n} \bigstep \numeral{0} \text{ and } %
+      \forall_{k \leq n}\pa*{M \, \numeral{k} \text{ reduces to a non-zero numeral}}.
+     \]
+     That is, \(\pcfroot \, M\) computes the first ``root'' (or zero) of \(M\)
+     provided that \(M\) terminates on all values up to (and including) the
+     root.
+   \item Give an informal argument as to why we can't drop the condition that
+     \(M \, \numeral{k}\) reduces to a (non-zero) numeral for all \(k \leq n\).
+   \item Show that there is \emph{no} program
+     \(F : (\pcfnat \pcffun \pcfnat) \pcffun \pcfnat \pcffun \pcfnat\) such that
+     for every program \(M : \pcfnat \pcffun \pcfnat\) and natural number \(n\),
+     we have
+     \[
+       F\,M \bigstep \numeral{n} \iff %
+       n \text{ is the least natural number with } M \, \numeral{n} \bigstep \numeral{0}.
+     \]
+     \emph{Hint}: Consider the \(\omega\)-continuous functions
+     \(f,g : \Nat_\bot \to \Nat_\bot \) given by \(f(\bot) \coloneqq \bot\),
+     \(f(0) \coloneqq \bot\) and \(f(n+1) \coloneqq 0\), and \(g(x) = 0\) for
+     all \(x \in \Nat_\bot\).
+     %
+     Use the observation that \(f \below g\) to obtain a contradiction from the
+     assumption of such a program \(F\).
+     %
+     \qedhere
+  \end{enumerate}
+\end{exercise}
 
 \section{List of exercises}
 \begin{enumerate}
@@ -383,6 +437,7 @@ By further specialising to the base type and the definition of
 \item \cref{exer:applicative-approximation-if-big-step-implication}: On a
   sufficient big-step condition for the applicative approximation relation to
   hold.
+\item \cref{exer:finding-roots}: On computational adequacy and programs finding roots.
 \end{enumerate}
 
 %%% Local Variables:
