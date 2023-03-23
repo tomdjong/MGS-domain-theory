@@ -415,11 +415,28 @@ the Scott model of PCF, respects the operational semantics.
   \end{itemize}
 \end{proof}
 
+\begin{exercise}\label{exer:non-termination-denotational}
+  % Recall the program \(M \coloneqq \pcffix_{\pcfnat}(S) : \pcfnat\) with
+  % \(S \coloneqq \pa*{\lambdadot{\var x : \pcfnat}{\pcfsuc \, \var x}} : \pcfnat
+  % \pcffun \pcfnat\) from~\cref{exam:non-termination}.
+
+  Consider the program
+  \(M \coloneqq \pcffix_\pcfnat (\lambdadot{\var x : \pcfnat}{\var x})\).
+
+  Prove that \(\densem{M} = \bot\) and use the soundness theorem to conclude
+  that \(M\) does not reduce to a value.
+
+  \emph{Hint}: For a particularly quick proof that \(\densem{M} = \bot\), use
+  \cref{exer:least-fixed-point}.
+\end{exercise}
+
 \section{List of exercises}
 \begin{enumerate}
 \item \cref{exer:interpretation-of-numerals}: On the interpretation of the numerals.
 \item \cref{exer:beta-equality}: On proving that the interpretation validates
   \(\beta\)-equality.
+\item \cref{exer:non-termination-denotational}: On using the soundness theorem
+  to prove non-termination.
 \end{enumerate}
 
 %%% Local Variables:
