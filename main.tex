@@ -68,6 +68,9 @@
     enlarge left by=-0.6mm}
 }
 
+% Keep a count of the number of exercises
+\newtotcounter{allexercises}
+
 \ifthenelse{\boolean{shade-envs}}{%
   \declaretheorem[sibling=equation]{theorem}
   \declaretheorem[unnumbered,title=Theorem]{theorem*}
@@ -76,7 +79,7 @@
   \declaretheorem[sibling=theorem,style=definition]{definition}
   \declaretheorem[sibling=theorem,style=definition]{example}
   \declaretheorem[sibling=theorem,style=remark]{remark}
-  \declaretheorem[sibling=theorem,style=definition]{exercise}
+  \declaretheorem[sibling=theorem,style=definition,postheadhook=\stepcounter{allexercises}]{exercise}
   %
   \tcolorboxenvironment{theorem}    {shadedenv={ShadeOfPurple}}
   \tcolorboxenvironment{theorem*}   {shadedenv={ShadeOfPurple}}
@@ -97,7 +100,7 @@
   \declaretheorem[sibling=theorem,style=definitionwithbox]{definition}
   \declaretheorem[sibling=theorem,style=definitionwithbox]{example}
   \declaretheorem[sibling=theorem,style=remarkwithbox]{remark}
-  \declaretheorem[sibling=theorem,style=definitionwithbox]{exercise}
+  \declaretheorem[sibling=theorem,style=definitionwithbox,postheadhook=\stepcounter{allexercises}]{exercise}
   \tcolorboxenvironment{theorem}    {shadedenv={white}}
   \tcolorboxenvironment{theorem*}   {shadedenv={white}}
   \tcolorboxenvironment{lemma}      {shadedenv={white}}
