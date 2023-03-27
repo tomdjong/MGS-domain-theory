@@ -391,6 +391,19 @@ result:
 the \(\omega\)-cppo \(\Nat_\bot\) from~\cref{exam:N_bot}.
 \end{exercise}
 
+\begin{remark}
+  For the interpretation of PCF, we do \emph{not} use the category
+  \(\omegaCPPObot\), but rather the full subcategory of \(\omegaCPO\) of pointed
+  \(\omega\)-cpos. That is, we do \emph{not} restrict to those
+  \(\omega\)-continuous functions that preserve the least element.
+  %
+  For instance, the interpretation of \(\pcfifz\) will not necessarily preserve
+  the least element in its second and third arguments.
+  %
+  This makes sense, because \(\pcfifz(\numeral{0},M,N) \bigstep M\) holds even
+  if the program \(N\) does not terminate.
+\end{remark}
+
 \section{Products: interpreting contexts}
 
 As explained in the introduction to this chapter our goal is to interpret the
