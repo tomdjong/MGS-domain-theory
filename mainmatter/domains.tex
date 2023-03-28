@@ -91,8 +91,9 @@ can be shown to have (least) fixed points, thus solving our second problem.
 
 \section{Basic definitions and the least fixed point theorem}
 
-We give the definitions of \(\omega\)-cppos and \(\omega\)-continuous functions
-between them.
+We define \(\omega\)-cppos (short for: pointed,
+\(\omega\)-chain complete posets) and \(\omega\)\nobreakdash-continuous
+functions between them.
 
 \begin{definition}[Poset]
   A \emph{partially ordered set}, or \emph{poset}, is a set \(X\) together with
@@ -314,9 +315,9 @@ The point of introducing \(\omega\)-continuity is the following fundamental
 result:
 
 \begin{theorem}[Knaster--Tarski fixed point theorem]\label{least-fixed-point}
-  Every \(\omega\)-continuous function \(f \colon X \to X\) on an \(\omega\)-cpo
-  \(X\) has a least fixed point given by the least upper bound of the
-  \(\omega\)-chain
+  Every \(\omega\)-continuous function \(f \colon X \to X\) on a pointed
+  \(\omega\)-cpo \(X\) has a least fixed point given by the least upper bound of
+  the \(\omega\)-chain
   \[
     \bot \below f(\bot) \below f(f(\bot)) \dots.
   \]
@@ -389,6 +390,19 @@ result:
 \emph{Hint}: The composite functor \(\Set \to \omegaCPPObot\) takes the set \(\Nat\) to
 the \(\omega\)-cppo \(\Nat_\bot\) from~\cref{exam:N_bot}.
 \end{exercise}
+
+\begin{remark}
+  For the interpretation of PCF, we do \emph{not} use the category
+  \(\omegaCPPObot\), but rather the full subcategory of \(\omegaCPO\) of pointed
+  \(\omega\)-cpos. That is, we do \emph{not} restrict to those
+  \(\omega\)-continuous functions that preserve the least element.
+  %
+  For instance, the interpretation of \(\pcfifz\) will not necessarily preserve
+  the least element in its second and third arguments.
+  %
+  This makes sense, because \(\pcfifz(\numeral{0},M,N) \bigstep M\) holds even
+  if the program \(N\) does not terminate.
+\end{remark}
 
 \section{Products: interpreting contexts}
 
