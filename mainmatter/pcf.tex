@@ -83,7 +83,7 @@ We are now ready to define the (well-typed) terms of PCF.
   \Axiom$\Gamma \fCenter M : \sigma \pcffun \sigma$
   \UnaryInf$\Gamma \fCenter \pcffix_\sigma(M) : \sigma$
   \DisplayProof\vspace{1cm}\\
-  \AxiomC{}
+  \AxiomC{\vphantom{$\Gamma$}} %% putting a phantom \Gamma here ensures vertical alignment
   \UnaryInf$\Gamma \fCenter \pcfzero : \pcfnat$
   \DisplayProof\quad\quad\quad
   \Axiom$\Gamma \fCenter M : \pcfnat$
