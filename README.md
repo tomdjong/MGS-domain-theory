@@ -5,8 +5,6 @@ denotational semantics* at the
 [Midlands Graduate School (MGS)
 2023](https://www.cs.bham.ac.uk/~mhe/events/MGS23/).
 
-**Under active development.**
-
 ## Abstract
 
 *Denotational semantics aims to understand computer programs by assigning
