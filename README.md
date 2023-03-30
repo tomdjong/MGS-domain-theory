@@ -35,3 +35,7 @@ If you find an inaccuracy of any kind in the notes, then please help me fix it:
   consider creating an **issue** addressing the inaccuracy.
 - If you don't wish to use GitHub, please inform me of the inaccuracy by
   sending me an email at `tom.dejong[symbol]nottingham.ac.uk`.
+
+---
+
+[My homepage](https://tdejong.com)
