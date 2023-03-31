@@ -39,7 +39,8 @@ If you find an inaccuracy of any kind in the notes, then please help me fix it:
 ## Post-lecture feedback
 
 Your feedback is **anonymous** and will be used to improve future lectures.
-1. [Feedback form for lecture 1](https://forms.gle/w8D7Ru2WAzihVvMX9)
+1. [Feedback form for Lecture 1](https://forms.gle/w8D7Ru2WAzihVvMX9)
+1. [Feedback form for Lecture 2](https://forms.gle/fpvGo9BaquyxKouG7)
 
 ---
 
