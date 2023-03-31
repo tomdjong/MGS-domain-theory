@@ -36,6 +36,11 @@ If you find an inaccuracy of any kind in the notes, then please help me fix it:
 - If you don't wish to use GitHub, please inform me of the inaccuracy by
   sending me an email at `tom.dejong[symbol]nottingham.ac.uk`.
 
+## Post-lecture feedback
+
+Your feedback is **anonymous** and will be used to improve future lectures.
+1. [Feedback form for lecture 1](https://forms.gle/w8D7Ru2WAzihVvMX9)
+
 ---
 
 [My homepage](https://tdejong.com)
