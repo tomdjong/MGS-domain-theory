@@ -10,6 +10,15 @@ e.g.\ the programs \(\lambdadot{\var x : \pcfnat}{\var x}\) and
 \(\lambdadot{\var x : \pcfnat}{\pcfpred\pa*{\pcfsuc\,\var x}}\) are different
 values in PCF, but their interpretations as \(\omega\)-continuous functions are
 equal.
+%
+Even if we did allow for reductions in the bodies of the
+\(\lambda\)-abstractions, we could easily get another counterexample such as the
+pair of programs
+\(\lambdadot{\var x : \pcfnat}{\lambdadot{\var y :
+    \pcfnat}{\pcffont{add}\,x\,y}}\) and
+\(\lambdadot{\var x : \pcfnat}{\lambdadot{\var y :
+    \pcfnat}{\pcffont{add}\,y\,x}}\) where \(\pcffont{add}\) is a program for
+addition.
 
 However, it \emph{is} the case that if \(M\) is a program of type \(\pcfnat\)
 and \(\densem{M} = n\), then \(M \bigstep \numeral{n}\).
